@@ -9,6 +9,7 @@
 #define MAKE_DXGI_HRESULT(code) MAKE_HRESULT(1, _FACDXGI, code)
 #define MAKE_DXGI_STATUS(code)  MAKE_HRESULT(0, _FACDXGI, code)
 
+#ifdef __MINGW32__
 #define DXGI_STATUS_OCCLUDED                    MAKE_DXGI_STATUS(1)
 #define DXGI_STATUS_CLIPPED                     MAKE_DXGI_STATUS(2)
 #define DXGI_STATUS_NO_REDIRECTION              MAKE_DXGI_STATUS(4)
@@ -16,8 +17,6 @@
 #define DXGI_STATUS_GRAPHICS_VIDPN_SOURCE_IN_USE MAKE_DXGI_STATUS(6)
 #define DXGI_STATUS_MODE_CHANGED                MAKE_DXGI_STATUS(7)
 #define DXGI_STATUS_MODE_CHANGE_IN_PROGRESS     MAKE_DXGI_STATUS(8)
-
-
 #define DXGI_ERROR_INVALID_CALL                 MAKE_DXGI_HRESULT(1)
 #define DXGI_ERROR_NOT_FOUND                    MAKE_DXGI_HRESULT(2)
 #define DXGI_ERROR_MORE_DATA                    MAKE_DXGI_HRESULT(3)
@@ -33,8 +32,9 @@
 #define DXGI_ERROR_NOT_CURRENTLY_AVAILABLE      MAKE_DXGI_HRESULT(34)
 #define DXGI_ERROR_REMOTE_CLIENT_DISCONNECTED   MAKE_DXGI_HRESULT(35)
 #define DXGI_ERROR_REMOTE_OUTOFMEMORY           MAKE_DXGI_HRESULT(36)
-
-
+#else /* !__MINGW32__*/
+// DXGI error messages have moved to winerror.h
+#endif /* !__MINGW32__*/
 
 #define DXGI_CPU_ACCESS_NONE                    ( 0 )
 #define DXGI_CPU_ACCESS_DYNAMIC                 ( 1 )
@@ -56,6 +56,19 @@ typedef struct DXGI_RGB
     float Green;
     float Blue;
 } DXGI_RGB;
+
+#ifndef D3DCOLORVALUE_DEFINED
+typedef struct _D3DCOLORVALUE {
+    float r;
+    float g;
+    float b;
+    float a;
+} D3DCOLORVALUE;
+
+#define D3DCOLORVALUE_DEFINED
+#endif
+
+typedef D3DCOLORVALUE DXGI_RGBA;
 
 typedef struct DXGI_GAMMA_CONTROL
 {

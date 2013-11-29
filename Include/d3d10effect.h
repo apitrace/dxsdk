@@ -11,6 +11,8 @@
 #ifndef __D3D10EFFECT_H__
 #define __D3D10EFFECT_H__
 
+
+
 #include "d3d10.h"
 
 //////////////////////////////////////////////////////////////////////////////
@@ -131,7 +133,7 @@ DECLARE_INTERFACE_(ID3D10StateBlock, IUnknown)
     STDMETHOD(Capture)(THIS) PURE;
     STDMETHOD(Apply)(THIS) PURE;
     STDMETHOD(ReleaseAllDeviceObjects)(THIS) PURE;
-    STDMETHOD(GetDevice)(THIS_ ID3D10Device **ppDevice) PURE;
+    STDMETHOD(GetDevice)(_Out_ THIS_ ID3D10Device **ppDevice) PURE;
 };
 
 #ifdef __cplusplus
@@ -163,14 +165,14 @@ extern "C" {
 //
 //----------------------------------------------------------------------------
 
-HRESULT WINAPI D3D10StateBlockMaskUnion(D3D10_STATE_BLOCK_MASK *pA, D3D10_STATE_BLOCK_MASK *pB, D3D10_STATE_BLOCK_MASK *pResult);
-HRESULT WINAPI D3D10StateBlockMaskIntersect(D3D10_STATE_BLOCK_MASK *pA, D3D10_STATE_BLOCK_MASK *pB, D3D10_STATE_BLOCK_MASK *pResult);
-HRESULT WINAPI D3D10StateBlockMaskDifference(D3D10_STATE_BLOCK_MASK *pA, D3D10_STATE_BLOCK_MASK *pB, D3D10_STATE_BLOCK_MASK *pResult);
-HRESULT WINAPI D3D10StateBlockMaskEnableCapture(D3D10_STATE_BLOCK_MASK *pMask, D3D10_DEVICE_STATE_TYPES StateType, UINT RangeStart, UINT RangeLength);
-HRESULT WINAPI D3D10StateBlockMaskDisableCapture(D3D10_STATE_BLOCK_MASK *pMask, D3D10_DEVICE_STATE_TYPES StateType, UINT RangeStart, UINT RangeLength);
-HRESULT WINAPI D3D10StateBlockMaskEnableAll(D3D10_STATE_BLOCK_MASK *pMask);
-HRESULT WINAPI D3D10StateBlockMaskDisableAll(D3D10_STATE_BLOCK_MASK *pMask);
-BOOL    WINAPI D3D10StateBlockMaskGetSetting(D3D10_STATE_BLOCK_MASK *pMask, D3D10_DEVICE_STATE_TYPES StateType, UINT Entry);
+HRESULT WINAPI D3D10StateBlockMaskUnion(_In_ D3D10_STATE_BLOCK_MASK *pA, _In_ D3D10_STATE_BLOCK_MASK *pB, _Out_ D3D10_STATE_BLOCK_MASK *pResult);
+HRESULT WINAPI D3D10StateBlockMaskIntersect(_In_ D3D10_STATE_BLOCK_MASK *pA, _In_ D3D10_STATE_BLOCK_MASK *pB, _Out_ D3D10_STATE_BLOCK_MASK *pResult);
+HRESULT WINAPI D3D10StateBlockMaskDifference(_In_ D3D10_STATE_BLOCK_MASK *pA, _In_ D3D10_STATE_BLOCK_MASK *pB, _Out_ D3D10_STATE_BLOCK_MASK *pResult);
+HRESULT WINAPI D3D10StateBlockMaskEnableCapture(_Inout_ D3D10_STATE_BLOCK_MASK *pMask, D3D10_DEVICE_STATE_TYPES StateType, UINT RangeStart, UINT RangeLength);
+HRESULT WINAPI D3D10StateBlockMaskDisableCapture(_Inout_ D3D10_STATE_BLOCK_MASK *pMask, D3D10_DEVICE_STATE_TYPES StateType, UINT RangeStart, UINT RangeLength);
+HRESULT WINAPI D3D10StateBlockMaskEnableAll(_Out_ D3D10_STATE_BLOCK_MASK *pMask);
+HRESULT WINAPI D3D10StateBlockMaskDisableAll(_Out_ D3D10_STATE_BLOCK_MASK *pMask);
+BOOL    WINAPI D3D10StateBlockMaskGetSetting(_In_ D3D10_STATE_BLOCK_MASK *pMask, D3D10_DEVICE_STATE_TYPES StateType, UINT Entry);
 
 //----------------------------------------------------------------------------
 // D3D10CreateStateBlock
@@ -192,7 +194,7 @@ BOOL    WINAPI D3D10StateBlockMaskGetSetting(D3D10_STATE_BLOCK_MASK *pMask, D3D1
 //      bit mask
 //----------------------------------------------------------------------------
 
-HRESULT WINAPI D3D10CreateStateBlock(ID3D10Device *pDevice, D3D10_STATE_BLOCK_MASK *pStateBlockMask, ID3D10StateBlock **ppStateBlock);
+HRESULT WINAPI D3D10CreateStateBlock(_In_ ID3D10Device *pDevice, _In_ D3D10_STATE_BLOCK_MASK *pStateBlockMask, _Out_ ID3D10StateBlock **ppStateBlock);
 
 #ifdef __cplusplus
 }
@@ -369,7 +371,7 @@ DECLARE_INTERFACE(ID3D10EffectVariable)
 {
     STDMETHOD_(BOOL, IsValid)(THIS) PURE;
     STDMETHOD_(ID3D10EffectType*, GetType)(THIS) PURE;
-    STDMETHOD(GetDesc)(THIS_ D3D10_EFFECT_VARIABLE_DESC *pDesc) PURE;
+    STDMETHOD(GetDesc)(THIS_ _Out_ D3D10_EFFECT_VARIABLE_DESC *pDesc) PURE;
     
     STDMETHOD_(ID3D10EffectVariable*, GetAnnotationByIndex)(THIS_ UINT Index) PURE;
     STDMETHOD_(ID3D10EffectVariable*, GetAnnotationByName)(THIS_ LPCSTR Name) PURE;
@@ -396,8 +398,8 @@ DECLARE_INTERFACE(ID3D10EffectVariable)
     STDMETHOD_(ID3D10EffectRasterizerVariable*, AsRasterizer)(THIS) PURE;
     STDMETHOD_(ID3D10EffectSamplerVariable*, AsSampler)(THIS) PURE;
     
-    STDMETHOD(SetRawValue)(THIS_ void *pData, UINT Offset, UINT Count) PURE;
-    STDMETHOD(GetRawValue)(THIS_ void *pData, UINT Offset, UINT Count) PURE;
+    STDMETHOD(SetRawValue)(THIS_ _In_reads_bytes_(ByteCount) void *pData, UINT Offset, UINT ByteCount) PURE;
+    STDMETHOD(GetRawValue)(THIS_ _Out_writes_bytes_(ByteCount) void *pData, UINT Offset, UINT ByteCount) PURE;
 };
 
 //////////////////////////////////////////////////////////////////////////////
@@ -418,7 +420,7 @@ DECLARE_INTERFACE_(ID3D10EffectScalarVariable, ID3D10EffectVariable)
 {
     STDMETHOD_(BOOL, IsValid)(THIS) PURE;
     STDMETHOD_(ID3D10EffectType*, GetType)(THIS) PURE;
-    STDMETHOD(GetDesc)(THIS_ D3D10_EFFECT_VARIABLE_DESC *pDesc) PURE;
+    STDMETHOD(GetDesc)(THIS_ _Out_ D3D10_EFFECT_VARIABLE_DESC *pDesc) PURE;
     
     STDMETHOD_(ID3D10EffectVariable*, GetAnnotationByIndex)(THIS_ UINT Index) PURE;
     STDMETHOD_(ID3D10EffectVariable*, GetAnnotationByName)(THIS_ LPCSTR Name) PURE;
@@ -445,26 +447,26 @@ DECLARE_INTERFACE_(ID3D10EffectScalarVariable, ID3D10EffectVariable)
     STDMETHOD_(ID3D10EffectRasterizerVariable*, AsRasterizer)(THIS) PURE;
     STDMETHOD_(ID3D10EffectSamplerVariable*, AsSampler)(THIS) PURE;
     
-    STDMETHOD(SetRawValue)(THIS_ void *pData, UINT ByteOffset, UINT ByteCount) PURE;
-    STDMETHOD(GetRawValue)(THIS_ void *pData, UINT ByteOffset, UINT ByteCount) PURE;
+    STDMETHOD(SetRawValue)(THIS_ _In_reads_bytes_(ByteCount) void *pData, UINT ByteOffset, UINT ByteCount) PURE;
+    STDMETHOD(GetRawValue)(THIS_ _Out_writes_bytes_(ByteCount) void *pData, UINT ByteOffset, UINT ByteCount) PURE;
     
     STDMETHOD(SetFloat)(THIS_ float Value) PURE;
-    STDMETHOD(GetFloat)(THIS_ float *pValue) PURE;    
+    STDMETHOD(GetFloat)(THIS_ _Out_ float *pValue) PURE;    
     
-    STDMETHOD(SetFloatArray)(THIS_ float *pData, UINT Offset, UINT Count) PURE;
-    STDMETHOD(GetFloatArray)(THIS_ float *pData, UINT Offset, UINT Count) PURE;
+    STDMETHOD(SetFloatArray)(THIS_ _In_reads_(Count) float *pData, UINT Offset, UINT Count) PURE;
+    STDMETHOD(GetFloatArray)(THIS_ _Out_writes_(Count) float *pData, UINT Offset, UINT Count) PURE;
     
     STDMETHOD(SetInt)(THIS_ int Value) PURE;
-    STDMETHOD(GetInt)(THIS_ int *pValue) PURE;
+    STDMETHOD(GetInt)(THIS_ _Out_ int *pValue) PURE;
     
-    STDMETHOD(SetIntArray)(THIS_ int *pData, UINT Offset, UINT Count) PURE;
-    STDMETHOD(GetIntArray)(THIS_ int *pData, UINT Offset, UINT Count) PURE;
+    STDMETHOD(SetIntArray)(THIS_ _In_reads_(Count) int *pData, UINT Offset, UINT Count) PURE;
+    STDMETHOD(GetIntArray)(THIS_ _Out_writes_(Count) int *pData, UINT Offset, UINT Count) PURE;
     
     STDMETHOD(SetBool)(THIS_ BOOL Value) PURE;
-    STDMETHOD(GetBool)(THIS_ BOOL *pValue) PURE;
+    STDMETHOD(GetBool)(THIS_ _Out_ BOOL *pValue) PURE;
     
-    STDMETHOD(SetBoolArray)(THIS_ BOOL *pData, UINT Offset, UINT Count) PURE;
-    STDMETHOD(GetBoolArray)(THIS_ BOOL *pData, UINT Offset, UINT Count) PURE;
+    STDMETHOD(SetBoolArray)(THIS_ _In_reads_(Count) BOOL *pData, UINT Offset, UINT Count) PURE;
+    STDMETHOD(GetBoolArray)(THIS_ _Out_writes_(Count) BOOL *pData, UINT Offset, UINT Count) PURE;
 };
 
 //////////////////////////////////////////////////////////////////////////////
@@ -485,7 +487,7 @@ DECLARE_INTERFACE_(ID3D10EffectVectorVariable, ID3D10EffectVariable)
 {
     STDMETHOD_(BOOL, IsValid)(THIS) PURE;
     STDMETHOD_(ID3D10EffectType*, GetType)(THIS) PURE;
-    STDMETHOD(GetDesc)(THIS_ D3D10_EFFECT_VARIABLE_DESC *pDesc) PURE;
+    STDMETHOD(GetDesc)(THIS_ _Out_ D3D10_EFFECT_VARIABLE_DESC *pDesc) PURE;
     
     STDMETHOD_(ID3D10EffectVariable*, GetAnnotationByIndex)(THIS_ UINT Index) PURE;
     STDMETHOD_(ID3D10EffectVariable*, GetAnnotationByName)(THIS_ LPCSTR Name) PURE;
@@ -512,8 +514,8 @@ DECLARE_INTERFACE_(ID3D10EffectVectorVariable, ID3D10EffectVariable)
     STDMETHOD_(ID3D10EffectRasterizerVariable*, AsRasterizer)(THIS) PURE;
     STDMETHOD_(ID3D10EffectSamplerVariable*, AsSampler)(THIS) PURE;
     
-    STDMETHOD(SetRawValue)(THIS_ void *pData, UINT ByteOffset, UINT ByteCount) PURE;
-    STDMETHOD(GetRawValue)(THIS_ void *pData, UINT ByteOffset, UINT ByteCount) PURE;
+    STDMETHOD(SetRawValue)(THIS_ _In_reads_bytes_(ByteCount) void *pData, UINT ByteOffset, UINT ByteCount) PURE;
+    STDMETHOD(GetRawValue)(THIS_ _Out_writes_bytes_(ByteCount) void *pData, UINT ByteOffset, UINT ByteCount) PURE;
     
     STDMETHOD(SetBoolVector) (THIS_ BOOL *pData) PURE;
     STDMETHOD(SetIntVector)  (THIS_ int *pData) PURE;
@@ -550,7 +552,7 @@ DECLARE_INTERFACE_(ID3D10EffectMatrixVariable, ID3D10EffectVariable)
 {
     STDMETHOD_(BOOL, IsValid)(THIS) PURE;
     STDMETHOD_(ID3D10EffectType*, GetType)(THIS) PURE;
-    STDMETHOD(GetDesc)(THIS_ D3D10_EFFECT_VARIABLE_DESC *pDesc) PURE;
+    STDMETHOD(GetDesc)(THIS_ _Out_ D3D10_EFFECT_VARIABLE_DESC *pDesc) PURE;
     
     STDMETHOD_(ID3D10EffectVariable*, GetAnnotationByIndex)(THIS_ UINT Index) PURE;
     STDMETHOD_(ID3D10EffectVariable*, GetAnnotationByName)(THIS_ LPCSTR Name) PURE;
@@ -577,8 +579,8 @@ DECLARE_INTERFACE_(ID3D10EffectMatrixVariable, ID3D10EffectVariable)
     STDMETHOD_(ID3D10EffectRasterizerVariable*, AsRasterizer)(THIS) PURE;
     STDMETHOD_(ID3D10EffectSamplerVariable*, AsSampler)(THIS) PURE;
     
-    STDMETHOD(SetRawValue)(THIS_ void *pData, UINT ByteOffset, UINT ByteCount) PURE;
-    STDMETHOD(GetRawValue)(THIS_ void *pData, UINT ByteOffset, UINT ByteCount) PURE;
+    STDMETHOD(SetRawValue)(THIS_ _In_reads_bytes_(ByteCount) void *pData, UINT ByteOffset, UINT ByteCount) PURE;
+    STDMETHOD(GetRawValue)(THIS_ _Out_writes_bytes_(ByteCount) void *pData, UINT ByteOffset, UINT ByteCount) PURE;
     
     STDMETHOD(SetMatrix)(THIS_ float *pData) PURE;
     STDMETHOD(GetMatrix)(THIS_ float *pData) PURE;
@@ -611,7 +613,7 @@ DECLARE_INTERFACE_(ID3D10EffectStringVariable, ID3D10EffectVariable)
 {
     STDMETHOD_(BOOL, IsValid)(THIS) PURE;
     STDMETHOD_(ID3D10EffectType*, GetType)(THIS) PURE;
-    STDMETHOD(GetDesc)(THIS_ D3D10_EFFECT_VARIABLE_DESC *pDesc) PURE;
+    STDMETHOD(GetDesc)(THIS_ _Out_ D3D10_EFFECT_VARIABLE_DESC *pDesc) PURE;
     
     STDMETHOD_(ID3D10EffectVariable*, GetAnnotationByIndex)(THIS_ UINT Index) PURE;
     STDMETHOD_(ID3D10EffectVariable*, GetAnnotationByName)(THIS_ LPCSTR Name) PURE;
@@ -638,11 +640,11 @@ DECLARE_INTERFACE_(ID3D10EffectStringVariable, ID3D10EffectVariable)
     STDMETHOD_(ID3D10EffectRasterizerVariable*, AsRasterizer)(THIS) PURE;
     STDMETHOD_(ID3D10EffectSamplerVariable*, AsSampler)(THIS) PURE;
     
-    STDMETHOD(SetRawValue)(THIS_ void *pData, UINT Offset, UINT Count) PURE;
-    STDMETHOD(GetRawValue)(THIS_ void *pData, UINT Offset, UINT Count) PURE;
+    STDMETHOD(SetRawValue)(THIS_ _In_reads_bytes_(ByteCount) void *pData, UINT Offset, UINT ByteCount) PURE;
+    STDMETHOD(GetRawValue)(THIS_ _Out_writes_bytes_(ByteCount) void *pData, UINT Offset, UINT ByteCount) PURE;
     
-    STDMETHOD(GetString)(THIS_ LPCSTR *ppString) PURE;
-    STDMETHOD(GetStringArray)(THIS_ LPCSTR *ppStrings, UINT Offset, UINT Count) PURE;
+    STDMETHOD(GetString)(THIS_ _Out_ LPCSTR *ppString) PURE;
+    STDMETHOD(GetStringArray)(THIS_ _Out_writes_(Count) LPCSTR *ppStrings, UINT Offset, UINT Count) PURE;
 };
 
 //////////////////////////////////////////////////////////////////////////////
@@ -664,7 +666,7 @@ DECLARE_INTERFACE_(ID3D10EffectShaderResourceVariable, ID3D10EffectVariable)
 {
     STDMETHOD_(BOOL, IsValid)(THIS) PURE;
     STDMETHOD_(ID3D10EffectType*, GetType)(THIS) PURE;
-    STDMETHOD(GetDesc)(THIS_ D3D10_EFFECT_VARIABLE_DESC *pDesc) PURE;
+    STDMETHOD(GetDesc)(THIS_ _Out_ D3D10_EFFECT_VARIABLE_DESC *pDesc) PURE;
     
     STDMETHOD_(ID3D10EffectVariable*, GetAnnotationByIndex)(THIS_ UINT Index) PURE;
     STDMETHOD_(ID3D10EffectVariable*, GetAnnotationByName)(THIS_ LPCSTR Name) PURE;
@@ -691,14 +693,14 @@ DECLARE_INTERFACE_(ID3D10EffectShaderResourceVariable, ID3D10EffectVariable)
     STDMETHOD_(ID3D10EffectRasterizerVariable*, AsRasterizer)(THIS) PURE;
     STDMETHOD_(ID3D10EffectSamplerVariable*, AsSampler)(THIS) PURE;
     
-    STDMETHOD(SetRawValue)(THIS_ void *pData, UINT Offset, UINT Count) PURE;
-    STDMETHOD(GetRawValue)(THIS_ void *pData, UINT Offset, UINT Count) PURE;
+    STDMETHOD(SetRawValue)(THIS_ _In_reads_bytes_(ByteCount) void *pData, UINT Offset, UINT ByteCount) PURE;
+    STDMETHOD(GetRawValue)(THIS_ _Out_writes_bytes_(ByteCount) void *pData, UINT Offset, UINT ByteCount) PURE;
     
-    STDMETHOD(SetResource)(THIS_ ID3D10ShaderResourceView *pResource) PURE;
-    STDMETHOD(GetResource)(THIS_ ID3D10ShaderResourceView **ppResource) PURE;
+    STDMETHOD(SetResource)(THIS_ _In_opt_ ID3D10ShaderResourceView *pResource) PURE;
+    STDMETHOD(GetResource)(THIS_ _Out_ ID3D10ShaderResourceView **ppResource) PURE;
     
-    STDMETHOD(SetResourceArray)(THIS_ ID3D10ShaderResourceView **ppResources, UINT Offset, UINT Count) PURE;
-    STDMETHOD(GetResourceArray)(THIS_ ID3D10ShaderResourceView **ppResources, UINT Offset, UINT Count) PURE;
+    STDMETHOD(SetResourceArray)(THIS_ _In_reads_(Count) ID3D10ShaderResourceView **ppResources, UINT Offset, UINT Count) PURE;
+    STDMETHOD(GetResourceArray)(THIS_ _Out_writes_(Count) ID3D10ShaderResourceView **ppResources, UINT Offset, UINT Count) PURE;
 };
 
 //////////////////////////////////////////////////////////////////////////////
@@ -719,7 +721,7 @@ DECLARE_INTERFACE_(ID3D10EffectRenderTargetViewVariable, ID3D10EffectVariable)
 {
     STDMETHOD_(BOOL, IsValid)(THIS) PURE;
     STDMETHOD_(ID3D10EffectType*, GetType)(THIS) PURE;
-    STDMETHOD(GetDesc)(THIS_ D3D10_EFFECT_VARIABLE_DESC *pDesc) PURE;
+    STDMETHOD(GetDesc)(THIS_ _Out_ D3D10_EFFECT_VARIABLE_DESC *pDesc) PURE;
     
     STDMETHOD_(ID3D10EffectVariable*, GetAnnotationByIndex)(THIS_ UINT Index) PURE;
     STDMETHOD_(ID3D10EffectVariable*, GetAnnotationByName)(THIS_ LPCSTR Name) PURE;
@@ -746,14 +748,14 @@ DECLARE_INTERFACE_(ID3D10EffectRenderTargetViewVariable, ID3D10EffectVariable)
     STDMETHOD_(ID3D10EffectRasterizerVariable*, AsRasterizer)(THIS) PURE;
     STDMETHOD_(ID3D10EffectSamplerVariable*, AsSampler)(THIS) PURE;
     
-    STDMETHOD(SetRawValue)(THIS_ void *pData, UINT Offset, UINT Count) PURE;
-    STDMETHOD(GetRawValue)(THIS_ void *pData, UINT Offset, UINT Count) PURE;
+    STDMETHOD(SetRawValue)(THIS_ _In_reads_bytes_(ByteCount) void *pData, UINT Offset, UINT ByteCount) PURE;
+    STDMETHOD(GetRawValue)(THIS_ _Out_writes_bytes_(ByteCount) void *pData, UINT Offset, UINT ByteCount) PURE;
     
-    STDMETHOD(SetRenderTarget)(THIS_ ID3D10RenderTargetView *pResource) PURE;
-    STDMETHOD(GetRenderTarget)(THIS_ ID3D10RenderTargetView **ppResource) PURE;
+    STDMETHOD(SetRenderTarget)(THIS_ _In_opt_ ID3D10RenderTargetView *pResource) PURE;
+    STDMETHOD(GetRenderTarget)(THIS_ _Out_ ID3D10RenderTargetView **ppResource) PURE;
     
-    STDMETHOD(SetRenderTargetArray)(THIS_ ID3D10RenderTargetView **ppResources, UINT Offset, UINT Count) PURE;
-    STDMETHOD(GetRenderTargetArray)(THIS_ ID3D10RenderTargetView **ppResources, UINT Offset, UINT Count) PURE;
+    STDMETHOD(SetRenderTargetArray)(THIS_ _In_reads_(Count) ID3D10RenderTargetView **ppResources, UINT Offset, UINT Count) PURE;
+    STDMETHOD(GetRenderTargetArray)(THIS_ _Out_writes_(Count) ID3D10RenderTargetView **ppResources, UINT Offset, UINT Count) PURE;
 };
 
 //////////////////////////////////////////////////////////////////////////////
@@ -774,7 +776,7 @@ DECLARE_INTERFACE_(ID3D10EffectDepthStencilViewVariable, ID3D10EffectVariable)
 {
     STDMETHOD_(BOOL, IsValid)(THIS) PURE;
     STDMETHOD_(ID3D10EffectType*, GetType)(THIS) PURE;
-    STDMETHOD(GetDesc)(THIS_ D3D10_EFFECT_VARIABLE_DESC *pDesc) PURE;
+    STDMETHOD(GetDesc)(THIS_ _Out_ D3D10_EFFECT_VARIABLE_DESC *pDesc) PURE;
     
     STDMETHOD_(ID3D10EffectVariable*, GetAnnotationByIndex)(THIS_ UINT Index) PURE;
     STDMETHOD_(ID3D10EffectVariable*, GetAnnotationByName)(THIS_ LPCSTR Name) PURE;
@@ -801,14 +803,14 @@ DECLARE_INTERFACE_(ID3D10EffectDepthStencilViewVariable, ID3D10EffectVariable)
     STDMETHOD_(ID3D10EffectRasterizerVariable*, AsRasterizer)(THIS) PURE;
     STDMETHOD_(ID3D10EffectSamplerVariable*, AsSampler)(THIS) PURE;
     
-    STDMETHOD(SetRawValue)(THIS_ void *pData, UINT Offset, UINT Count) PURE;
-    STDMETHOD(GetRawValue)(THIS_ void *pData, UINT Offset, UINT Count) PURE;
+    STDMETHOD(SetRawValue)(THIS_ _In_reads_bytes_(ByteCount) void *pData, UINT Offset, UINT ByteCount) PURE;
+    STDMETHOD(GetRawValue)(THIS_ _Out_writes_bytes_(ByteCount) void *pData, UINT Offset, UINT ByteCount) PURE;
     
-    STDMETHOD(SetDepthStencil)(THIS_ ID3D10DepthStencilView *pResource) PURE;
-    STDMETHOD(GetDepthStencil)(THIS_ ID3D10DepthStencilView **ppResource) PURE;
+    STDMETHOD(SetDepthStencil)(THIS_ _In_opt_ ID3D10DepthStencilView *pResource) PURE;
+    STDMETHOD(GetDepthStencil)(THIS_ _Out_ ID3D10DepthStencilView **ppResource) PURE;
     
-    STDMETHOD(SetDepthStencilArray)(THIS_ ID3D10DepthStencilView **ppResources, UINT Offset, UINT Count) PURE;
-    STDMETHOD(GetDepthStencilArray)(THIS_ ID3D10DepthStencilView **ppResources, UINT Offset, UINT Count) PURE;
+    STDMETHOD(SetDepthStencilArray)(THIS_ _In_reads_(Count) ID3D10DepthStencilView **ppResources, UINT Offset, UINT Count) PURE;
+    STDMETHOD(GetDepthStencilArray)(THIS_ _Out_writes_(Count) ID3D10DepthStencilView **ppResources, UINT Offset, UINT Count) PURE;
 };
 
 //////////////////////////////////////////////////////////////////////////////
@@ -828,7 +830,7 @@ DEFINE_GUID(IID_ID3D10EffectConstantBuffer,
 DECLARE_INTERFACE_(ID3D10EffectConstantBuffer, ID3D10EffectVariable)
 {
     STDMETHOD_(ID3D10EffectType*, GetType)(THIS) PURE;
-    STDMETHOD(GetDesc)(THIS_ D3D10_EFFECT_VARIABLE_DESC *pDesc) PURE;
+    STDMETHOD(GetDesc)(THIS_ _Out_ D3D10_EFFECT_VARIABLE_DESC *pDesc) PURE;
     
     STDMETHOD_(ID3D10EffectVariable*, GetAnnotationByIndex)(THIS_ UINT Index) PURE;
     STDMETHOD_(ID3D10EffectVariable*, GetAnnotationByName)(THIS_ LPCSTR Name) PURE;
@@ -855,14 +857,14 @@ DECLARE_INTERFACE_(ID3D10EffectConstantBuffer, ID3D10EffectVariable)
     STDMETHOD_(ID3D10EffectRasterizerVariable*, AsRasterizer)(THIS) PURE;
     STDMETHOD_(ID3D10EffectSamplerVariable*, AsSampler)(THIS) PURE;
     
-    STDMETHOD(SetRawValue)(THIS_ void *pData, UINT Offset, UINT Count) PURE;
-    STDMETHOD(GetRawValue)(THIS_ void *pData, UINT Offset, UINT Count) PURE;
+    STDMETHOD(SetRawValue)(THIS_ _In_reads_bytes_(ByteCount) void *pData, UINT Offset, UINT ByteCount) PURE;
+    STDMETHOD(GetRawValue)(THIS_ _Out_writes_bytes_(ByteCount) void *pData, UINT Offset, UINT ByteCount) PURE;
     
-    STDMETHOD(SetConstantBuffer)(THIS_ ID3D10Buffer *pConstantBuffer) PURE;
-    STDMETHOD(GetConstantBuffer)(THIS_ ID3D10Buffer **ppConstantBuffer) PURE;
+    STDMETHOD(SetConstantBuffer)(THIS_ _In_opt_ ID3D10Buffer *pConstantBuffer) PURE;
+    STDMETHOD(GetConstantBuffer)(THIS_ _Out_ ID3D10Buffer **ppConstantBuffer) PURE;
     
-    STDMETHOD(SetTextureBuffer)(THIS_ ID3D10ShaderResourceView *pTextureBuffer) PURE;
-    STDMETHOD(GetTextureBuffer)(THIS_ ID3D10ShaderResourceView **ppTextureBuffer) PURE;
+    STDMETHOD(SetTextureBuffer)(THIS_ _In_opt_ ID3D10ShaderResourceView *pTextureBuffer) PURE;
+    STDMETHOD(GetTextureBuffer)(THIS_ _Out_ ID3D10ShaderResourceView **ppTextureBuffer) PURE;
 };
 
 //////////////////////////////////////////////////////////////////////////////
@@ -908,7 +910,7 @@ DEFINE_GUID(IID_ID3D10EffectShaderVariable,
 DECLARE_INTERFACE_(ID3D10EffectShaderVariable, ID3D10EffectVariable)
 {
     STDMETHOD_(ID3D10EffectType*, GetType)(THIS) PURE;
-    STDMETHOD(GetDesc)(THIS_ D3D10_EFFECT_VARIABLE_DESC *pDesc) PURE;
+    STDMETHOD(GetDesc)(THIS_ _Out_ D3D10_EFFECT_VARIABLE_DESC *pDesc) PURE;
     
     STDMETHOD_(ID3D10EffectVariable*, GetAnnotationByIndex)(THIS_ UINT Index) PURE;
     STDMETHOD_(ID3D10EffectVariable*, GetAnnotationByName)(THIS_ LPCSTR Name) PURE;
@@ -935,17 +937,17 @@ DECLARE_INTERFACE_(ID3D10EffectShaderVariable, ID3D10EffectVariable)
     STDMETHOD_(ID3D10EffectRasterizerVariable*, AsRasterizer)(THIS) PURE;
     STDMETHOD_(ID3D10EffectSamplerVariable*, AsSampler)(THIS) PURE;
         
-    STDMETHOD(SetRawValue)(THIS_ void *pData, UINT Offset, UINT Count) PURE;
-    STDMETHOD(GetRawValue)(THIS_ void *pData, UINT Offset, UINT Count) PURE;
+    STDMETHOD(SetRawValue)(THIS_ _In_reads_bytes_(ByteCount) void *pData, UINT Offset, UINT ByteCount) PURE;
+    STDMETHOD(GetRawValue)(THIS_ _Out_writes_bytes_(ByteCount) void *pData, UINT Offset, UINT ByteCount) PURE;
     
-    STDMETHOD(GetShaderDesc)(THIS_ UINT ShaderIndex, D3D10_EFFECT_SHADER_DESC *pDesc) PURE;
+    STDMETHOD(GetShaderDesc)(THIS_ UINT ShaderIndex, _Out_ D3D10_EFFECT_SHADER_DESC *pDesc) PURE;
     
-    STDMETHOD(GetVertexShader)(THIS_ UINT ShaderIndex, ID3D10VertexShader **ppVS) PURE;
-    STDMETHOD(GetGeometryShader)(THIS_ UINT ShaderIndex, ID3D10GeometryShader **ppGS) PURE;
-    STDMETHOD(GetPixelShader)(THIS_ UINT ShaderIndex, ID3D10PixelShader **ppPS) PURE;
+    STDMETHOD(GetVertexShader)(THIS_ UINT ShaderIndex, _Out_ ID3D10VertexShader **ppVS) PURE;
+    STDMETHOD(GetGeometryShader)(THIS_ UINT ShaderIndex, _Out_ ID3D10GeometryShader **ppGS) PURE;
+    STDMETHOD(GetPixelShader)(THIS_ UINT ShaderIndex, _Out_ ID3D10PixelShader **ppPS) PURE;
     
-    STDMETHOD(GetInputSignatureElementDesc)(THIS_ UINT ShaderIndex, UINT Element, D3D10_SIGNATURE_PARAMETER_DESC *pDesc) PURE;
-    STDMETHOD(GetOutputSignatureElementDesc)(THIS_ UINT ShaderIndex, UINT Element, D3D10_SIGNATURE_PARAMETER_DESC *pDesc) PURE;
+    STDMETHOD(GetInputSignatureElementDesc)(THIS_ UINT ShaderIndex, UINT Element, _Out_ D3D10_SIGNATURE_PARAMETER_DESC *pDesc) PURE;
+    STDMETHOD(GetOutputSignatureElementDesc)(THIS_ UINT ShaderIndex, UINT Element, _Out_ D3D10_SIGNATURE_PARAMETER_DESC *pDesc) PURE;
 };
 
 //////////////////////////////////////////////////////////////////////////////
@@ -965,7 +967,7 @@ DEFINE_GUID(IID_ID3D10EffectBlendVariable,
 DECLARE_INTERFACE_(ID3D10EffectBlendVariable, ID3D10EffectVariable)
 {
     STDMETHOD_(ID3D10EffectType*, GetType)(THIS) PURE;
-    STDMETHOD(GetDesc)(THIS_ D3D10_EFFECT_VARIABLE_DESC *pDesc) PURE;
+    STDMETHOD(GetDesc)(THIS_ _Out_ D3D10_EFFECT_VARIABLE_DESC *pDesc) PURE;
     
     STDMETHOD_(ID3D10EffectVariable*, GetAnnotationByIndex)(THIS_ UINT Index) PURE;
     STDMETHOD_(ID3D10EffectVariable*, GetAnnotationByName)(THIS_ LPCSTR Name) PURE;
@@ -992,8 +994,8 @@ DECLARE_INTERFACE_(ID3D10EffectBlendVariable, ID3D10EffectVariable)
     STDMETHOD_(ID3D10EffectRasterizerVariable*, AsRasterizer)(THIS) PURE;
     STDMETHOD_(ID3D10EffectSamplerVariable*, AsSampler)(THIS) PURE;
     
-    STDMETHOD(SetRawValue)(THIS_ void *pData, UINT Offset, UINT Count) PURE;
-    STDMETHOD(GetRawValue)(THIS_ void *pData, UINT Offset, UINT Count) PURE;
+    STDMETHOD(SetRawValue)(THIS_ _In_reads_bytes_(ByteCount) void *pData, UINT Offset, UINT ByteCount) PURE;
+    STDMETHOD(GetRawValue)(THIS_ _Out_writes_bytes_(ByteCount) void *pData, UINT Offset, UINT ByteCount) PURE;
     
     STDMETHOD(GetBlendState)(THIS_ UINT Index, ID3D10BlendState **ppBlendState) PURE;
     STDMETHOD(GetBackingStore)(THIS_ UINT Index, D3D10_BLEND_DESC *pBlendDesc) PURE;
@@ -1016,7 +1018,7 @@ DEFINE_GUID(IID_ID3D10EffectDepthStencilVariable,
 DECLARE_INTERFACE_(ID3D10EffectDepthStencilVariable, ID3D10EffectVariable)
 {
     STDMETHOD_(ID3D10EffectType*, GetType)(THIS) PURE;
-    STDMETHOD(GetDesc)(THIS_ D3D10_EFFECT_VARIABLE_DESC *pDesc) PURE;
+    STDMETHOD(GetDesc)(THIS_ _Out_ D3D10_EFFECT_VARIABLE_DESC *pDesc) PURE;
     
     STDMETHOD_(ID3D10EffectVariable*, GetAnnotationByIndex)(THIS_ UINT Index) PURE;
     STDMETHOD_(ID3D10EffectVariable*, GetAnnotationByName)(THIS_ LPCSTR Name) PURE;
@@ -1043,11 +1045,11 @@ DECLARE_INTERFACE_(ID3D10EffectDepthStencilVariable, ID3D10EffectVariable)
     STDMETHOD_(ID3D10EffectRasterizerVariable*, AsRasterizer)(THIS) PURE;
     STDMETHOD_(ID3D10EffectSamplerVariable*, AsSampler)(THIS) PURE;
     
-    STDMETHOD(SetRawValue)(THIS_ void *pData, UINT Offset, UINT Count) PURE;
-    STDMETHOD(GetRawValue)(THIS_ void *pData, UINT Offset, UINT Count) PURE;
+    STDMETHOD(SetRawValue)(THIS_ _In_reads_bytes_(ByteCount) void *pData, UINT Offset, UINT ByteCount) PURE;
+    STDMETHOD(GetRawValue)(THIS_ _Out_writes_bytes_(ByteCount) void *pData, UINT Offset, UINT ByteCount) PURE;
     
-    STDMETHOD(GetDepthStencilState)(THIS_ UINT Index, ID3D10DepthStencilState **ppDepthStencilState) PURE;
-    STDMETHOD(GetBackingStore)(THIS_ UINT Index, D3D10_DEPTH_STENCIL_DESC *pDepthStencilDesc) PURE;
+    STDMETHOD(GetDepthStencilState)(THIS_ UINT Index, _Out_ ID3D10DepthStencilState **ppDepthStencilState) PURE;
+    STDMETHOD(GetBackingStore)(THIS_ UINT Index, _Out_ D3D10_DEPTH_STENCIL_DESC *pDepthStencilDesc) PURE;
 };
 
 //////////////////////////////////////////////////////////////////////////////
@@ -1067,7 +1069,7 @@ DEFINE_GUID(IID_ID3D10EffectRasterizerVariable,
 DECLARE_INTERFACE_(ID3D10EffectRasterizerVariable, ID3D10EffectVariable)
 {
     STDMETHOD_(ID3D10EffectType*, GetType)(THIS) PURE;
-    STDMETHOD(GetDesc)(THIS_ D3D10_EFFECT_VARIABLE_DESC *pDesc) PURE;
+    STDMETHOD(GetDesc)(THIS_ _Out_ D3D10_EFFECT_VARIABLE_DESC *pDesc) PURE;
     
     STDMETHOD_(ID3D10EffectVariable*, GetAnnotationByIndex)(THIS_ UINT Index) PURE;
     STDMETHOD_(ID3D10EffectVariable*, GetAnnotationByName)(THIS_ LPCSTR Name) PURE;
@@ -1094,11 +1096,11 @@ DECLARE_INTERFACE_(ID3D10EffectRasterizerVariable, ID3D10EffectVariable)
     STDMETHOD_(ID3D10EffectRasterizerVariable*, AsRasterizer)(THIS) PURE;
     STDMETHOD_(ID3D10EffectSamplerVariable*, AsSampler)(THIS) PURE;
     
-    STDMETHOD(SetRawValue)(THIS_ void *pData, UINT Offset, UINT Count) PURE;
-    STDMETHOD(GetRawValue)(THIS_ void *pData, UINT Offset, UINT Count) PURE;
+    STDMETHOD(SetRawValue)(THIS_ _In_reads_bytes_(ByteCount) void *pData, UINT Offset, UINT ByteCount) PURE;
+    STDMETHOD(GetRawValue)(THIS_ _Out_writes_bytes_(ByteCount) void *pData, UINT Offset, UINT ByteCount) PURE;
     
-    STDMETHOD(GetRasterizerState)(THIS_ UINT Index, ID3D10RasterizerState **ppRasterizerState) PURE;
-    STDMETHOD(GetBackingStore)(THIS_ UINT Index, D3D10_RASTERIZER_DESC *pRasterizerDesc) PURE;
+    STDMETHOD(GetRasterizerState)(THIS_ UINT Index, _Out_ ID3D10RasterizerState **ppRasterizerState) PURE;
+    STDMETHOD(GetBackingStore)(THIS_ UINT Index, _Out_ D3D10_RASTERIZER_DESC *pRasterizerDesc) PURE;
 };
 
 //////////////////////////////////////////////////////////////////////////////
@@ -1118,7 +1120,7 @@ DEFINE_GUID(IID_ID3D10EffectSamplerVariable,
 DECLARE_INTERFACE_(ID3D10EffectSamplerVariable, ID3D10EffectVariable)
 {
     STDMETHOD_(ID3D10EffectType*, GetType)(THIS) PURE;
-    STDMETHOD(GetDesc)(THIS_ D3D10_EFFECT_VARIABLE_DESC *pDesc) PURE;
+    STDMETHOD(GetDesc)(THIS_ _Out_ D3D10_EFFECT_VARIABLE_DESC *pDesc) PURE;
     
     STDMETHOD_(ID3D10EffectVariable*, GetAnnotationByIndex)(THIS_ UINT Index) PURE;
     STDMETHOD_(ID3D10EffectVariable*, GetAnnotationByName)(THIS_ LPCSTR Name) PURE;
@@ -1145,11 +1147,11 @@ DECLARE_INTERFACE_(ID3D10EffectSamplerVariable, ID3D10EffectVariable)
     STDMETHOD_(ID3D10EffectRasterizerVariable*, AsRasterizer)(THIS) PURE;
     STDMETHOD_(ID3D10EffectSamplerVariable*, AsSampler)(THIS) PURE;
     
-    STDMETHOD(SetRawValue)(THIS_ void *pData, UINT Offset, UINT Count) PURE;
-    STDMETHOD(GetRawValue)(THIS_ void *pData, UINT Offset, UINT Count) PURE;
+    STDMETHOD(SetRawValue)(THIS_ _In_reads_bytes_(ByteCount) void *pData, UINT Offset, UINT ByteCount) PURE;
+    STDMETHOD(GetRawValue)(THIS_ _Out_writes_bytes_(ByteCount) void *pData, UINT Offset, UINT ByteCount) PURE;
     
-    STDMETHOD(GetSampler)(THIS_ UINT Index, ID3D10SamplerState **ppSampler) PURE;
-    STDMETHOD(GetBackingStore)(THIS_ UINT Index, D3D10_SAMPLER_DESC *pSamplerDesc) PURE;
+    STDMETHOD(GetSampler)(THIS_ UINT Index, _Out_ ID3D10SamplerState **ppSampler) PURE;
+    STDMETHOD(GetBackingStore)(THIS_ UINT Index, _Out_ D3D10_SAMPLER_DESC *pSamplerDesc) PURE;
 };
 
 //////////////////////////////////////////////////////////////////////////////
@@ -1223,7 +1225,7 @@ DECLARE_INTERFACE(ID3D10EffectPass)
     
     STDMETHOD(Apply)(THIS_ UINT Flags) PURE;
     
-    STDMETHOD(ComputeStateBlockMask)(THIS_ D3D10_STATE_BLOCK_MASK *pStateBlockMask) PURE;
+    STDMETHOD(ComputeStateBlockMask)(THIS_ _Out_ D3D10_STATE_BLOCK_MASK *pStateBlockMask) PURE;
 };
 
 //////////////////////////////////////////////////////////////////////////////
@@ -1264,7 +1266,7 @@ DECLARE_INTERFACE(ID3D10EffectTechnique)
     STDMETHOD_(ID3D10EffectPass*, GetPassByIndex)(THIS_ UINT Index) PURE;
     STDMETHOD_(ID3D10EffectPass*, GetPassByName)(THIS_ LPCSTR Name) PURE;
     
-    STDMETHOD(ComputeStateBlockMask)(THIS_ D3D10_STATE_BLOCK_MASK *pStateBlockMask) PURE;
+    STDMETHOD(ComputeStateBlockMask)(THIS_ _Out_ D3D10_STATE_BLOCK_MASK *pStateBlockMask) PURE;
 };
 
 //////////////////////////////////////////////////////////////////////////////
@@ -1318,10 +1320,10 @@ DECLARE_INTERFACE_(ID3D10Effect, IUnknown)
     STDMETHOD_(BOOL, IsPool)(THIS) PURE;
 
     // Managing D3D Device
-    STDMETHOD(GetDevice)(THIS_ ID3D10Device** ppDevice) PURE;
+    STDMETHOD(GetDevice)(THIS_ _Out_ ID3D10Device** ppDevice) PURE;
     
     // New Reflection APIs
-    STDMETHOD(GetDesc)(THIS_ D3D10_EFFECT_DESC *pDesc) PURE;
+    STDMETHOD(GetDesc)(THIS_ _Out_ D3D10_EFFECT_DESC *pDesc) PURE;
     
     STDMETHOD_(ID3D10EffectConstantBuffer*, GetConstantBufferByIndex)(THIS_ UINT Index) PURE;
     STDMETHOD_(ID3D10EffectConstantBuffer*, GetConstantBufferByName)(THIS_ LPCSTR Name) PURE;
@@ -1419,15 +1421,15 @@ extern "C" {
 //
 //----------------------------------------------------------------------------
 
-HRESULT WINAPI D3D10CompileEffectFromMemory(void *pData, SIZE_T DataLength, LPCSTR pSrcFileName, CONST D3D10_SHADER_MACRO *pDefines, 
-    ID3D10Include *pInclude, UINT HLSLFlags, UINT FXFlags, 
-    ID3D10Blob **ppCompiledEffect, ID3D10Blob **ppErrors);
+HRESULT WINAPI D3D10CompileEffectFromMemory(_In_reads_bytes_(DataLength) void *pData, SIZE_T DataLength, LPCSTR pSrcFileName, _In_opt_ CONST D3D10_SHADER_MACRO *pDefines, 
+    _In_opt_ ID3D10Include *pInclude, UINT HLSLFlags, UINT FXFlags, 
+    _Out_ ID3D10Blob **ppCompiledEffect, _Out_opt_ ID3D10Blob **ppErrors);
 
-HRESULT WINAPI D3D10CreateEffectFromMemory(void *pData, SIZE_T DataLength, UINT FXFlags, ID3D10Device *pDevice, 
-    ID3D10EffectPool *pEffectPool, ID3D10Effect **ppEffect);
+HRESULT WINAPI D3D10CreateEffectFromMemory(_In_reads_bytes_(DataLength) void *pData, SIZE_T DataLength, UINT FXFlags, _In_ ID3D10Device *pDevice, 
+    _In_opt_ ID3D10EffectPool *pEffectPool, _Out_ ID3D10Effect **ppEffect);
 
-HRESULT WINAPI D3D10CreateEffectPoolFromMemory(void *pData, SIZE_T DataLength, UINT FXFlags, ID3D10Device *pDevice,
-    ID3D10EffectPool **ppEffectPool);
+HRESULT WINAPI D3D10CreateEffectPoolFromMemory(_In_reads_bytes_(DataLength) void *pData, SIZE_T DataLength, UINT FXFlags, _In_ ID3D10Device *pDevice,
+    _Out_ ID3D10EffectPool **ppEffectPool);
 
 
 //----------------------------------------------------------------------------
@@ -1444,11 +1446,12 @@ HRESULT WINAPI D3D10CreateEffectPoolFromMemory(void *pData, SIZE_T DataLength, U
 //      Returns a buffer containing the disassembled effect.
 //----------------------------------------------------------------------------
 
-HRESULT WINAPI D3D10DisassembleEffect(ID3D10Effect *pEffect, BOOL EnableColorCode, ID3D10Blob **ppDisassembly);
+HRESULT WINAPI D3D10DisassembleEffect(_In_ ID3D10Effect *pEffect, BOOL EnableColorCode, _Out_ ID3D10Blob **ppDisassembly);
 
 #ifdef __cplusplus
 }
 #endif //__cplusplus
+
 
 #endif //__D3D10EFFECT_H__
 

@@ -6,6 +6,8 @@
 
 #pragma once
 
+
+
 /*=========================================================================*\
     D2D Status Codes
 \*=========================================================================*/
@@ -48,6 +50,8 @@
 //
 #define D2DERR_INSUFFICIENT_BUFFER          HRESULT_FROM_WIN32(ERROR_INSUFFICIENT_BUFFER)
 
+
+#ifdef __MINGW32__
 
 //
 // D2D specific codes
@@ -204,3 +208,17 @@
 // The requested size is larger than the guaranteed supported texture size.
 // 
 #define D2DERR_EXCEEDS_MAX_BITMAP_SIZE     MAKE_D2DHR_ERR(0x01D)
+
+#else /* !__MINGW32__ */
+
+//
+// The file specified was not found.
+//
+#define D2DERR_FILE_NOT_FOUND               HRESULT_FROM_WIN32(ERROR_FILE_NOT_FOUND)
+
+//
+// D2D specific codes now live in winerror.h
+//
+
+#endif /* !__MINGW32__ */
+

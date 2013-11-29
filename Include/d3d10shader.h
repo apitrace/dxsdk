@@ -285,7 +285,7 @@ DEFINE_GUID(IID_ID3D10ShaderReflectionVariable,
 
 DECLARE_INTERFACE(ID3D10ShaderReflectionVariable)
 {
-    STDMETHOD(GetDesc)(THIS_ D3D10_SHADER_VARIABLE_DESC *pDesc) PURE;
+    STDMETHOD(GetDesc)(THIS_ _Out_ D3D10_SHADER_VARIABLE_DESC *pDesc) PURE;
     
     STDMETHOD_(ID3D10ShaderReflectionType*, GetType)(THIS) PURE;
 };
@@ -302,7 +302,7 @@ DEFINE_GUID(IID_ID3D10ShaderReflectionConstantBuffer,
 
 DECLARE_INTERFACE(ID3D10ShaderReflectionConstantBuffer)
 {
-    STDMETHOD(GetDesc)(THIS_ D3D10_SHADER_BUFFER_DESC *pDesc) PURE;
+    STDMETHOD(GetDesc)(THIS_ _Out_ D3D10_SHADER_BUFFER_DESC *pDesc) PURE;
     
     STDMETHOD_(ID3D10ShaderReflectionVariable*, GetVariableByIndex)(THIS_ UINT Index) PURE;
     STDMETHOD_(ID3D10ShaderReflectionVariable*, GetVariableByName)(THIS_ LPCSTR Name) PURE;
@@ -324,15 +324,15 @@ DECLARE_INTERFACE_(ID3D10ShaderReflection, IUnknown)
     STDMETHOD_(ULONG, AddRef)(THIS) PURE;
     STDMETHOD_(ULONG, Release)(THIS) PURE;
 
-    STDMETHOD(GetDesc)(THIS_ D3D10_SHADER_DESC *pDesc) PURE;
+    STDMETHOD(GetDesc)(THIS_ _Out_ D3D10_SHADER_DESC *pDesc) PURE;
     
     STDMETHOD_(ID3D10ShaderReflectionConstantBuffer*, GetConstantBufferByIndex)(THIS_ UINT Index) PURE;
     STDMETHOD_(ID3D10ShaderReflectionConstantBuffer*, GetConstantBufferByName)(THIS_ LPCSTR Name) PURE;
     
-    STDMETHOD(GetResourceBindingDesc)(THIS_ UINT ResourceIndex, D3D10_SHADER_INPUT_BIND_DESC *pDesc) PURE;
+    STDMETHOD(GetResourceBindingDesc)(THIS_ UINT ResourceIndex, _Out_ D3D10_SHADER_INPUT_BIND_DESC *pDesc) PURE;
     
-    STDMETHOD(GetInputParameterDesc)(THIS_ UINT ParameterIndex, D3D10_SIGNATURE_PARAMETER_DESC *pDesc) PURE;
-    STDMETHOD(GetOutputParameterDesc)(THIS_ UINT ParameterIndex, D3D10_SIGNATURE_PARAMETER_DESC *pDesc) PURE;
+    STDMETHOD(GetInputParameterDesc)(THIS_ UINT ParameterIndex, _Out_ D3D10_SIGNATURE_PARAMETER_DESC *pDesc) PURE;
+    STDMETHOD(GetOutputParameterDesc)(THIS_ UINT ParameterIndex, _Out_ D3D10_SIGNATURE_PARAMETER_DESC *pDesc) PURE;
     
 };
 
@@ -359,7 +359,7 @@ extern "C" {
 //      Resource name in module.
 //  pSrcData
 //      Pointer to source code.
-//  SrcDataLen
+//  SrcDataSize
 //      Size of source code, in bytes.
 //  pDefines
 //      Optional NULL-terminated array of preprocessor macro definitions.
@@ -384,8 +384,8 @@ extern "C" {
 //      these are the same messages you will see in your debug output.
 //----------------------------------------------------------------------------
 
-HRESULT WINAPI D3D10CompileShader(LPCSTR pSrcData, SIZE_T SrcDataLen, LPCSTR pFileName, CONST D3D10_SHADER_MACRO* pDefines, LPD3D10INCLUDE pInclude, 
-    LPCSTR pFunctionName, LPCSTR pProfile, UINT Flags, ID3D10Blob** ppShader, ID3D10Blob** ppErrorMsgs);
+HRESULT WINAPI D3D10CompileShader(_In_reads_bytes_(SrcDataSize) LPCSTR pSrcData, SIZE_T SrcDataSize, _In_opt_ LPCSTR pFileName, _In_opt_ CONST D3D10_SHADER_MACRO* pDefines, _In_opt_ LPD3D10INCLUDE pInclude, 
+    LPCSTR pFunctionName, LPCSTR pProfile, UINT Flags, _Out_ ID3D10Blob** ppShader, _Out_opt_ ID3D10Blob** ppErrorMsgs);
 
 //----------------------------------------------------------------------------
 // D3D10DisassembleShader:
@@ -405,7 +405,7 @@ HRESULT WINAPI D3D10CompileShader(LPCSTR pSrcData, SIZE_T SrcDataLen, LPCSTR pFi
 //      Returns a buffer containing the disassembled shader.
 //----------------------------------------------------------------------------
 
-HRESULT WINAPI D3D10DisassembleShader(CONST void *pShader, SIZE_T BytecodeLength, BOOL EnableColorCode, LPCSTR pComments, ID3D10Blob** ppDisassembly);
+HRESULT WINAPI D3D10DisassembleShader(_In_reads_bytes_(BytecodeLength) CONST void *pShader, SIZE_T BytecodeLength, BOOL EnableColorCode, _In_opt_ LPCSTR pComments, _Out_ ID3D10Blob** ppDisassembly);
 
 
 //----------------------------------------------------------------------------
@@ -418,11 +418,11 @@ HRESULT WINAPI D3D10DisassembleShader(CONST void *pShader, SIZE_T BytecodeLength
 //      Pointer to the device in question
 //----------------------------------------------------------------------------
 
-LPCSTR WINAPI D3D10GetPixelShaderProfile(ID3D10Device *pDevice);
+LPCSTR WINAPI D3D10GetPixelShaderProfile(_In_ ID3D10Device *pDevice);
 
-LPCSTR WINAPI D3D10GetVertexShaderProfile(ID3D10Device *pDevice);
+LPCSTR WINAPI D3D10GetVertexShaderProfile(_In_ ID3D10Device *pDevice);
 
-LPCSTR WINAPI D3D10GetGeometryShaderProfile(ID3D10Device *pDevice);
+LPCSTR WINAPI D3D10GetGeometryShaderProfile(_In_ ID3D10Device *pDevice);
 
 //----------------------------------------------------------------------------
 // D3D10ReflectShader:
@@ -442,7 +442,7 @@ LPCSTR WINAPI D3D10GetGeometryShaderProfile(ID3D10Device *pDevice);
 //
 //----------------------------------------------------------------------------
 
-HRESULT WINAPI D3D10ReflectShader(CONST void *pShaderBytecode, SIZE_T BytecodeLength, ID3D10ShaderReflection **ppReflector);
+HRESULT WINAPI D3D10ReflectShader(_In_reads_bytes_(BytecodeLength) CONST void *pShaderBytecode, SIZE_T BytecodeLength, _Out_ ID3D10ShaderReflection **ppReflector);
 
 //----------------------------------------------------------------------------
 // D3D10PreprocessShader
@@ -453,7 +453,7 @@ HRESULT WINAPI D3D10ReflectShader(CONST void *pShaderBytecode, SIZE_T BytecodeLe
 // Parameters:
 //  pSrcData
 //      Pointer to source code
-//  SrcDataLen
+//  SrcDataSize
 //      Size of source code, in bytes
 //  pFileName
 //      Source file name (used for error output)
@@ -472,8 +472,8 @@ HRESULT WINAPI D3D10ReflectShader(CONST void *pShaderBytecode, SIZE_T BytecodeLe
 //      these are the same messages you will see in your debug output.
 //----------------------------------------------------------------------------
 
-HRESULT WINAPI D3D10PreprocessShader(LPCSTR pSrcData, SIZE_T SrcDataSize, LPCSTR pFileName, CONST D3D10_SHADER_MACRO* pDefines, 
-    LPD3D10INCLUDE pInclude, ID3D10Blob** ppShaderText, ID3D10Blob** ppErrorMsgs);
+HRESULT WINAPI D3D10PreprocessShader(_In_reads_bytes_(SrcDataSize) LPCSTR pSrcData, SIZE_T SrcDataSize, _In_opt_ LPCSTR pFileName, _In_opt_ CONST D3D10_SHADER_MACRO* pDefines, 
+    _In_opt_ LPD3D10INCLUDE pInclude, _Out_ ID3D10Blob** ppShaderText, _Out_opt_ ID3D10Blob** ppErrorMsgs);
 
 //////////////////////////////////////////////////////////////////////////
 //
@@ -504,9 +504,9 @@ HRESULT WINAPI D3D10PreprocessShader(LPCSTR pSrcData, SIZE_T SrcDataSize, LPCSTR
 //
 //////////////////////////////////////////////////////////////////////////
 
-HRESULT WINAPI D3D10GetInputSignatureBlob(CONST void *pShaderBytecode, SIZE_T BytecodeLength, ID3D10Blob **ppSignatureBlob);
-HRESULT WINAPI D3D10GetOutputSignatureBlob(CONST void *pShaderBytecode, SIZE_T BytecodeLength, ID3D10Blob **ppSignatureBlob);
-HRESULT WINAPI D3D10GetInputAndOutputSignatureBlob(CONST void *pShaderBytecode, SIZE_T BytecodeLength, ID3D10Blob **ppSignatureBlob);
+HRESULT WINAPI D3D10GetInputSignatureBlob(_In_reads_bytes_(BytecodeLength) CONST void *pShaderBytecode, SIZE_T BytecodeLength, _Out_ ID3D10Blob **ppSignatureBlob);
+HRESULT WINAPI D3D10GetOutputSignatureBlob(_In_reads_bytes_(BytecodeLength) CONST void *pShaderBytecode, SIZE_T BytecodeLength, _Out_ ID3D10Blob **ppSignatureBlob);
+HRESULT WINAPI D3D10GetInputAndOutputSignatureBlob(_In_reads_bytes_(BytecodeLength) CONST void *pShaderBytecode, SIZE_T BytecodeLength, _Out_ ID3D10Blob **ppSignatureBlob);
 
 //----------------------------------------------------------------------------
 // D3D10GetShaderDebugInfo:
@@ -524,7 +524,7 @@ HRESULT WINAPI D3D10GetInputAndOutputSignatureBlob(CONST void *pShaderBytecode, 
 //      of this buffer, see definition of D3D10_SHADER_DEBUG_INFO above.
 //----------------------------------------------------------------------------
 
-HRESULT WINAPI D3D10GetShaderDebugInfo(CONST void *pShaderBytecode, SIZE_T BytecodeLength, ID3D10Blob** ppDebugInfo);
+HRESULT WINAPI D3D10GetShaderDebugInfo(_In_reads_bytes_(BytecodeLength) CONST void *pShaderBytecode, SIZE_T BytecodeLength, _Out_ ID3D10Blob** ppDebugInfo);
 
 #ifdef __cplusplus
 }

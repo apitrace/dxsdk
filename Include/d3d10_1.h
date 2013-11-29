@@ -1,9 +1,14 @@
+/*-------------------------------------------------------------------------------------
+ *
+ * Copyright (c) Microsoft Corporation
+ *
+ *-------------------------------------------------------------------------------------*/
 
 
 /* this ALWAYS GENERATED file contains the definitions for the interfaces */
 
 
- /* File created by MIDL compiler version 7.00.0555 */
+ /* File created by MIDL compiler version 8.00.0594 */
 /* @@MIDL_FILE_HEADING(  ) */
 
 #pragma warning( disable: 4049 )  /* more than 64k source lines */
@@ -11,7 +16,7 @@
 
 /* verify that the <rpcndr.h> version is high enough to compile this file*/
 #ifndef __REQUIRED_RPCNDR_H_VERSION__
-#define __REQUIRED_RPCNDR_H_VERSION__ 475
+#define __REQUIRED_RPCNDR_H_VERSION__ 500
 #endif
 
 /* verify that the <rpcsal.h> version is high enough to compile this file*/
@@ -43,18 +48,21 @@
 #ifndef __ID3D10BlendState1_FWD_DEFINED__
 #define __ID3D10BlendState1_FWD_DEFINED__
 typedef interface ID3D10BlendState1 ID3D10BlendState1;
+
 #endif 	/* __ID3D10BlendState1_FWD_DEFINED__ */
 
 
 #ifndef __ID3D10ShaderResourceView1_FWD_DEFINED__
 #define __ID3D10ShaderResourceView1_FWD_DEFINED__
 typedef interface ID3D10ShaderResourceView1 ID3D10ShaderResourceView1;
+
 #endif 	/* __ID3D10ShaderResourceView1_FWD_DEFINED__ */
 
 
 #ifndef __ID3D10Device1_FWD_DEFINED__
 #define __ID3D10Device1_FWD_DEFINED__
 typedef interface ID3D10Device1 ID3D10Device1;
+
 #endif 	/* __ID3D10Device1_FWD_DEFINED__ */
 
 
@@ -121,11 +129,12 @@ If possibly targeting d3d10.1, include d3d10_1.h instead of d3d10.h, or ensure d
 
 typedef 
 enum D3D10_FEATURE_LEVEL1
-    {	D3D10_FEATURE_LEVEL_10_0	= 0xa000,
-	D3D10_FEATURE_LEVEL_10_1	= 0xa100,
-	D3D10_FEATURE_LEVEL_9_1	= 0x9100,
-	D3D10_FEATURE_LEVEL_9_2	= 0x9200,
-	D3D10_FEATURE_LEVEL_9_3	= 0x9300
+    {
+        D3D10_FEATURE_LEVEL_10_0	= 0xa000,
+        D3D10_FEATURE_LEVEL_10_1	= 0xa100,
+        D3D10_FEATURE_LEVEL_9_1	= 0x9100,
+        D3D10_FEATURE_LEVEL_9_2	= 0x9200,
+        D3D10_FEATURE_LEVEL_9_3	= 0x9300
     } 	D3D10_FEATURE_LEVEL1;
 
 typedef struct D3D10_RENDER_TARGET_BLEND_DESC1
@@ -169,9 +178,10 @@ EXTERN_C const IID IID_ID3D10BlendState1;
     public:
         virtual void STDMETHODCALLTYPE GetDesc1( 
             /* [annotation] */ 
-            __out  D3D10_BLEND_DESC1 *pDesc) = 0;
+            _Out_  D3D10_BLEND_DESC1 *pDesc) = 0;
         
     };
+    
     
 #else 	/* C style interface */
 
@@ -183,7 +193,7 @@ EXTERN_C const IID IID_ID3D10BlendState1;
             ID3D10BlendState1 * This,
             /* [in] */ REFIID riid,
             /* [annotation][iid_is][out] */ 
-            __RPC__deref_out  void **ppvObject);
+            _COM_Outptr_  void **ppvObject);
         
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
             ID3D10BlendState1 * This);
@@ -194,42 +204,42 @@ EXTERN_C const IID IID_ID3D10BlendState1;
         void ( STDMETHODCALLTYPE *GetDevice )( 
             ID3D10BlendState1 * This,
             /* [annotation] */ 
-            __out  ID3D10Device **ppDevice);
+            _Out_  ID3D10Device **ppDevice);
         
         HRESULT ( STDMETHODCALLTYPE *GetPrivateData )( 
             ID3D10BlendState1 * This,
             /* [annotation] */ 
-            __in  REFGUID guid,
+            _In_  REFGUID guid,
             /* [annotation] */ 
-            __inout  UINT *pDataSize,
+            _Inout_  UINT *pDataSize,
             /* [annotation] */ 
-            __out_bcount_opt(*pDataSize)  void *pData);
+            _Out_writes_bytes_opt_(*pDataSize)  void *pData);
         
         HRESULT ( STDMETHODCALLTYPE *SetPrivateData )( 
             ID3D10BlendState1 * This,
             /* [annotation] */ 
-            __in  REFGUID guid,
+            _In_  REFGUID guid,
             /* [annotation] */ 
-            __in  UINT DataSize,
+            _In_  UINT DataSize,
             /* [annotation] */ 
-            __in_bcount_opt(DataSize)  const void *pData);
+            _In_reads_bytes_opt_(DataSize)  const void *pData);
         
         HRESULT ( STDMETHODCALLTYPE *SetPrivateDataInterface )( 
             ID3D10BlendState1 * This,
             /* [annotation] */ 
-            __in  REFGUID guid,
+            _In_  REFGUID guid,
             /* [annotation] */ 
-            __in_opt  const IUnknown *pData);
+            _In_opt_  const IUnknown *pData);
         
         void ( STDMETHODCALLTYPE *GetDesc )( 
             ID3D10BlendState1 * This,
             /* [annotation] */ 
-            __out  D3D10_BLEND_DESC *pDesc);
+            _Out_  D3D10_BLEND_DESC *pDesc);
         
         void ( STDMETHODCALLTYPE *GetDesc1 )( 
             ID3D10BlendState1 * This,
             /* [annotation] */ 
-            __out  D3D10_BLEND_DESC1 *pDesc);
+            _Out_  D3D10_BLEND_DESC1 *pDesc);
         
         END_INTERFACE
     } ID3D10BlendState1Vtbl;
@@ -339,9 +349,10 @@ EXTERN_C const IID IID_ID3D10ShaderResourceView1;
     public:
         virtual void STDMETHODCALLTYPE GetDesc1( 
             /* [annotation] */ 
-            __out  D3D10_SHADER_RESOURCE_VIEW_DESC1 *pDesc) = 0;
+            _Out_  D3D10_SHADER_RESOURCE_VIEW_DESC1 *pDesc) = 0;
         
     };
+    
     
 #else 	/* C style interface */
 
@@ -353,7 +364,7 @@ EXTERN_C const IID IID_ID3D10ShaderResourceView1;
             ID3D10ShaderResourceView1 * This,
             /* [in] */ REFIID riid,
             /* [annotation][iid_is][out] */ 
-            __RPC__deref_out  void **ppvObject);
+            _COM_Outptr_  void **ppvObject);
         
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
             ID3D10ShaderResourceView1 * This);
@@ -364,47 +375,47 @@ EXTERN_C const IID IID_ID3D10ShaderResourceView1;
         void ( STDMETHODCALLTYPE *GetDevice )( 
             ID3D10ShaderResourceView1 * This,
             /* [annotation] */ 
-            __out  ID3D10Device **ppDevice);
+            _Out_  ID3D10Device **ppDevice);
         
         HRESULT ( STDMETHODCALLTYPE *GetPrivateData )( 
             ID3D10ShaderResourceView1 * This,
             /* [annotation] */ 
-            __in  REFGUID guid,
+            _In_  REFGUID guid,
             /* [annotation] */ 
-            __inout  UINT *pDataSize,
+            _Inout_  UINT *pDataSize,
             /* [annotation] */ 
-            __out_bcount_opt(*pDataSize)  void *pData);
+            _Out_writes_bytes_opt_(*pDataSize)  void *pData);
         
         HRESULT ( STDMETHODCALLTYPE *SetPrivateData )( 
             ID3D10ShaderResourceView1 * This,
             /* [annotation] */ 
-            __in  REFGUID guid,
+            _In_  REFGUID guid,
             /* [annotation] */ 
-            __in  UINT DataSize,
+            _In_  UINT DataSize,
             /* [annotation] */ 
-            __in_bcount_opt(DataSize)  const void *pData);
+            _In_reads_bytes_opt_(DataSize)  const void *pData);
         
         HRESULT ( STDMETHODCALLTYPE *SetPrivateDataInterface )( 
             ID3D10ShaderResourceView1 * This,
             /* [annotation] */ 
-            __in  REFGUID guid,
+            _In_  REFGUID guid,
             /* [annotation] */ 
-            __in_opt  const IUnknown *pData);
+            _In_opt_  const IUnknown *pData);
         
         void ( STDMETHODCALLTYPE *GetResource )( 
             ID3D10ShaderResourceView1 * This,
             /* [annotation] */ 
-            __out  ID3D10Resource **ppResource);
+            _Out_  ID3D10Resource **ppResource);
         
         void ( STDMETHODCALLTYPE *GetDesc )( 
             ID3D10ShaderResourceView1 * This,
             /* [annotation] */ 
-            __out  D3D10_SHADER_RESOURCE_VIEW_DESC *pDesc);
+            _Out_  D3D10_SHADER_RESOURCE_VIEW_DESC *pDesc);
         
         void ( STDMETHODCALLTYPE *GetDesc1 )( 
             ID3D10ShaderResourceView1 * This,
             /* [annotation] */ 
-            __out  D3D10_SHADER_RESOURCE_VIEW_DESC1 *pDesc);
+            _Out_  D3D10_SHADER_RESOURCE_VIEW_DESC1 *pDesc);
         
         END_INTERFACE
     } ID3D10ShaderResourceView1Vtbl;
@@ -469,8 +480,9 @@ EXTERN_C const IID IID_ID3D10ShaderResourceView1;
 
 typedef 
 enum D3D10_STANDARD_MULTISAMPLE_QUALITY_LEVELS
-    {	D3D10_STANDARD_MULTISAMPLE_PATTERN	= 0xffffffff,
-	D3D10_CENTER_MULTISAMPLE_PATTERN	= 0xfffffffe
+    {
+        D3D10_STANDARD_MULTISAMPLE_PATTERN	= 0xffffffff,
+        D3D10_CENTER_MULTISAMPLE_PATTERN	= 0xfffffffe
     } 	D3D10_STANDARD_MULTISAMPLE_QUALITY_LEVELS;
 
 
@@ -495,21 +507,22 @@ EXTERN_C const IID IID_ID3D10Device1;
     public:
         virtual HRESULT STDMETHODCALLTYPE CreateShaderResourceView1( 
             /* [annotation] */ 
-            __in  ID3D10Resource *pResource,
+            _In_  ID3D10Resource *pResource,
             /* [annotation] */ 
-            __in_opt  const D3D10_SHADER_RESOURCE_VIEW_DESC1 *pDesc,
+            _In_opt_  const D3D10_SHADER_RESOURCE_VIEW_DESC1 *pDesc,
             /* [annotation] */ 
-            __out_opt  ID3D10ShaderResourceView1 **ppSRView) = 0;
+            _Out_opt_  ID3D10ShaderResourceView1 **ppSRView) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE CreateBlendState1( 
             /* [annotation] */ 
-            __in  const D3D10_BLEND_DESC1 *pBlendStateDesc,
+            _In_  const D3D10_BLEND_DESC1 *pBlendStateDesc,
             /* [annotation] */ 
-            __out_opt  ID3D10BlendState1 **ppBlendState) = 0;
+            _Out_opt_  ID3D10BlendState1 **ppBlendState) = 0;
         
         virtual D3D10_FEATURE_LEVEL1 STDMETHODCALLTYPE GetFeatureLevel( void) = 0;
         
     };
+    
     
 #else 	/* C style interface */
 
@@ -521,7 +534,7 @@ EXTERN_C const IID IID_ID3D10Device1;
             ID3D10Device1 * This,
             /* [in] */ REFIID riid,
             /* [annotation][iid_is][out] */ 
-            __RPC__deref_out  void **ppvObject);
+            _COM_Outptr_  void **ppvObject);
         
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
             ID3D10Device1 * This);
@@ -532,211 +545,211 @@ EXTERN_C const IID IID_ID3D10Device1;
         void ( STDMETHODCALLTYPE *VSSetConstantBuffers )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in_range( 0, D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - 1 )  UINT StartSlot,
+            _In_range_( 0, D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - 1 )  UINT StartSlot,
             /* [annotation] */ 
-            __in_range( 0, D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - StartSlot )  UINT NumBuffers,
+            _In_range_( 0, D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - StartSlot )  UINT NumBuffers,
             /* [annotation] */ 
-            __in_ecount(NumBuffers)  ID3D10Buffer *const *ppConstantBuffers);
+            _In_reads_opt_(NumBuffers)  ID3D10Buffer *const *ppConstantBuffers);
         
         void ( STDMETHODCALLTYPE *PSSetShaderResources )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in_range( 0, D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - 1 )  UINT StartSlot,
+            _In_range_( 0, D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - 1 )  UINT StartSlot,
             /* [annotation] */ 
-            __in_range( 0, D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - StartSlot )  UINT NumViews,
+            _In_range_( 0, D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - StartSlot )  UINT NumViews,
             /* [annotation] */ 
-            __in_ecount(NumViews)  ID3D10ShaderResourceView *const *ppShaderResourceViews);
+            _In_reads_opt_(NumViews)  ID3D10ShaderResourceView *const *ppShaderResourceViews);
         
         void ( STDMETHODCALLTYPE *PSSetShader )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in_opt  ID3D10PixelShader *pPixelShader);
+            _In_opt_  ID3D10PixelShader *pPixelShader);
         
         void ( STDMETHODCALLTYPE *PSSetSamplers )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in_range( 0, D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT - 1 )  UINT StartSlot,
+            _In_range_( 0, D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT - 1 )  UINT StartSlot,
             /* [annotation] */ 
-            __in_range( 0, D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT - StartSlot )  UINT NumSamplers,
+            _In_range_( 0, D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT - StartSlot )  UINT NumSamplers,
             /* [annotation] */ 
-            __in_ecount(NumSamplers)  ID3D10SamplerState *const *ppSamplers);
+            _In_reads_opt_(NumSamplers)  ID3D10SamplerState *const *ppSamplers);
         
         void ( STDMETHODCALLTYPE *VSSetShader )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in_opt  ID3D10VertexShader *pVertexShader);
+            _In_opt_  ID3D10VertexShader *pVertexShader);
         
         void ( STDMETHODCALLTYPE *DrawIndexed )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in  UINT IndexCount,
+            _In_  UINT IndexCount,
             /* [annotation] */ 
-            __in  UINT StartIndexLocation,
+            _In_  UINT StartIndexLocation,
             /* [annotation] */ 
-            __in  INT BaseVertexLocation);
+            _In_  INT BaseVertexLocation);
         
         void ( STDMETHODCALLTYPE *Draw )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in  UINT VertexCount,
+            _In_  UINT VertexCount,
             /* [annotation] */ 
-            __in  UINT StartVertexLocation);
+            _In_  UINT StartVertexLocation);
         
         void ( STDMETHODCALLTYPE *PSSetConstantBuffers )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in_range( 0, D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - 1 )  UINT StartSlot,
+            _In_range_( 0, D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - 1 )  UINT StartSlot,
             /* [annotation] */ 
-            __in_range( 0, D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - StartSlot )  UINT NumBuffers,
+            _In_range_( 0, D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - StartSlot )  UINT NumBuffers,
             /* [annotation] */ 
-            __in_ecount(NumBuffers)  ID3D10Buffer *const *ppConstantBuffers);
+            _In_reads_opt_(NumBuffers)  ID3D10Buffer *const *ppConstantBuffers);
         
         void ( STDMETHODCALLTYPE *IASetInputLayout )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in_opt  ID3D10InputLayout *pInputLayout);
+            _In_opt_  ID3D10InputLayout *pInputLayout);
         
         void ( STDMETHODCALLTYPE *IASetVertexBuffers )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in_range( 0, D3D10_1_IA_VERTEX_INPUT_RESOURCE_SLOT_COUNT - 1 )  UINT StartSlot,
+            _In_range_( 0, D3D10_1_IA_VERTEX_INPUT_RESOURCE_SLOT_COUNT - 1 )  UINT StartSlot,
             /* [annotation] */ 
-            __in_range( 0, D3D10_1_IA_VERTEX_INPUT_RESOURCE_SLOT_COUNT - StartSlot )  UINT NumBuffers,
+            _In_range_( 0, D3D10_1_IA_VERTEX_INPUT_RESOURCE_SLOT_COUNT - StartSlot )  UINT NumBuffers,
             /* [annotation] */ 
-            __in_ecount(NumBuffers)  ID3D10Buffer *const *ppVertexBuffers,
+            _In_reads_opt_(NumBuffers)  ID3D10Buffer *const *ppVertexBuffers,
             /* [annotation] */ 
-            __in_ecount(NumBuffers)  const UINT *pStrides,
+            _In_reads_opt_(NumBuffers)  const UINT *pStrides,
             /* [annotation] */ 
-            __in_ecount(NumBuffers)  const UINT *pOffsets);
+            _In_reads_opt_(NumBuffers)  const UINT *pOffsets);
         
         void ( STDMETHODCALLTYPE *IASetIndexBuffer )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in_opt  ID3D10Buffer *pIndexBuffer,
+            _In_opt_  ID3D10Buffer *pIndexBuffer,
             /* [annotation] */ 
-            __in  DXGI_FORMAT Format,
+            _In_  DXGI_FORMAT Format,
             /* [annotation] */ 
-            __in  UINT Offset);
+            _In_  UINT Offset);
         
         void ( STDMETHODCALLTYPE *DrawIndexedInstanced )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in  UINT IndexCountPerInstance,
+            _In_  UINT IndexCountPerInstance,
             /* [annotation] */ 
-            __in  UINT InstanceCount,
+            _In_  UINT InstanceCount,
             /* [annotation] */ 
-            __in  UINT StartIndexLocation,
+            _In_  UINT StartIndexLocation,
             /* [annotation] */ 
-            __in  INT BaseVertexLocation,
+            _In_  INT BaseVertexLocation,
             /* [annotation] */ 
-            __in  UINT StartInstanceLocation);
+            _In_  UINT StartInstanceLocation);
         
         void ( STDMETHODCALLTYPE *DrawInstanced )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in  UINT VertexCountPerInstance,
+            _In_  UINT VertexCountPerInstance,
             /* [annotation] */ 
-            __in  UINT InstanceCount,
+            _In_  UINT InstanceCount,
             /* [annotation] */ 
-            __in  UINT StartVertexLocation,
+            _In_  UINT StartVertexLocation,
             /* [annotation] */ 
-            __in  UINT StartInstanceLocation);
+            _In_  UINT StartInstanceLocation);
         
         void ( STDMETHODCALLTYPE *GSSetConstantBuffers )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in_range( 0, D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - 1 )  UINT StartSlot,
+            _In_range_( 0, D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - 1 )  UINT StartSlot,
             /* [annotation] */ 
-            __in_range( 0, D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - StartSlot )  UINT NumBuffers,
+            _In_range_( 0, D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - StartSlot )  UINT NumBuffers,
             /* [annotation] */ 
-            __in_ecount(NumBuffers)  ID3D10Buffer *const *ppConstantBuffers);
+            _In_reads_opt_(NumBuffers)  ID3D10Buffer *const *ppConstantBuffers);
         
         void ( STDMETHODCALLTYPE *GSSetShader )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in_opt  ID3D10GeometryShader *pShader);
+            _In_opt_  ID3D10GeometryShader *pShader);
         
         void ( STDMETHODCALLTYPE *IASetPrimitiveTopology )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in  D3D10_PRIMITIVE_TOPOLOGY Topology);
+            _In_  D3D10_PRIMITIVE_TOPOLOGY Topology);
         
         void ( STDMETHODCALLTYPE *VSSetShaderResources )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in_range( 0, D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - 1 )  UINT StartSlot,
+            _In_range_( 0, D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - 1 )  UINT StartSlot,
             /* [annotation] */ 
-            __in_range( 0, D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - StartSlot )  UINT NumViews,
+            _In_range_( 0, D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - StartSlot )  UINT NumViews,
             /* [annotation] */ 
-            __in_ecount(NumViews)  ID3D10ShaderResourceView *const *ppShaderResourceViews);
+            _In_reads_opt_(NumViews)  ID3D10ShaderResourceView *const *ppShaderResourceViews);
         
         void ( STDMETHODCALLTYPE *VSSetSamplers )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in_range( 0, D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT - 1 )  UINT StartSlot,
+            _In_range_( 0, D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT - 1 )  UINT StartSlot,
             /* [annotation] */ 
-            __in_range( 0, D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT - StartSlot )  UINT NumSamplers,
+            _In_range_( 0, D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT - StartSlot )  UINT NumSamplers,
             /* [annotation] */ 
-            __in_ecount(NumSamplers)  ID3D10SamplerState *const *ppSamplers);
+            _In_reads_opt_(NumSamplers)  ID3D10SamplerState *const *ppSamplers);
         
         void ( STDMETHODCALLTYPE *SetPredication )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in_opt  ID3D10Predicate *pPredicate,
+            _In_opt_  ID3D10Predicate *pPredicate,
             /* [annotation] */ 
-            __in  BOOL PredicateValue);
+            _In_  BOOL PredicateValue);
         
         void ( STDMETHODCALLTYPE *GSSetShaderResources )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in_range( 0, D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - 1 )  UINT StartSlot,
+            _In_range_( 0, D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - 1 )  UINT StartSlot,
             /* [annotation] */ 
-            __in_range( 0, D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - StartSlot )  UINT NumViews,
+            _In_range_( 0, D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - StartSlot )  UINT NumViews,
             /* [annotation] */ 
-            __in_ecount(NumViews)  ID3D10ShaderResourceView *const *ppShaderResourceViews);
+            _In_reads_opt_(NumViews)  ID3D10ShaderResourceView *const *ppShaderResourceViews);
         
         void ( STDMETHODCALLTYPE *GSSetSamplers )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in_range( 0, D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT - 1 )  UINT StartSlot,
+            _In_range_( 0, D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT - 1 )  UINT StartSlot,
             /* [annotation] */ 
-            __in_range( 0, D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT - StartSlot )  UINT NumSamplers,
+            _In_range_( 0, D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT - StartSlot )  UINT NumSamplers,
             /* [annotation] */ 
-            __in_ecount(NumSamplers)  ID3D10SamplerState *const *ppSamplers);
+            _In_reads_opt_(NumSamplers)  ID3D10SamplerState *const *ppSamplers);
         
         void ( STDMETHODCALLTYPE *OMSetRenderTargets )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in_range( 0, D3D10_SIMULTANEOUS_RENDER_TARGET_COUNT )  UINT NumViews,
+            _In_range_( 0, D3D10_SIMULTANEOUS_RENDER_TARGET_COUNT )  UINT NumViews,
             /* [annotation] */ 
-            __in_ecount_opt(NumViews)  ID3D10RenderTargetView *const *ppRenderTargetViews,
+            _In_reads_opt_(NumViews)  ID3D10RenderTargetView *const *ppRenderTargetViews,
             /* [annotation] */ 
-            __in_opt  ID3D10DepthStencilView *pDepthStencilView);
+            _In_opt_  ID3D10DepthStencilView *pDepthStencilView);
         
         void ( STDMETHODCALLTYPE *OMSetBlendState )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in_opt  ID3D10BlendState *pBlendState,
+            _In_opt_  ID3D10BlendState *pBlendState,
             /* [annotation] */ 
-            __in  const FLOAT BlendFactor[ 4 ],
+            _In_  const FLOAT BlendFactor[ 4 ],
             /* [annotation] */ 
-            __in  UINT SampleMask);
+            _In_  UINT SampleMask);
         
         void ( STDMETHODCALLTYPE *OMSetDepthStencilState )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in_opt  ID3D10DepthStencilState *pDepthStencilState,
+            _In_opt_  ID3D10DepthStencilState *pDepthStencilState,
             /* [annotation] */ 
-            __in  UINT StencilRef);
+            _In_  UINT StencilRef);
         
         void ( STDMETHODCALLTYPE *SOSetTargets )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in_range( 0, D3D10_SO_BUFFER_SLOT_COUNT)  UINT NumBuffers,
+            _In_range_( 0, D3D10_SO_BUFFER_SLOT_COUNT)  UINT NumBuffers,
             /* [annotation] */ 
-            __in_ecount_opt(NumBuffers)  ID3D10Buffer *const *ppSOTargets,
+            _In_reads_opt_(NumBuffers)  ID3D10Buffer *const *ppSOTargets,
             /* [annotation] */ 
-            __in_ecount_opt(NumBuffers)  const UINT *pOffsets);
+            _In_reads_opt_(NumBuffers)  const UINT *pOffsets);
         
         void ( STDMETHODCALLTYPE *DrawAuto )( 
             ID3D10Device1 * This);
@@ -744,286 +757,286 @@ EXTERN_C const IID IID_ID3D10Device1;
         void ( STDMETHODCALLTYPE *RSSetState )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in_opt  ID3D10RasterizerState *pRasterizerState);
+            _In_opt_  ID3D10RasterizerState *pRasterizerState);
         
         void ( STDMETHODCALLTYPE *RSSetViewports )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in_range(0, D3D10_VIEWPORT_AND_SCISSORRECT_OBJECT_COUNT_PER_PIPELINE)  UINT NumViewports,
+            _In_range_(0, D3D10_VIEWPORT_AND_SCISSORRECT_OBJECT_COUNT_PER_PIPELINE)  UINT NumViewports,
             /* [annotation] */ 
-            __in_ecount_opt(NumViewports)  const D3D10_VIEWPORT *pViewports);
+            _In_reads_opt_(NumViewports)  const D3D10_VIEWPORT *pViewports);
         
         void ( STDMETHODCALLTYPE *RSSetScissorRects )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in_range(0, D3D10_VIEWPORT_AND_SCISSORRECT_OBJECT_COUNT_PER_PIPELINE)  UINT NumRects,
+            _In_range_(0, D3D10_VIEWPORT_AND_SCISSORRECT_OBJECT_COUNT_PER_PIPELINE)  UINT NumRects,
             /* [annotation] */ 
-            __in_ecount_opt(NumRects)  const D3D10_RECT *pRects);
+            _In_reads_opt_(NumRects)  const D3D10_RECT *pRects);
         
         void ( STDMETHODCALLTYPE *CopySubresourceRegion )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in  ID3D10Resource *pDstResource,
+            _In_  ID3D10Resource *pDstResource,
             /* [annotation] */ 
-            __in  UINT DstSubresource,
+            _In_  UINT DstSubresource,
             /* [annotation] */ 
-            __in  UINT DstX,
+            _In_  UINT DstX,
             /* [annotation] */ 
-            __in  UINT DstY,
+            _In_  UINT DstY,
             /* [annotation] */ 
-            __in  UINT DstZ,
+            _In_  UINT DstZ,
             /* [annotation] */ 
-            __in  ID3D10Resource *pSrcResource,
+            _In_  ID3D10Resource *pSrcResource,
             /* [annotation] */ 
-            __in  UINT SrcSubresource,
+            _In_  UINT SrcSubresource,
             /* [annotation] */ 
-            __in_opt  const D3D10_BOX *pSrcBox);
+            _In_opt_  const D3D10_BOX *pSrcBox);
         
         void ( STDMETHODCALLTYPE *CopyResource )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in  ID3D10Resource *pDstResource,
+            _In_  ID3D10Resource *pDstResource,
             /* [annotation] */ 
-            __in  ID3D10Resource *pSrcResource);
+            _In_  ID3D10Resource *pSrcResource);
         
         void ( STDMETHODCALLTYPE *UpdateSubresource )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in  ID3D10Resource *pDstResource,
+            _In_  ID3D10Resource *pDstResource,
             /* [annotation] */ 
-            __in  UINT DstSubresource,
+            _In_  UINT DstSubresource,
             /* [annotation] */ 
-            __in_opt  const D3D10_BOX *pDstBox,
+            _In_opt_  const D3D10_BOX *pDstBox,
             /* [annotation] */ 
-            __in  const void *pSrcData,
+            _In_  const void *pSrcData,
             /* [annotation] */ 
-            __in  UINT SrcRowPitch,
+            _In_  UINT SrcRowPitch,
             /* [annotation] */ 
-            __in  UINT SrcDepthPitch);
+            _In_  UINT SrcDepthPitch);
         
         void ( STDMETHODCALLTYPE *ClearRenderTargetView )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in  ID3D10RenderTargetView *pRenderTargetView,
+            _In_  ID3D10RenderTargetView *pRenderTargetView,
             /* [annotation] */ 
-            __in  const FLOAT ColorRGBA[ 4 ]);
+            _In_  const FLOAT ColorRGBA[ 4 ]);
         
         void ( STDMETHODCALLTYPE *ClearDepthStencilView )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in  ID3D10DepthStencilView *pDepthStencilView,
+            _In_  ID3D10DepthStencilView *pDepthStencilView,
             /* [annotation] */ 
-            __in  UINT ClearFlags,
+            _In_  UINT ClearFlags,
             /* [annotation] */ 
-            __in  FLOAT Depth,
+            _In_  FLOAT Depth,
             /* [annotation] */ 
-            __in  UINT8 Stencil);
+            _In_  UINT8 Stencil);
         
         void ( STDMETHODCALLTYPE *GenerateMips )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in  ID3D10ShaderResourceView *pShaderResourceView);
+            _In_  ID3D10ShaderResourceView *pShaderResourceView);
         
         void ( STDMETHODCALLTYPE *ResolveSubresource )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in  ID3D10Resource *pDstResource,
+            _In_  ID3D10Resource *pDstResource,
             /* [annotation] */ 
-            __in  UINT DstSubresource,
+            _In_  UINT DstSubresource,
             /* [annotation] */ 
-            __in  ID3D10Resource *pSrcResource,
+            _In_  ID3D10Resource *pSrcResource,
             /* [annotation] */ 
-            __in  UINT SrcSubresource,
+            _In_  UINT SrcSubresource,
             /* [annotation] */ 
-            __in  DXGI_FORMAT Format);
+            _In_  DXGI_FORMAT Format);
         
         void ( STDMETHODCALLTYPE *VSGetConstantBuffers )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in_range( 0, D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - 1 )  UINT StartSlot,
+            _In_range_( 0, D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - 1 )  UINT StartSlot,
             /* [annotation] */ 
-            __in_range( 0, D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - StartSlot )  UINT NumBuffers,
+            _In_range_( 0, D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - StartSlot )  UINT NumBuffers,
             /* [annotation] */ 
-            __out_ecount(NumBuffers)  ID3D10Buffer **ppConstantBuffers);
+            _Out_writes_opt_(NumBuffers)  ID3D10Buffer **ppConstantBuffers);
         
         void ( STDMETHODCALLTYPE *PSGetShaderResources )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in_range( 0, D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - 1 )  UINT StartSlot,
+            _In_range_( 0, D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - 1 )  UINT StartSlot,
             /* [annotation] */ 
-            __in_range( 0, D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - StartSlot )  UINT NumViews,
+            _In_range_( 0, D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - StartSlot )  UINT NumViews,
             /* [annotation] */ 
-            __out_ecount(NumViews)  ID3D10ShaderResourceView **ppShaderResourceViews);
+            _Out_writes_opt_(NumViews)  ID3D10ShaderResourceView **ppShaderResourceViews);
         
         void ( STDMETHODCALLTYPE *PSGetShader )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __out  ID3D10PixelShader **ppPixelShader);
+            _Out_  ID3D10PixelShader **ppPixelShader);
         
         void ( STDMETHODCALLTYPE *PSGetSamplers )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in_range( 0, D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT - 1 )  UINT StartSlot,
+            _In_range_( 0, D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT - 1 )  UINT StartSlot,
             /* [annotation] */ 
-            __in_range( 0, D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT - StartSlot )  UINT NumSamplers,
+            _In_range_( 0, D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT - StartSlot )  UINT NumSamplers,
             /* [annotation] */ 
-            __out_ecount(NumSamplers)  ID3D10SamplerState **ppSamplers);
+            _Out_writes_opt_(NumSamplers)  ID3D10SamplerState **ppSamplers);
         
         void ( STDMETHODCALLTYPE *VSGetShader )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __out  ID3D10VertexShader **ppVertexShader);
+            _Out_  ID3D10VertexShader **ppVertexShader);
         
         void ( STDMETHODCALLTYPE *PSGetConstantBuffers )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in_range( 0, D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - 1 )  UINT StartSlot,
+            _In_range_( 0, D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - 1 )  UINT StartSlot,
             /* [annotation] */ 
-            __in_range( 0, D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - StartSlot )  UINT NumBuffers,
+            _In_range_( 0, D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - StartSlot )  UINT NumBuffers,
             /* [annotation] */ 
-            __out_ecount(NumBuffers)  ID3D10Buffer **ppConstantBuffers);
+            _Out_writes_opt_(NumBuffers)  ID3D10Buffer **ppConstantBuffers);
         
         void ( STDMETHODCALLTYPE *IAGetInputLayout )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __out  ID3D10InputLayout **ppInputLayout);
+            _Out_  ID3D10InputLayout **ppInputLayout);
         
         void ( STDMETHODCALLTYPE *IAGetVertexBuffers )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in_range( 0, D3D10_1_IA_VERTEX_INPUT_RESOURCE_SLOT_COUNT - 1 )  UINT StartSlot,
+            _In_range_( 0, D3D10_1_IA_VERTEX_INPUT_RESOURCE_SLOT_COUNT - 1 )  UINT StartSlot,
             /* [annotation] */ 
-            __in_range( 0, D3D10_1_IA_VERTEX_INPUT_RESOURCE_SLOT_COUNT - StartSlot )  UINT NumBuffers,
+            _In_range_( 0, D3D10_1_IA_VERTEX_INPUT_RESOURCE_SLOT_COUNT - StartSlot )  UINT NumBuffers,
             /* [annotation] */ 
-            __out_ecount_opt(NumBuffers)  ID3D10Buffer **ppVertexBuffers,
+            _Out_writes_opt_(NumBuffers)  ID3D10Buffer **ppVertexBuffers,
             /* [annotation] */ 
-            __out_ecount_opt(NumBuffers)  UINT *pStrides,
+            _Out_writes_opt_(NumBuffers)  UINT *pStrides,
             /* [annotation] */ 
-            __out_ecount_opt(NumBuffers)  UINT *pOffsets);
+            _Out_writes_opt_(NumBuffers)  UINT *pOffsets);
         
         void ( STDMETHODCALLTYPE *IAGetIndexBuffer )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __out_opt  ID3D10Buffer **pIndexBuffer,
+            _Out_opt_  ID3D10Buffer **pIndexBuffer,
             /* [annotation] */ 
-            __out_opt  DXGI_FORMAT *Format,
+            _Out_opt_  DXGI_FORMAT *Format,
             /* [annotation] */ 
-            __out_opt  UINT *Offset);
+            _Out_opt_  UINT *Offset);
         
         void ( STDMETHODCALLTYPE *GSGetConstantBuffers )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in_range( 0, D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - 1 )  UINT StartSlot,
+            _In_range_( 0, D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - 1 )  UINT StartSlot,
             /* [annotation] */ 
-            __in_range( 0, D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - StartSlot )  UINT NumBuffers,
+            _In_range_( 0, D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - StartSlot )  UINT NumBuffers,
             /* [annotation] */ 
-            __out_ecount(NumBuffers)  ID3D10Buffer **ppConstantBuffers);
+            _Out_writes_opt_(NumBuffers)  ID3D10Buffer **ppConstantBuffers);
         
         void ( STDMETHODCALLTYPE *GSGetShader )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __out  ID3D10GeometryShader **ppGeometryShader);
+            _Out_  ID3D10GeometryShader **ppGeometryShader);
         
         void ( STDMETHODCALLTYPE *IAGetPrimitiveTopology )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __out  D3D10_PRIMITIVE_TOPOLOGY *pTopology);
+            _Out_  D3D10_PRIMITIVE_TOPOLOGY *pTopology);
         
         void ( STDMETHODCALLTYPE *VSGetShaderResources )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in_range( 0, D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - 1 )  UINT StartSlot,
+            _In_range_( 0, D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - 1 )  UINT StartSlot,
             /* [annotation] */ 
-            __in_range( 0, D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - StartSlot )  UINT NumViews,
+            _In_range_( 0, D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - StartSlot )  UINT NumViews,
             /* [annotation] */ 
-            __out_ecount(NumViews)  ID3D10ShaderResourceView **ppShaderResourceViews);
+            _Out_writes_opt_(NumViews)  ID3D10ShaderResourceView **ppShaderResourceViews);
         
         void ( STDMETHODCALLTYPE *VSGetSamplers )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in_range( 0, D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT - 1 )  UINT StartSlot,
+            _In_range_( 0, D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT - 1 )  UINT StartSlot,
             /* [annotation] */ 
-            __in_range( 0, D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT - StartSlot )  UINT NumSamplers,
+            _In_range_( 0, D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT - StartSlot )  UINT NumSamplers,
             /* [annotation] */ 
-            __out_ecount(NumSamplers)  ID3D10SamplerState **ppSamplers);
+            _Out_writes_opt_(NumSamplers)  ID3D10SamplerState **ppSamplers);
         
         void ( STDMETHODCALLTYPE *GetPredication )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __out_opt  ID3D10Predicate **ppPredicate,
+            _Out_opt_  ID3D10Predicate **ppPredicate,
             /* [annotation] */ 
-            __out_opt  BOOL *pPredicateValue);
+            _Out_opt_  BOOL *pPredicateValue);
         
         void ( STDMETHODCALLTYPE *GSGetShaderResources )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in_range( 0, D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - 1 )  UINT StartSlot,
+            _In_range_( 0, D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - 1 )  UINT StartSlot,
             /* [annotation] */ 
-            __in_range( 0, D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - StartSlot )  UINT NumViews,
+            _In_range_( 0, D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - StartSlot )  UINT NumViews,
             /* [annotation] */ 
-            __out_ecount(NumViews)  ID3D10ShaderResourceView **ppShaderResourceViews);
+            _Out_writes_opt_(NumViews)  ID3D10ShaderResourceView **ppShaderResourceViews);
         
         void ( STDMETHODCALLTYPE *GSGetSamplers )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in_range( 0, D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT - 1 )  UINT StartSlot,
+            _In_range_( 0, D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT - 1 )  UINT StartSlot,
             /* [annotation] */ 
-            __in_range( 0, D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT - StartSlot )  UINT NumSamplers,
+            _In_range_( 0, D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT - StartSlot )  UINT NumSamplers,
             /* [annotation] */ 
-            __out_ecount(NumSamplers)  ID3D10SamplerState **ppSamplers);
+            _Out_writes_opt_(NumSamplers)  ID3D10SamplerState **ppSamplers);
         
         void ( STDMETHODCALLTYPE *OMGetRenderTargets )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in_range( 0, D3D10_SIMULTANEOUS_RENDER_TARGET_COUNT )  UINT NumViews,
+            _In_range_( 0, D3D10_SIMULTANEOUS_RENDER_TARGET_COUNT )  UINT NumViews,
             /* [annotation] */ 
-            __out_ecount_opt(NumViews)  ID3D10RenderTargetView **ppRenderTargetViews,
+            _Out_writes_opt_(NumViews)  ID3D10RenderTargetView **ppRenderTargetViews,
             /* [annotation] */ 
-            __out_opt  ID3D10DepthStencilView **ppDepthStencilView);
+            _Out_opt_  ID3D10DepthStencilView **ppDepthStencilView);
         
         void ( STDMETHODCALLTYPE *OMGetBlendState )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __out_opt  ID3D10BlendState **ppBlendState,
+            _Out_opt_  ID3D10BlendState **ppBlendState,
             /* [annotation] */ 
-            __out_opt  FLOAT BlendFactor[ 4 ],
+            _Out_opt_  FLOAT BlendFactor[ 4 ],
             /* [annotation] */ 
-            __out_opt  UINT *pSampleMask);
+            _Out_opt_  UINT *pSampleMask);
         
         void ( STDMETHODCALLTYPE *OMGetDepthStencilState )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __out_opt  ID3D10DepthStencilState **ppDepthStencilState,
+            _Out_opt_  ID3D10DepthStencilState **ppDepthStencilState,
             /* [annotation] */ 
-            __out_opt  UINT *pStencilRef);
+            _Out_opt_  UINT *pStencilRef);
         
         void ( STDMETHODCALLTYPE *SOGetTargets )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in_range( 0, D3D10_SO_BUFFER_SLOT_COUNT )  UINT NumBuffers,
+            _In_range_( 0, D3D10_SO_BUFFER_SLOT_COUNT )  UINT NumBuffers,
             /* [annotation] */ 
-            __out_ecount_opt(NumBuffers)  ID3D10Buffer **ppSOTargets,
+            _Out_writes_opt_(NumBuffers)  ID3D10Buffer **ppSOTargets,
             /* [annotation] */ 
-            __out_ecount_opt(NumBuffers)  UINT *pOffsets);
+            _Out_writes_opt_(NumBuffers)  UINT *pOffsets);
         
         void ( STDMETHODCALLTYPE *RSGetState )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __out  ID3D10RasterizerState **ppRasterizerState);
+            _Out_  ID3D10RasterizerState **ppRasterizerState);
         
         void ( STDMETHODCALLTYPE *RSGetViewports )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __inout /*_range(0, D3D10_VIEWPORT_AND_SCISSORRECT_OBJECT_COUNT_PER_PIPELINE )*/   UINT *NumViewports,
+            _Inout_ /*_range(0, D3D10_VIEWPORT_AND_SCISSORRECT_OBJECT_COUNT_PER_PIPELINE )*/   UINT *NumViewports,
             /* [annotation] */ 
-            __out_ecount_opt(*NumViewports)  D3D10_VIEWPORT *pViewports);
+            _Out_writes_opt_(*NumViewports)  D3D10_VIEWPORT *pViewports);
         
         void ( STDMETHODCALLTYPE *RSGetScissorRects )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __inout /*_range(0, D3D10_VIEWPORT_AND_SCISSORRECT_OBJECT_COUNT_PER_PIPELINE )*/   UINT *NumRects,
+            _Inout_ /*_range(0, D3D10_VIEWPORT_AND_SCISSORRECT_OBJECT_COUNT_PER_PIPELINE )*/   UINT *NumRects,
             /* [annotation] */ 
-            __out_ecount_opt(*NumRects)  D3D10_RECT *pRects);
+            _Out_writes_opt_(*NumRects)  D3D10_RECT *pRects);
         
         HRESULT ( STDMETHODCALLTYPE *GetDeviceRemovedReason )( 
             ID3D10Device1 * This);
@@ -1038,27 +1051,27 @@ EXTERN_C const IID IID_ID3D10Device1;
         HRESULT ( STDMETHODCALLTYPE *GetPrivateData )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in  REFGUID guid,
+            _In_  REFGUID guid,
             /* [annotation] */ 
-            __inout  UINT *pDataSize,
+            _Inout_  UINT *pDataSize,
             /* [annotation] */ 
-            __out_bcount_opt(*pDataSize)  void *pData);
+            _Out_writes_bytes_opt_(*pDataSize)  void *pData);
         
         HRESULT ( STDMETHODCALLTYPE *SetPrivateData )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in  REFGUID guid,
+            _In_  REFGUID guid,
             /* [annotation] */ 
-            __in  UINT DataSize,
+            _In_  UINT DataSize,
             /* [annotation] */ 
-            __in_bcount_opt(DataSize)  const void *pData);
+            _In_reads_bytes_opt_(DataSize)  const void *pData);
         
         HRESULT ( STDMETHODCALLTYPE *SetPrivateDataInterface )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in  REFGUID guid,
+            _In_  REFGUID guid,
             /* [annotation] */ 
-            __in_opt  const IUnknown *pData);
+            _In_opt_  const IUnknown *pData);
         
         void ( STDMETHODCALLTYPE *ClearState )( 
             ID3D10Device1 * This);
@@ -1069,211 +1082,211 @@ EXTERN_C const IID IID_ID3D10Device1;
         HRESULT ( STDMETHODCALLTYPE *CreateBuffer )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in  const D3D10_BUFFER_DESC *pDesc,
+            _In_  const D3D10_BUFFER_DESC *pDesc,
             /* [annotation] */ 
-            __in_opt  const D3D10_SUBRESOURCE_DATA *pInitialData,
+            _In_opt_  const D3D10_SUBRESOURCE_DATA *pInitialData,
             /* [annotation] */ 
-            __out_opt  ID3D10Buffer **ppBuffer);
+            _Out_opt_  ID3D10Buffer **ppBuffer);
         
         HRESULT ( STDMETHODCALLTYPE *CreateTexture1D )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in  const D3D10_TEXTURE1D_DESC *pDesc,
+            _In_  const D3D10_TEXTURE1D_DESC *pDesc,
             /* [annotation] */ 
-            __in_xcount_opt(pDesc->MipLevels * pDesc->ArraySize)  const D3D10_SUBRESOURCE_DATA *pInitialData,
+            _In_reads_opt_(_Inexpressible(pDesc->MipLevels * pDesc->ArraySize))  const D3D10_SUBRESOURCE_DATA *pInitialData,
             /* [annotation] */ 
-            __out  ID3D10Texture1D **ppTexture1D);
+            _Out_  ID3D10Texture1D **ppTexture1D);
         
         HRESULT ( STDMETHODCALLTYPE *CreateTexture2D )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in  const D3D10_TEXTURE2D_DESC *pDesc,
+            _In_  const D3D10_TEXTURE2D_DESC *pDesc,
             /* [annotation] */ 
-            __in_xcount_opt(pDesc->MipLevels * pDesc->ArraySize)  const D3D10_SUBRESOURCE_DATA *pInitialData,
+            _In_reads_opt_(_Inexpressible_(pDesc->MipLevels * pDesc->ArraySize))  const D3D10_SUBRESOURCE_DATA *pInitialData,
             /* [annotation] */ 
-            __out  ID3D10Texture2D **ppTexture2D);
+            _Out_  ID3D10Texture2D **ppTexture2D);
         
         HRESULT ( STDMETHODCALLTYPE *CreateTexture3D )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in  const D3D10_TEXTURE3D_DESC *pDesc,
+            _In_  const D3D10_TEXTURE3D_DESC *pDesc,
             /* [annotation] */ 
-            __in_xcount_opt(pDesc->MipLevels)  const D3D10_SUBRESOURCE_DATA *pInitialData,
+            _In_reads_opt_(_Inexpressible_(pDesc->MipLevels))  const D3D10_SUBRESOURCE_DATA *pInitialData,
             /* [annotation] */ 
-            __out  ID3D10Texture3D **ppTexture3D);
+            _Out_  ID3D10Texture3D **ppTexture3D);
         
         HRESULT ( STDMETHODCALLTYPE *CreateShaderResourceView )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in  ID3D10Resource *pResource,
+            _In_  ID3D10Resource *pResource,
             /* [annotation] */ 
-            __in_opt  const D3D10_SHADER_RESOURCE_VIEW_DESC *pDesc,
+            _In_opt_  const D3D10_SHADER_RESOURCE_VIEW_DESC *pDesc,
             /* [annotation] */ 
-            __out_opt  ID3D10ShaderResourceView **ppSRView);
+            _Out_opt_  ID3D10ShaderResourceView **ppSRView);
         
         HRESULT ( STDMETHODCALLTYPE *CreateRenderTargetView )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in  ID3D10Resource *pResource,
+            _In_  ID3D10Resource *pResource,
             /* [annotation] */ 
-            __in_opt  const D3D10_RENDER_TARGET_VIEW_DESC *pDesc,
+            _In_opt_  const D3D10_RENDER_TARGET_VIEW_DESC *pDesc,
             /* [annotation] */ 
-            __out_opt  ID3D10RenderTargetView **ppRTView);
+            _Out_opt_  ID3D10RenderTargetView **ppRTView);
         
         HRESULT ( STDMETHODCALLTYPE *CreateDepthStencilView )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in  ID3D10Resource *pResource,
+            _In_  ID3D10Resource *pResource,
             /* [annotation] */ 
-            __in_opt  const D3D10_DEPTH_STENCIL_VIEW_DESC *pDesc,
+            _In_opt_  const D3D10_DEPTH_STENCIL_VIEW_DESC *pDesc,
             /* [annotation] */ 
-            __out_opt  ID3D10DepthStencilView **ppDepthStencilView);
+            _Out_opt_  ID3D10DepthStencilView **ppDepthStencilView);
         
         HRESULT ( STDMETHODCALLTYPE *CreateInputLayout )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in_ecount(NumElements)  const D3D10_INPUT_ELEMENT_DESC *pInputElementDescs,
+            _In_reads_(NumElements)  const D3D10_INPUT_ELEMENT_DESC *pInputElementDescs,
             /* [annotation] */ 
-            __in_range( 0, D3D10_1_IA_VERTEX_INPUT_STRUCTURE_ELEMENT_COUNT )  UINT NumElements,
+            _In_range_( 0, D3D10_1_IA_VERTEX_INPUT_STRUCTURE_ELEMENT_COUNT )  UINT NumElements,
             /* [annotation] */ 
-            __in  const void *pShaderBytecodeWithInputSignature,
+            _In_  const void *pShaderBytecodeWithInputSignature,
             /* [annotation] */ 
-            __in  SIZE_T BytecodeLength,
+            _In_  SIZE_T BytecodeLength,
             /* [annotation] */ 
-            __out_opt  ID3D10InputLayout **ppInputLayout);
+            _Out_opt_  ID3D10InputLayout **ppInputLayout);
         
         HRESULT ( STDMETHODCALLTYPE *CreateVertexShader )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in  const void *pShaderBytecode,
+            _In_  const void *pShaderBytecode,
             /* [annotation] */ 
-            __in  SIZE_T BytecodeLength,
+            _In_  SIZE_T BytecodeLength,
             /* [annotation] */ 
-            __out_opt  ID3D10VertexShader **ppVertexShader);
+            _Out_opt_  ID3D10VertexShader **ppVertexShader);
         
         HRESULT ( STDMETHODCALLTYPE *CreateGeometryShader )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in  const void *pShaderBytecode,
+            _In_  const void *pShaderBytecode,
             /* [annotation] */ 
-            __in  SIZE_T BytecodeLength,
+            _In_  SIZE_T BytecodeLength,
             /* [annotation] */ 
-            __out_opt  ID3D10GeometryShader **ppGeometryShader);
+            _Out_opt_  ID3D10GeometryShader **ppGeometryShader);
         
         HRESULT ( STDMETHODCALLTYPE *CreateGeometryShaderWithStreamOutput )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in  const void *pShaderBytecode,
+            _In_  const void *pShaderBytecode,
             /* [annotation] */ 
-            __in  SIZE_T BytecodeLength,
+            _In_  SIZE_T BytecodeLength,
             /* [annotation] */ 
-            __in_ecount_opt(NumEntries)  const D3D10_SO_DECLARATION_ENTRY *pSODeclaration,
+            _In_reads_opt_(NumEntries)  const D3D10_SO_DECLARATION_ENTRY *pSODeclaration,
             /* [annotation] */ 
-            __in_range( 0, D3D10_SO_SINGLE_BUFFER_COMPONENT_LIMIT )  UINT NumEntries,
+            _In_range_( 0, D3D10_SO_SINGLE_BUFFER_COMPONENT_LIMIT )  UINT NumEntries,
             /* [annotation] */ 
-            __in  UINT OutputStreamStride,
+            _In_  UINT OutputStreamStride,
             /* [annotation] */ 
-            __out_opt  ID3D10GeometryShader **ppGeometryShader);
+            _Out_opt_  ID3D10GeometryShader **ppGeometryShader);
         
         HRESULT ( STDMETHODCALLTYPE *CreatePixelShader )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in  const void *pShaderBytecode,
+            _In_  const void *pShaderBytecode,
             /* [annotation] */ 
-            __in  SIZE_T BytecodeLength,
+            _In_  SIZE_T BytecodeLength,
             /* [annotation] */ 
-            __out_opt  ID3D10PixelShader **ppPixelShader);
+            _Out_opt_  ID3D10PixelShader **ppPixelShader);
         
         HRESULT ( STDMETHODCALLTYPE *CreateBlendState )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in  const D3D10_BLEND_DESC *pBlendStateDesc,
+            _In_  const D3D10_BLEND_DESC *pBlendStateDesc,
             /* [annotation] */ 
-            __out_opt  ID3D10BlendState **ppBlendState);
+            _Out_opt_  ID3D10BlendState **ppBlendState);
         
         HRESULT ( STDMETHODCALLTYPE *CreateDepthStencilState )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in  const D3D10_DEPTH_STENCIL_DESC *pDepthStencilDesc,
+            _In_  const D3D10_DEPTH_STENCIL_DESC *pDepthStencilDesc,
             /* [annotation] */ 
-            __out_opt  ID3D10DepthStencilState **ppDepthStencilState);
+            _Out_opt_  ID3D10DepthStencilState **ppDepthStencilState);
         
         HRESULT ( STDMETHODCALLTYPE *CreateRasterizerState )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in  const D3D10_RASTERIZER_DESC *pRasterizerDesc,
+            _In_  const D3D10_RASTERIZER_DESC *pRasterizerDesc,
             /* [annotation] */ 
-            __out_opt  ID3D10RasterizerState **ppRasterizerState);
+            _Out_opt_  ID3D10RasterizerState **ppRasterizerState);
         
         HRESULT ( STDMETHODCALLTYPE *CreateSamplerState )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in  const D3D10_SAMPLER_DESC *pSamplerDesc,
+            _In_  const D3D10_SAMPLER_DESC *pSamplerDesc,
             /* [annotation] */ 
-            __out_opt  ID3D10SamplerState **ppSamplerState);
+            _Out_opt_  ID3D10SamplerState **ppSamplerState);
         
         HRESULT ( STDMETHODCALLTYPE *CreateQuery )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in  const D3D10_QUERY_DESC *pQueryDesc,
+            _In_  const D3D10_QUERY_DESC *pQueryDesc,
             /* [annotation] */ 
-            __out_opt  ID3D10Query **ppQuery);
+            _Out_opt_  ID3D10Query **ppQuery);
         
         HRESULT ( STDMETHODCALLTYPE *CreatePredicate )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in  const D3D10_QUERY_DESC *pPredicateDesc,
+            _In_  const D3D10_QUERY_DESC *pPredicateDesc,
             /* [annotation] */ 
-            __out_opt  ID3D10Predicate **ppPredicate);
+            _Out_opt_  ID3D10Predicate **ppPredicate);
         
         HRESULT ( STDMETHODCALLTYPE *CreateCounter )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in  const D3D10_COUNTER_DESC *pCounterDesc,
+            _In_  const D3D10_COUNTER_DESC *pCounterDesc,
             /* [annotation] */ 
-            __out_opt  ID3D10Counter **ppCounter);
+            _Out_opt_  ID3D10Counter **ppCounter);
         
         HRESULT ( STDMETHODCALLTYPE *CheckFormatSupport )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in  DXGI_FORMAT Format,
+            _In_  DXGI_FORMAT Format,
             /* [annotation] */ 
-            __out  UINT *pFormatSupport);
+            _Out_  UINT *pFormatSupport);
         
         HRESULT ( STDMETHODCALLTYPE *CheckMultisampleQualityLevels )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in  DXGI_FORMAT Format,
+            _In_  DXGI_FORMAT Format,
             /* [annotation] */ 
-            __in  UINT SampleCount,
+            _In_  UINT SampleCount,
             /* [annotation] */ 
-            __out  UINT *pNumQualityLevels);
+            _Out_  UINT *pNumQualityLevels);
         
         void ( STDMETHODCALLTYPE *CheckCounterInfo )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __out  D3D10_COUNTER_INFO *pCounterInfo);
+            _Out_  D3D10_COUNTER_INFO *pCounterInfo);
         
         HRESULT ( STDMETHODCALLTYPE *CheckCounter )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in  const D3D10_COUNTER_DESC *pDesc,
+            _In_  const D3D10_COUNTER_DESC *pDesc,
             /* [annotation] */ 
-            __out  D3D10_COUNTER_TYPE *pType,
+            _Out_  D3D10_COUNTER_TYPE *pType,
             /* [annotation] */ 
-            __out  UINT *pActiveCounters,
+            _Out_  UINT *pActiveCounters,
             /* [annotation] */ 
-            __out_ecount_opt(*pNameLength)  LPSTR szName,
+            _Out_writes_opt_(*pNameLength)  LPSTR szName,
             /* [annotation] */ 
-            __inout_opt  UINT *pNameLength,
+            _Inout_opt_  UINT *pNameLength,
             /* [annotation] */ 
-            __out_ecount_opt(*pUnitsLength)  LPSTR szUnits,
+            _Out_writes_opt_(*pUnitsLength)  LPSTR szUnits,
             /* [annotation] */ 
-            __inout_opt  UINT *pUnitsLength,
+            _Inout_opt_  UINT *pUnitsLength,
             /* [annotation] */ 
-            __out_ecount_opt(*pDescriptionLength)  LPSTR szDescription,
+            _Out_writes_opt_(*pDescriptionLength)  LPSTR szDescription,
             /* [annotation] */ 
-            __inout_opt  UINT *pDescriptionLength);
+            _Inout_opt_  UINT *pDescriptionLength);
         
         UINT ( STDMETHODCALLTYPE *GetCreationFlags )( 
             ID3D10Device1 * This);
@@ -1281,41 +1294,41 @@ EXTERN_C const IID IID_ID3D10Device1;
         HRESULT ( STDMETHODCALLTYPE *OpenSharedResource )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in  HANDLE hResource,
+            _In_  HANDLE hResource,
             /* [annotation] */ 
-            __in  REFIID ReturnedInterface,
+            _In_  REFIID ReturnedInterface,
             /* [annotation] */ 
-            __out_opt  void **ppResource);
+            _Out_opt_  void **ppResource);
         
         void ( STDMETHODCALLTYPE *SetTextFilterSize )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in  UINT Width,
+            _In_  UINT Width,
             /* [annotation] */ 
-            __in  UINT Height);
+            _In_  UINT Height);
         
         void ( STDMETHODCALLTYPE *GetTextFilterSize )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __out_opt  UINT *pWidth,
+            _Out_opt_  UINT *pWidth,
             /* [annotation] */ 
-            __out_opt  UINT *pHeight);
+            _Out_opt_  UINT *pHeight);
         
         HRESULT ( STDMETHODCALLTYPE *CreateShaderResourceView1 )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in  ID3D10Resource *pResource,
+            _In_  ID3D10Resource *pResource,
             /* [annotation] */ 
-            __in_opt  const D3D10_SHADER_RESOURCE_VIEW_DESC1 *pDesc,
+            _In_opt_  const D3D10_SHADER_RESOURCE_VIEW_DESC1 *pDesc,
             /* [annotation] */ 
-            __out_opt  ID3D10ShaderResourceView1 **ppSRView);
+            _Out_opt_  ID3D10ShaderResourceView1 **ppSRView);
         
         HRESULT ( STDMETHODCALLTYPE *CreateBlendState1 )( 
             ID3D10Device1 * This,
             /* [annotation] */ 
-            __in  const D3D10_BLEND_DESC1 *pBlendStateDesc,
+            _In_  const D3D10_BLEND_DESC1 *pBlendStateDesc,
             /* [annotation] */ 
-            __out_opt  ID3D10BlendState1 **ppBlendState);
+            _Out_opt_  ID3D10BlendState1 **ppBlendState);
         
         D3D10_FEATURE_LEVEL1 ( STDMETHODCALLTYPE *GetFeatureLevel )( 
             ID3D10Device1 * This);
@@ -1693,13 +1706,13 @@ typedef HRESULT (WINAPI* PFN_D3D10_CREATE_DEVICE1)(IDXGIAdapter *,
     D3D10_DRIVER_TYPE, HMODULE, UINT, D3D10_FEATURE_LEVEL1, UINT, ID3D10Device1**);
 
 HRESULT WINAPI D3D10CreateDevice1(
-    IDXGIAdapter *pAdapter,
+    _In_opt_ IDXGIAdapter *pAdapter,
     D3D10_DRIVER_TYPE DriverType,
     HMODULE Software,
     UINT Flags,
     D3D10_FEATURE_LEVEL1 HardwareLevel,
     UINT SDKVersion,
-    ID3D10Device1 **ppDevice);
+    _Out_opt_ ID3D10Device1 **ppDevice);
 
 ///////////////////////////////////////////////////////////////////////////
 // D3D10CreateDeviceAndSwapChain1
@@ -1745,15 +1758,16 @@ typedef HRESULT (WINAPI* PFN_D3D10_CREATE_DEVICE_AND_SWAP_CHAIN1)(IDXGIAdapter *
     D3D10_DRIVER_TYPE, HMODULE, UINT, D3D10_FEATURE_LEVEL1, UINT, DXGI_SWAP_CHAIN_DESC *, IDXGISwapChain **, ID3D10Device1 **);
 
 HRESULT WINAPI D3D10CreateDeviceAndSwapChain1(
-    IDXGIAdapter *pAdapter,
+    _In_opt_ IDXGIAdapter *pAdapter,
     D3D10_DRIVER_TYPE DriverType,
     HMODULE Software,
     UINT Flags,
     D3D10_FEATURE_LEVEL1 HardwareLevel,
     UINT SDKVersion,
-    DXGI_SWAP_CHAIN_DESC *pSwapChainDesc,
-    IDXGISwapChain **ppSwapChain,
-    ID3D10Device1 **ppDevice);
+    _In_opt_ DXGI_SWAP_CHAIN_DESC *pSwapChainDesc,
+    _Out_opt_ IDXGISwapChain **ppSwapChain,
+    _Out_opt_ ID3D10Device1 **ppDevice);
+
 DEFINE_GUID(IID_ID3D10BlendState1,0xEDAD8D99,0x8A35,0x4d6d,0x85,0x66,0x2E,0xA2,0x76,0xCD,0xE1,0x61);
 DEFINE_GUID(IID_ID3D10ShaderResourceView1,0x9B7E4C87,0x342C,0x4106,0xA1,0x9F,0x4F,0x27,0x04,0xF6,0x89,0xF0);
 DEFINE_GUID(IID_ID3D10Device1,0x9B7E4C8F,0x342C,0x4106,0xA1,0x9F,0x4F,0x27,0x04,0xF6,0x89,0xF0);
