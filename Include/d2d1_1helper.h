@@ -43,7 +43,9 @@ namespace D2D1
     {
     public:
 
-        inline Matrix4x3F(
+        COM_DECLSPEC_NOTHROW
+        inline
+        Matrix4x3F(
             FLOAT m11, FLOAT m12, FLOAT m13,
             FLOAT m21, FLOAT m22, FLOAT m23,
             FLOAT m31, FLOAT m32, FLOAT m33,
@@ -67,7 +69,9 @@ namespace D2D1
             _43 = m43;
         }
 
-        inline Matrix4x3F()
+        COM_DECLSPEC_NOTHROW
+        inline
+        Matrix4x3F()
         {
             _11 = 1;
             _12 = 0;
@@ -91,7 +95,9 @@ namespace D2D1
     {
     public:
 
-        inline Matrix4x4F(
+        COM_DECLSPEC_NOTHROW
+        inline
+        Matrix4x4F(
             FLOAT m11, FLOAT m12, FLOAT m13, FLOAT m14,
             FLOAT m21, FLOAT m22, FLOAT m23, FLOAT m24,
             FLOAT m31, FLOAT m32, FLOAT m33, FLOAT m34,
@@ -119,7 +125,9 @@ namespace D2D1
             _44 = m44;
         }
 
-        inline Matrix4x4F()
+        COM_DECLSPEC_NOTHROW
+        inline
+        Matrix4x4F()
         {
             _11 = 1;
             _12 = 0;
@@ -142,7 +150,10 @@ namespace D2D1
             _44 = 1;
         }
 
-        inline bool operator==(
+        COM_DECLSPEC_NOTHROW
+        inline
+        bool
+        operator==(
             const Matrix4x4F& r
             ) const
         {
@@ -152,14 +163,21 @@ namespace D2D1
                    _41 == r._41 && _42 == r._42 && _43 == r._43 && _44 == r._44;
         }
 
-        inline bool operator!=(
+        COM_DECLSPEC_NOTHROW
+        inline
+        bool
+        operator!=(
             const Matrix4x4F& r
             ) const
         {
             return !(*this == r);
         }
 
-        static inline Matrix4x4F Translation(FLOAT x, FLOAT y, FLOAT z)
+        static
+        COM_DECLSPEC_NOTHROW
+        inline
+        Matrix4x4F
+        Translation(FLOAT x, FLOAT y, FLOAT z)
         {
             Matrix4x4F translation;
 
@@ -171,7 +189,11 @@ namespace D2D1
             return translation;
         }
 
-        static inline Matrix4x4F Scale(FLOAT x, FLOAT y, FLOAT z)
+        static
+        COM_DECLSPEC_NOTHROW
+        inline
+        Matrix4x4F
+        Scale(FLOAT x, FLOAT y, FLOAT z)
         {
             Matrix4x4F scale;
 
@@ -183,12 +205,16 @@ namespace D2D1
             return scale;
         }
 
-        static inline Matrix4x4F RotationX(FLOAT degreeX)
+        static
+        COM_DECLSPEC_NOTHROW
+        inline
+        Matrix4x4F
+        RotationX(FLOAT degreeX)
         {
             FLOAT angleInRadian = degreeX * (3.141592654f / 180.0f);
 
-            FLOAT sinAngle;
-            FLOAT cosAngle;
+            FLOAT sinAngle = 0.0;
+            FLOAT cosAngle = 0.0;
             D2D1SinCos(angleInRadian, &sinAngle, &cosAngle);
 
             Matrix4x4F rotationX(
@@ -201,12 +227,16 @@ namespace D2D1
             return rotationX;
         }
 
-        static inline Matrix4x4F RotationY(FLOAT degreeY)
+        static
+        COM_DECLSPEC_NOTHROW
+        inline
+        Matrix4x4F
+        RotationY(FLOAT degreeY)
         {
             FLOAT angleInRadian = degreeY * (3.141592654f / 180.0f);
 
-            FLOAT sinAngle;
-            FLOAT cosAngle;
+            FLOAT sinAngle = 0.0;
+            FLOAT cosAngle = 0.0;
             D2D1SinCos(angleInRadian, &sinAngle, &cosAngle);
 
             Matrix4x4F rotationY(
@@ -219,12 +249,16 @@ namespace D2D1
             return rotationY;
         }
 
-        static inline Matrix4x4F RotationZ(FLOAT degreeZ)
+        static
+        COM_DECLSPEC_NOTHROW
+        inline
+        Matrix4x4F
+        RotationZ(FLOAT degreeZ)
         {
             FLOAT angleInRadian = degreeZ * (3.141592654f / 180.0f);
 
-            FLOAT sinAngle;
-            FLOAT cosAngle;
+            FLOAT sinAngle = 0.0;
+            FLOAT cosAngle = 0.0;
             D2D1SinCos(angleInRadian, &sinAngle, &cosAngle);
 
             Matrix4x4F rotationZ(
@@ -240,7 +274,11 @@ namespace D2D1
         //
         // 3D Rotation matrix for an arbitrary axis specified by x, y and z
         //
-        static inline Matrix4x4F RotationArbitraryAxis(FLOAT x, FLOAT y, FLOAT z, FLOAT degree)
+        static
+        COM_DECLSPEC_NOTHROW
+        inline
+        Matrix4x4F
+        RotationArbitraryAxis(FLOAT x, FLOAT y, FLOAT z, FLOAT degree)
         {
             // Normalize the vector represented by x, y, and z
             FLOAT magnitude = D2D1Vec3Length(x, y, z);
@@ -250,8 +288,8 @@ namespace D2D1
 
             FLOAT angleInRadian = degree * (3.141592654f / 180.0f);
 
-            FLOAT sinAngle;
-            FLOAT cosAngle;
+            FLOAT sinAngle = 0.0;
+            FLOAT cosAngle = 0.0;
             D2D1SinCos(angleInRadian, &sinAngle, &cosAngle);
 
             FLOAT oneMinusCosAngle = 1 - cosAngle;
@@ -278,7 +316,11 @@ namespace D2D1
             return rotationArb;
         }
 
-        static inline Matrix4x4F SkewX(FLOAT degreeX)
+        static
+        COM_DECLSPEC_NOTHROW
+        inline
+        Matrix4x4F
+        SkewX(FLOAT degreeX)
         {
             FLOAT angleInRadian = degreeX * (3.141592654f / 180.0f);
 
@@ -294,7 +336,11 @@ namespace D2D1
             return skewX;
         }
 
-        static inline Matrix4x4F SkewY(FLOAT degreeY)
+        static
+        COM_DECLSPEC_NOTHROW
+        inline
+        Matrix4x4F
+        SkewY(FLOAT degreeY)
         {
             FLOAT angleInRadian = degreeY * (3.141592654f / 180.0f);
 
@@ -311,7 +357,11 @@ namespace D2D1
         }
 
 
-        static inline Matrix4x4F PerspectiveProjection(FLOAT depth)
+        static
+        COM_DECLSPEC_NOTHROW
+        inline
+        Matrix4x4F
+        PerspectiveProjection(FLOAT depth)
         {
             float proj = 0;
 
@@ -331,19 +381,31 @@ namespace D2D1
         }
 
         //
-        // Functions for convertion from the base D2D1_MATRIX_4X4_f to this type without making a copy
+        // Functions for convertion from the base D2D1_MATRIX_4X4_f to
+        // this type without making a copy
         //
-        static inline const Matrix4x4F* ReinterpretBaseType(const D2D1_MATRIX_4X4_F *pMatrix)
+        static
+        COM_DECLSPEC_NOTHROW
+        inline
+        const Matrix4x4F*
+        ReinterpretBaseType(const D2D1_MATRIX_4X4_F *pMatrix)
         {
             return static_cast<const Matrix4x4F *>(pMatrix);
         }
 
-        static inline Matrix4x4F* ReinterpretBaseType(D2D1_MATRIX_4X4_F *pMatrix)
+        static
+        COM_DECLSPEC_NOTHROW
+        inline
+        Matrix4x4F*
+        ReinterpretBaseType(D2D1_MATRIX_4X4_F *pMatrix)
         {
             return static_cast<Matrix4x4F *>(pMatrix);
         }
 
-        inline FLOAT Determinant() const
+        COM_DECLSPEC_NOTHROW
+        inline
+        FLOAT
+        Determinant() const
         {
             FLOAT minor1 = _41 * (_12 * (_23 * _34 - _33 * _24) - _13 * (_22 * _34 - _24 * _32) + _14 * (_22 * _33 - _23 * _32));
             FLOAT minor2 = _42 * (_11 * (_21 * _34 - _31 * _24) - _13 * (_21 * _34 - _24 * _31) + _14 * (_21 * _33 - _23 * _31));
@@ -353,7 +415,10 @@ namespace D2D1
             return minor1 - minor2 + minor3 - minor4;
         }
 
-        inline bool IsIdentity() const
+        COM_DECLSPEC_NOTHROW
+        inline
+        bool
+        IsIdentity() const
         {
             return _11 == 1.f && _12 == 0.f && _13 == 0.f && _14 == 0.f
                 && _21 == 0.f && _22 == 1.f && _23 == 0.f && _24 == 0.f
@@ -361,7 +426,10 @@ namespace D2D1
                 && _41 == 0.f && _42 == 0.f && _43 == 0.f && _44 == 1.f;
         }
 
-        inline void SetProduct(const Matrix4x4F &a, const Matrix4x4F &b)
+        COM_DECLSPEC_NOTHROW
+        inline
+        void
+        SetProduct(const Matrix4x4F &a, const Matrix4x4F &b)
         {
             _11 = a._11 * b._11 + a._12 * b._21 + a._13 * b._31 + a._14 * b._41;
             _12 = a._11 * b._12 + a._12 * b._22 + a._13 * b._32 + a._14 * b._42;
@@ -384,7 +452,10 @@ namespace D2D1
             _44 = a._41 * b._14 + a._42 * b._24 + a._43 * b._34 + a._44 * b._44;
         }
 
-        inline Matrix4x4F operator*(const Matrix4x4F &matrix) const
+        COM_DECLSPEC_NOTHROW
+        inline
+        Matrix4x4F
+        operator*(const Matrix4x4F &matrix) const
         {
             Matrix4x4F result;
 
@@ -399,7 +470,9 @@ namespace D2D1
     {
     public:
 
-        inline Matrix5x4F(
+        COM_DECLSPEC_NOTHROW
+        inline
+        Matrix5x4F(
             FLOAT m11, FLOAT m12, FLOAT m13, FLOAT m14,
             FLOAT m21, FLOAT m22, FLOAT m23, FLOAT m24,
             FLOAT m31, FLOAT m32, FLOAT m33, FLOAT m34,
@@ -433,7 +506,9 @@ namespace D2D1
             _54 = m54;
         }
 
-        inline Matrix5x4F()
+        COM_DECLSPEC_NOTHROW
+        inline
+        Matrix5x4F()
         {
             _11 = 1;
             _12 = 0;
@@ -462,7 +537,10 @@ namespace D2D1
         }
     };
 
-    inline D2D1_COLOR_F ConvertColorSpace(
+    COM_DECLSPEC_NOTHROW
+    inline
+    D2D1_COLOR_F
+    ConvertColorSpace(
         D2D1_COLOR_SPACE sourceColorSpace,
         D2D1_COLOR_SPACE destinationColorSpace,
         const D2D1_COLOR_F& color
@@ -475,6 +553,7 @@ namespace D2D1
             );
     }
 
+    COM_DECLSPEC_NOTHROW
     D2D1FORCEINLINE
     D2D1_DRAWING_STATE_DESCRIPTION1
     DrawingStateDescription1(
@@ -500,6 +579,7 @@ namespace D2D1
         return drawingStateDescription1;
     }
 
+    COM_DECLSPEC_NOTHROW
     D2D1FORCEINLINE
     D2D1_DRAWING_STATE_DESCRIPTION1
     DrawingStateDescription1(
@@ -521,6 +601,7 @@ namespace D2D1
         return drawingStateDescription1;
     }
 
+    COM_DECLSPEC_NOTHROW
     D2D1FORCEINLINE
     D2D1_BITMAP_PROPERTIES1
     BitmapProperties1(
@@ -542,6 +623,7 @@ namespace D2D1
         return bitmapProperties;
     }    
 
+    COM_DECLSPEC_NOTHROW
     D2D1FORCEINLINE
     D2D1_LAYER_PARAMETERS1
     LayerParameters1(
@@ -567,7 +649,7 @@ namespace D2D1
         return layerParameters;
     }
 
-
+    COM_DECLSPEC_NOTHROW
     D2D1FORCEINLINE
     D2D1_STROKE_STYLE_PROPERTIES1
     StrokeStyleProperties1(
@@ -595,6 +677,7 @@ namespace D2D1
         return strokeStyleProperties;
     }
 
+    COM_DECLSPEC_NOTHROW
     D2D1FORCEINLINE
     D2D1_IMAGE_BRUSH_PROPERTIES
     ImageBrushProperties(
@@ -614,6 +697,7 @@ namespace D2D1
         return imageBrushProperties;
     }
 
+    COM_DECLSPEC_NOTHROW
     D2D1FORCEINLINE
     D2D1_BITMAP_BRUSH_PROPERTIES1
     BitmapBrushProperties1(
@@ -631,6 +715,7 @@ namespace D2D1
         return bitmapBrush1Properties;
     }
 
+    COM_DECLSPEC_NOTHROW
     D2D1FORCEINLINE
     D2D1_PRINT_CONTROL_PROPERTIES
     PrintControlProperties(
@@ -648,6 +733,7 @@ namespace D2D1
         return printControlProps;
     }
 
+    COM_DECLSPEC_NOTHROW
     D2D1FORCEINLINE
     D2D1_RENDERING_CONTROLS
     RenderingControls(
@@ -663,6 +749,7 @@ namespace D2D1
         return renderingControls;
     }
 
+    COM_DECLSPEC_NOTHROW
     D2D1FORCEINLINE
     D2D1_EFFECT_INPUT_DESCRIPTION
     EffectInputDescription(
@@ -680,6 +767,7 @@ namespace D2D1
         return description;
     }
 
+    COM_DECLSPEC_NOTHROW
     D2D1FORCEINLINE
     D2D1_CREATION_PROPERTIES
     CreationProperties(
@@ -697,6 +785,7 @@ namespace D2D1
         return creationProperties;
     }
 
+    COM_DECLSPEC_NOTHROW
     D2D1FORCEINLINE
     D2D1_VECTOR_2F
     Vector2F(
@@ -708,6 +797,7 @@ namespace D2D1
         return vec2;
     }
 
+    COM_DECLSPEC_NOTHROW
     D2D1FORCEINLINE
     D2D1_VECTOR_3F
     Vector3F(
@@ -720,6 +810,7 @@ namespace D2D1
         return vec3;
     }
 
+    COM_DECLSPEC_NOTHROW
     D2D1FORCEINLINE
     D2D1_VECTOR_4F
     Vector4F(
@@ -733,6 +824,7 @@ namespace D2D1
         return vec4;
     }
 
+    COM_DECLSPEC_NOTHROW
     D2D1FORCEINLINE
     D2D1_POINT_2L
     Point2L(
@@ -743,6 +835,7 @@ namespace D2D1
         return Point2<INT32>(x, y);
     }
 
+    COM_DECLSPEC_NOTHROW
     D2D1FORCEINLINE
     D2D1_RECT_L
     RectL(
@@ -758,9 +851,11 @@ namespace D2D1
     //
     // Sets a bitmap as an effect input, while inserting a DPI compensation effect
     // to preserve visual appearance as the device context's DPI changes.
-    //
+    // 
+    COM_DECLSPEC_NOTHROW
     D2D1FORCEINLINE
-    HRESULT SetDpiCompensatedEffectInput(
+    HRESULT
+    SetDpiCompensatedEffectInput(
         _In_ ID2D1DeviceContext *deviceContext,
         _In_ ID2D1Effect *effect,
         UINT32 inputIndex,
@@ -818,3 +913,4 @@ namespace D2D1
 #endif // #ifndef D2D_USE_C_DEFINITIONS
 
 #endif // #ifndef _D2D1_HELPER_H_
+

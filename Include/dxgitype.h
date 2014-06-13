@@ -1,7 +1,8 @@
-
+//
+//    Copyright (C) Microsoft.  All rights reserved.
+//
 #ifndef __dxgitype_h__
 #define __dxgitype_h__
-
 
 #include "dxgiformat.h"
 

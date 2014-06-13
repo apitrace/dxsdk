@@ -5,8 +5,9 @@
 //
 // File name: D2DBaseTypes.h
 //---------------------------------------------------------------------------
+#ifdef _MSC_VER
 #pragma once
-
+#endif // #ifdef _MSC_VER
 
 #ifndef _D2DBASETYPES_INCLUDED
 #define _D2DBASETYPES_INCLUDED
@@ -14,32 +15,14 @@
 #ifndef COM_NO_WINDOWS_H
 #include <windows.h>
 #endif // #ifndef COM_NO_WINDOWS_H
+#ifndef __dxgitype_h__
+#include <dxgitype.h>
+#endif // #ifndef __dxgitype_h__
 
 #if _MSC_VER >= 1200
 #pragma warning(push)
 #endif
 #pragma warning(disable:4201) // anonymous unions warning
-
-#ifndef D3DCOLORVALUE_DEFINED
-
-//+-----------------------------------------------------------------------------
-//
-//  Struct:
-//      D3DCOLORVALUE
-//
-//------------------------------------------------------------------------------
-typedef struct D3DCOLORVALUE
-{
-    FLOAT r;
-    FLOAT g;
-    FLOAT b;
-    FLOAT a;
-
-} D3DCOLORVALUE;
-
-#define D3DCOLORVALUE_DEFINED
-#endif
-
 
 //+-----------------------------------------------------------------------------
 //

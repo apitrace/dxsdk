@@ -5,8 +5,9 @@
 //
 // File name: D2D1Effects.h
 //---------------------------------------------------------------------------
+#ifdef _MSC_VER
 #pragma once
-
+#endif // #ifdef _MSC_VER
 
 #ifndef _D2D1_EFFECTS_
 #define _D2D1_EFFECTS_
@@ -45,6 +46,7 @@ DEFINE_GUID(CLSID_D2D1HueRotation,              0x0f4458ec, 0x4b32, 0x491b, 0x9e
 DEFINE_GUID(CLSID_D2D1LinearTransfer,           0xad47c8fd, 0x63ef, 0x4acc, 0x9b, 0x51, 0x67, 0x97, 0x9c, 0x03, 0x6c, 0x06);
 DEFINE_GUID(CLSID_D2D1LuminanceToAlpha,         0x41251ab7, 0x0beb, 0x46f8, 0x9d, 0xa7, 0x59, 0xe9, 0x3f, 0xcc, 0xe5, 0xde);
 DEFINE_GUID(CLSID_D2D1Morphology,               0xeae6c40d, 0x626a, 0x4c2d, 0xbf, 0xcb, 0x39, 0x10, 0x01, 0xab, 0xe2, 0x02);
+DEFINE_GUID(CLSID_D2D1OpacityMetadata,          0x6c53006a, 0x4450, 0x4199, 0xaa, 0x5b, 0xad, 0x16, 0x56, 0xfe, 0xce, 0x5e);
 DEFINE_GUID(CLSID_D2D1PointDiffuse,             0xb9e303c3, 0xc08c, 0x4f91, 0x8b, 0x7b, 0x38, 0x65, 0x6b, 0xc4, 0x8c, 0x20);
 DEFINE_GUID(CLSID_D2D1PointSpecular,            0x09c3ca26, 0x3ae2, 0x4f09, 0x9e, 0xbc, 0xed, 0x38, 0x65, 0xd5, 0x3f, 0x22);
 DEFINE_GUID(CLSID_D2D1Premultiply,              0x06eab419, 0xdeed, 0x4018, 0x80, 0xd2, 0x3e, 0x1d, 0x47, 0x1a, 0xde, 0xb2);
@@ -932,52 +934,18 @@ typedef enum D2D1_DISPLACEMENTMAP_PROP
         
         //
         // Property Name: "XChannelSelect"
-        // Property Type: D2D1_DISPLACEMENTMAP_X_CHANNEL_SELECT
+        // Property Type: D2D1_CHANNEL_SELECTOR
         //
         D2D1_DISPLACEMENTMAP_PROP_X_CHANNEL_SELECT = 1,
         
         //
         // Property Name: "YChannelSelect"
-        // Property Type: D2D1_DISPLACEMENTMAP_Y_CHANNEL_SELECT
+        // Property Type: D2D1_CHANNEL_SELECTOR
         //
         D2D1_DISPLACEMENTMAP_PROP_Y_CHANNEL_SELECT = 2,
         D2D1_DISPLACEMENTMAP_PROP_FORCE_DWORD = 0xffffffff
 
 } D2D1_DISPLACEMENTMAP_PROP;
-
-
-//+-----------------------------------------------------------------------------
-//
-//  Enum:
-//      D2D1_DISPLACEMENTMAP_X_CHANNEL_SELECT
-//
-//------------------------------------------------------------------------------
-typedef enum D2D1_DISPLACEMENTMAP_X_CHANNEL_SELECT
-{
-        D2D1_DISPLACEMENTMAP_X_CHANNEL_SELECT_R_CHANNEL = 0,
-        D2D1_DISPLACEMENTMAP_X_CHANNEL_SELECT_G_CHANNEL = 1,
-        D2D1_DISPLACEMENTMAP_X_CHANNEL_SELECT_B_CHANNEL = 2,
-        D2D1_DISPLACEMENTMAP_X_CHANNEL_SELECT_A_CHANNEL = 3,
-        D2D1_DISPLACEMENTMAP_X_CHANNEL_SELECT_FORCE_DWORD = 0xffffffff
-
-} D2D1_DISPLACEMENTMAP_X_CHANNEL_SELECT;
-
-
-//+-----------------------------------------------------------------------------
-//
-//  Enum:
-//      D2D1_DISPLACEMENTMAP_Y_CHANNEL_SELECT
-//
-//------------------------------------------------------------------------------
-typedef enum D2D1_DISPLACEMENTMAP_Y_CHANNEL_SELECT
-{
-        D2D1_DISPLACEMENTMAP_Y_CHANNEL_SELECT_R_CHANNEL = 0,
-        D2D1_DISPLACEMENTMAP_Y_CHANNEL_SELECT_G_CHANNEL = 1,
-        D2D1_DISPLACEMENTMAP_Y_CHANNEL_SELECT_B_CHANNEL = 2,
-        D2D1_DISPLACEMENTMAP_Y_CHANNEL_SELECT_A_CHANNEL = 3,
-        D2D1_DISPLACEMENTMAP_Y_CHANNEL_SELECT_FORCE_DWORD = 0xffffffff
-
-} D2D1_DISPLACEMENTMAP_Y_CHANNEL_SELECT;
 
 
 //+-----------------------------------------------------------------------------
@@ -1021,6 +989,12 @@ typedef enum D2D1_COLORMANAGEMENT_PROP
         // Property Type: D2D1_COLORMANAGEMENT_ALPHA_MODE
         //
         D2D1_COLORMANAGEMENT_PROP_ALPHA_MODE = 4,
+        
+        //
+        // Property Name: "Quality"
+        // Property Type: D2D1_COLORMANAGEMENT_QUALITY
+        //
+        D2D1_COLORMANAGEMENT_PROP_QUALITY = 5,
         D2D1_COLORMANAGEMENT_PROP_FORCE_DWORD = 0xffffffff
 
 } D2D1_COLORMANAGEMENT_PROP;
@@ -1039,6 +1013,22 @@ typedef enum D2D1_COLORMANAGEMENT_ALPHA_MODE
         D2D1_COLORMANAGEMENT_ALPHA_MODE_FORCE_DWORD = 0xffffffff
 
 } D2D1_COLORMANAGEMENT_ALPHA_MODE;
+
+
+//+-----------------------------------------------------------------------------
+//
+//  Enum:
+//      D2D1_COLORMANAGEMENT_QUALITY
+//
+//------------------------------------------------------------------------------
+typedef enum D2D1_COLORMANAGEMENT_QUALITY
+{
+        D2D1_COLORMANAGEMENT_QUALITY_PROOF = 0,
+        D2D1_COLORMANAGEMENT_QUALITY_NORMAL = 1,
+        D2D1_COLORMANAGEMENT_QUALITY_BEST = 2,
+        D2D1_COLORMANAGEMENT_QUALITY_FORCE_DWORD = 0xffffffff
+
+} D2D1_COLORMANAGEMENT_QUALITY;
 
 
 //+-----------------------------------------------------------------------------
@@ -2284,6 +2274,28 @@ typedef enum D2D1_ATLAS_PROP
         D2D1_ATLAS_PROP_FORCE_DWORD = 0xffffffff
 
 } D2D1_ATLAS_PROP;
+
+
+//+-----------------------------------------------------------------------------
+//
+//  Enum:
+//      D2D1_OPACITYMETADATA_PROP
+//
+//  Synopsis:
+//      The enumeration of the Opacity Metadata effect's top level properties.
+//
+//------------------------------------------------------------------------------
+typedef enum D2D1_OPACITYMETADATA_PROP
+{
+        
+        //
+        // Property Name: "InputOpaqueRect"
+        // Property Type: D2D1_VECTOR_4F
+        //
+        D2D1_OPACITYMETADATA_PROP_INPUT_OPAQUE_RECT = 0,
+        D2D1_OPACITYMETADATA_PROP_FORCE_DWORD = 0xffffffff
+
+} D2D1_OPACITYMETADATA_PROP;
 
 
 

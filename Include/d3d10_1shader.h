@@ -12,6 +12,9 @@
 
 #include "d3d10shader.h"
 
+
+
+
 //----------------------------------------------------------------------------
 // Shader debugging structures
 //----------------------------------------------------------------------------
@@ -244,6 +247,7 @@ typedef struct _D3D10_SHADER_DEBUG_INFO
 //
 // Interface definitions
 //
+
 
 typedef interface ID3D10ShaderReflection1 ID3D10ShaderReflection1;
 typedef interface ID3D10ShaderReflection1 *LPD3D10SHADERREFLECTION1;

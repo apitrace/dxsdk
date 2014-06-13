@@ -1174,7 +1174,8 @@ typedef
 enum DXGI_SCALING
     {
         DXGI_SCALING_STRETCH	= 0,
-        DXGI_SCALING_NONE	= 1
+        DXGI_SCALING_NONE	= 1,
+        DXGI_SCALING_ASPECT_RATIO_STRETCH	= 2
     } 	DXGI_SCALING;
 
 typedef struct DXGI_SWAP_CHAIN_DESC1
@@ -1197,6 +1198,7 @@ typedef struct DXGI_SWAP_CHAIN_FULLSCREEN_DESC
     DXGI_RATIONAL RefreshRate;
     DXGI_MODE_SCANLINE_ORDER ScanlineOrdering;
     DXGI_MODE_SCALING Scaling;
+    BOOL Windowed;
     } 	DXGI_SWAP_CHAIN_FULLSCREEN_DESC;
 
 typedef struct DXGI_PRESENT_PARAMETERS
@@ -1656,7 +1658,7 @@ EXTERN_C const IID IID_IDXGIFactory2;
             /* [annotation][in] */ 
             _In_opt_  IDXGIOutput *pRestrictToOutput,
             /* [annotation][out] */ 
-            _Deref_out_  IDXGISwapChain1 **ppSwapChain) = 0;
+            _Outptr_  IDXGISwapChain1 **ppSwapChain) = 0;
         
     };
     
@@ -1839,7 +1841,7 @@ EXTERN_C const IID IID_IDXGIFactory2;
             /* [annotation][in] */ 
             _In_opt_  IDXGIOutput *pRestrictToOutput,
             /* [annotation][out] */ 
-            _Deref_out_  IDXGISwapChain1 **ppSwapChain);
+            _Outptr_  IDXGISwapChain1 **ppSwapChain);
         
         END_INTERFACE
     } IDXGIFactory2Vtbl;

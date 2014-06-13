@@ -1053,7 +1053,7 @@ interface DWRITE_DECLARE_INTERFACE("30572f99-dac6-41db-a16e-0486307e606a") IDWri
     /// for the glyph are zero.
     /// </remarks>
     STDMETHOD(GetEudcFontCollection)(
-        _Out_ IDWriteFontCollection** fontCollection,
+        _COM_Outptr_ IDWriteFontCollection** fontCollection,
         BOOL checkForUpdates = FALSE
         );
 
@@ -1077,7 +1077,7 @@ interface DWRITE_DECLARE_INTERFACE("30572f99-dac6-41db-a16e-0486307e606a") IDWri
         FLOAT clearTypeLevel,
         DWRITE_PIXEL_GEOMETRY pixelGeometry,
         DWRITE_RENDERING_MODE renderingMode,
-        _Out_ IDWriteRenderingParams1** renderingParams
+        _COM_Outptr_ IDWriteRenderingParams1** renderingParams
         ) PURE;
 
     using IDWriteFactory::CreateCustomRenderingParams;
@@ -1476,7 +1476,7 @@ interface DWRITE_DECLARE_INTERFACE("80DAD800-E21F-4E83-96CE-BFCCE500DB7C") IDWri
     /// Standard HRESULT error code.
     /// </returns>
     STDMETHOD(GetBaseline)(
-        IDWriteFontFace* fontFace,
+        _In_ IDWriteFontFace* fontFace,
         DWRITE_BASELINE baseline,
         BOOL isVertical,
         BOOL isSimulationAllowed,
@@ -1501,10 +1501,10 @@ interface DWRITE_DECLARE_INTERFACE("80DAD800-E21F-4E83-96CE-BFCCE500DB7C") IDWri
     /// All bidi analysis should be resolved before calling this.
     /// </remarks>
     STDMETHOD(AnalyzeVerticalGlyphOrientation)(
-        IDWriteTextAnalysisSource1* analysisSource,
+        _In_ IDWriteTextAnalysisSource1* analysisSource,
         UINT32 textPosition,
         UINT32 textLength,
-        IDWriteTextAnalysisSink1* analysisSink
+        _In_ IDWriteTextAnalysisSink1* analysisSink
         ) PURE;
 
     /// <summary>
@@ -1577,7 +1577,7 @@ interface DWRITE_DECLARE_INTERFACE("80DAD800-E21F-4E83-96CE-BFCCE500DB7C") IDWri
     STDMETHOD(GetTextComplexity)(
         _In_reads_(textLength) WCHAR const* textString,
         UINT32 textLength,
-        IDWriteFontFace* fontFace,
+        _In_ IDWriteFontFace* fontFace,
         _Out_ BOOL* isTextSimple,
         _Out_range_(0, textLength) UINT32* textLengthRead,
         _Out_writes_to_opt_(textLength, *textLengthRead) UINT16* glyphIndices
@@ -1607,7 +1607,7 @@ interface DWRITE_DECLARE_INTERFACE("80DAD800-E21F-4E83-96CE-BFCCE500DB7C") IDWri
     /// Standard HRESULT error code.
     /// </returns>
     STDMETHOD(GetJustificationOpportunities)(
-        _Maybenull_ IDWriteFontFace* fontFace,
+        _In_opt_ IDWriteFontFace* fontFace,
         FLOAT fontEmSize,
         DWRITE_SCRIPT_ANALYSIS scriptAnalysis,
         UINT32 textLength,
@@ -1687,7 +1687,7 @@ interface DWRITE_DECLARE_INTERFACE("80DAD800-E21F-4E83-96CE-BFCCE500DB7C") IDWri
     /// Standard HRESULT error code.
     /// </returns>
     STDMETHOD(GetJustifiedGlyphs)(
-        _Maybenull_ IDWriteFontFace* fontFace,
+        _In_opt_ IDWriteFontFace* fontFace,
         FLOAT fontEmSize,
         DWRITE_SCRIPT_ANALYSIS scriptAnalysis,
         UINT32 textLength,
@@ -1701,9 +1701,9 @@ interface DWRITE_DECLARE_INTERFACE("80DAD800-E21F-4E83-96CE-BFCCE500DB7C") IDWri
         _In_reads_(glyphCount) DWRITE_SHAPING_GLYPH_PROPERTIES const* glyphProperties,
         _Out_range_(glyphCount, maxGlyphCount) UINT32* actualGlyphCount,
         _Out_writes_opt_(textLength) UINT16* modifiedClusterMap,
-        _Out_writes_opt_(actualGlyphCount) UINT16* modifiedGlyphIndices,
-        _Out_writes_opt_(actualGlyphCount) FLOAT* modifiedGlyphAdvances,
-        _Out_writes_opt_(actualGlyphCount) DWRITE_GLYPH_OFFSET* modifiedGlyphOffsets
+        _Out_writes_to_(maxGlyphCount, *actualGlyphCount) UINT16* modifiedGlyphIndices,
+        _Out_writes_to_(maxGlyphCount, *actualGlyphCount) FLOAT* modifiedGlyphAdvances,
+        _Out_writes_to_(maxGlyphCount, *actualGlyphCount) DWRITE_GLYPH_OFFSET* modifiedGlyphOffsets
         ) PURE;
 };
 

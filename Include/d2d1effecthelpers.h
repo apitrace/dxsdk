@@ -277,7 +277,7 @@ HRESULT DeducingStringGetter(
     _Out_opt_ UINT32 *actualSize
     )
 {
-    UINT32 cchString;
+    UINT32 cchString = 0;
 
     HRESULT hr = (static_cast<const C *>(effect)->*callback)(reinterpret_cast<PWSTR>(data), dataSize / sizeof(WCHAR), &cchString);
 

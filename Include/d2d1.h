@@ -5,8 +5,9 @@
 //
 // File name: D2D1.h
 //---------------------------------------------------------------------------
+#ifdef _MSC_VER
 #pragma once
-
+#endif // #ifdef _MSC_VER
 
 #ifndef _D2D1_H_
 #define _D2D1_H_
@@ -32,9 +33,6 @@
 
 #endif // #ifndef D2D_USE_C_DEFINITIONS
 
-#ifndef DX_DECLARE_INTERFACE
-#define DX_DECLARE_INTERFACE(X) DECLSPEC_UUID(X) DECLSPEC_NOVTABLE
-#endif
 
 //
 // Forward declarations here
@@ -100,46 +98,6 @@ enum
 };
 
 
-#ifdef __MINGW32__
-//+-----------------------------------------------------------------------------
-//
-//  Enum:
-//      D2D1_ALPHA_MODE
-//
-//  Synopsis:
-//      Qualifies how alpha is to be treated in a bitmap or render target containing
-//      alpha.
-//
-//------------------------------------------------------------------------------
-typedef enum D2D1_ALPHA_MODE
-{
-        
-        //
-        // Alpha mode should be determined implicitly. Some target surfaces do not supply
-        // or imply this information in which case alpha must be specified.
-        //
-        D2D1_ALPHA_MODE_UNKNOWN = 0,
-        
-        //
-        // Treat the alpha as premultipled.
-        //
-        D2D1_ALPHA_MODE_PREMULTIPLIED = 1,
-        
-        //
-        // Opacity is in the 'A' component only.
-        //
-        D2D1_ALPHA_MODE_STRAIGHT = 2,
-        
-        //
-        // Ignore any alpha channel information.
-        //
-        D2D1_ALPHA_MODE_IGNORE = 3,
-        D2D1_ALPHA_MODE_FORCE_DWORD = 0xffffffff
-
-} D2D1_ALPHA_MODE;
-#endif /* __MINGW32__ */
-
-
 //+-----------------------------------------------------------------------------
 //
 //  Enum:
@@ -203,7 +161,7 @@ typedef enum D2D1_OPACITY_MASK_CONTENT
 //      D2D1_EXTEND_MODE
 //
 //  Synopsis:
-//      Enum which descibes how to sample from a source outside it's base tile.
+//      Enum which describes how to sample from a source outside its base tile.
 //
 //------------------------------------------------------------------------------
 typedef enum D2D1_EXTEND_MODE
@@ -237,7 +195,7 @@ typedef enum D2D1_EXTEND_MODE
 //      D2D1_ANTIALIAS_MODE
 //
 //  Synopsis:
-//      Enum which descibes the manner in which we render edges of non-text primitives.
+//      Enum which describes the manner in which we render edges of non-text primitives.
 //
 //------------------------------------------------------------------------------
 typedef enum D2D1_ANTIALIAS_MODE
@@ -336,28 +294,17 @@ typedef enum D2D1_DRAW_TEXT_OPTIONS
         // Clip the text to the content bounds.
         //
         D2D1_DRAW_TEXT_OPTIONS_CLIP = 0x00000002,
+        
+        //
+        // Render color versions of glyphs if defined by the font.
+        //
+        D2D1_DRAW_TEXT_OPTIONS_ENABLE_COLOR_FONT = 0x00000004,
         D2D1_DRAW_TEXT_OPTIONS_NONE = 0x00000000,
         D2D1_DRAW_TEXT_OPTIONS_FORCE_DWORD = 0xffffffff
 
 } D2D1_DRAW_TEXT_OPTIONS;
 
 DEFINE_ENUM_FLAG_OPERATORS(D2D1_DRAW_TEXT_OPTIONS);
-
-
-#ifdef __MINGW32__
-//+-----------------------------------------------------------------------------
-//
-//  Struct:
-//      D2D1_PIXEL_FORMAT
-//
-//------------------------------------------------------------------------------
-typedef struct D2D1_PIXEL_FORMAT
-{
-    DXGI_FORMAT format;
-    D2D1_ALPHA_MODE alphaMode;
-
-} D2D1_PIXEL_FORMAT;
-#endif /* __MINGW32__ */
 
 typedef D2D_POINT_2U D2D1_POINT_2U;
 typedef D2D_POINT_2F D2D1_POINT_2F;
@@ -482,7 +429,7 @@ typedef enum D2D1_ARC_SIZE
 //      D2D1_CAP_STYLE
 //
 //  Synopsis:
-//      Enum which descibes the drawing of the ends of a line.
+//      Enum which describes the drawing of the ends of a line.
 //
 //------------------------------------------------------------------------------
 typedef enum D2D1_CAP_STYLE
@@ -537,7 +484,7 @@ typedef enum D2D1_DASH_STYLE
 //      D2D1_LINE_JOIN
 //
 //  Synopsis:
-//      Enum which descibes the drawing of the corners on the line.
+//      Enum which describes the drawing of the corners on the line.
 //
 //------------------------------------------------------------------------------
 typedef enum D2D1_LINE_JOIN
@@ -688,7 +635,7 @@ typedef enum D2D1_FIGURE_BEGIN
 //      D2D1_FIGURE_END
 //
 //  Synopsis:
-//      Indicates whether the figure ir open or closed on its end point.
+//      Indicates whether the figure is open or closed on its end point.
 //
 //------------------------------------------------------------------------------
 typedef enum D2D1_FIGURE_END
@@ -1047,7 +994,7 @@ typedef enum D2D1_RENDER_TARGET_USAGE
         D2D1_RENDER_TARGET_USAGE_FORCE_BITMAP_REMOTING = 0x00000001,
         
         //
-        // The render target will allow a call to GetDC on the IGdiInteropRenderTarget
+        // The render target will allow a call to GetDC on the ID2D1GdiInteropRenderTarget
         // interface. Rendering will also occur locally.
         //
         D2D1_RENDER_TARGET_USAGE_GDI_COMPATIBLE = 0x00000002,
@@ -1132,7 +1079,7 @@ typedef enum D2D1_COMPATIBLE_RENDER_TARGET_OPTIONS
         
         //
         // The compatible render target will allow a call to GetDC on the
-        // IGdiInteropRenderTarget interface. This can be specified even if the parent
+        // ID2D1GdiInteropRenderTarget interface. This can be specified even if the parent
         // render target is not GDI compatible.
         //
         D2D1_COMPATIBLE_RENDER_TARGET_OPTIONS_GDI_COMPATIBLE = 0x00000001,
@@ -1193,7 +1140,7 @@ typedef enum D2D1_DC_INITIALIZE_MODE
 //      D2D1_DEBUG_LEVEL
 //
 //  Synopsis:
-//      Indicates the debug level to be outputed by the debug layer.
+//      Indicates the debug level to be output by the debug layer.
 //
 //------------------------------------------------------------------------------
 typedef enum D2D1_DEBUG_LEVEL
@@ -1389,7 +1336,7 @@ interface DX_DECLARE_INTERFACE("2cd906a7-12e2-11dc-9fed-001143a055f9") ID2D1Grad
     // returned colors have straight alpha.
     //
     STDMETHOD_(void, GetGradientStops)(
-        _Out_writes_to_(gradientStopsCount, _Inexpressible_("Retrieved through GetGradientStopCount") ) D2D1_GRADIENT_STOP *gradientStops,
+        _Out_writes_to_(gradientStopsCount, _Inexpressible_("Retrieved through GetGradientStopCount()") ) D2D1_GRADIENT_STOP *gradientStops,
         UINT32 gradientStopsCount 
         ) CONST PURE;
     
@@ -1441,6 +1388,7 @@ interface DX_DECLARE_INTERFACE("2cd906a8-12e2-11dc-9fed-001143a055f9") ID2D1Brus
         _Out_ D2D1_MATRIX_3X2_F *transform 
         ) CONST PURE;
     
+    COM_DECLSPEC_NOTHROW
     void
     SetTransform(
         CONST D2D1_MATRIX_3X2_F &transform 
@@ -1495,7 +1443,7 @@ interface DX_DECLARE_INTERFACE("2cd906aa-12e2-11dc-9fed-001143a055f9") ID2D1Bitm
     // Sets the bitmap associated as the source of this brush.
     //
     STDMETHOD_(void, SetBitmap)(
-        _In_ ID2D1Bitmap *bitmap 
+        _In_opt_ ID2D1Bitmap *bitmap 
         ) PURE;
     
     STDMETHOD_(D2D1_EXTEND_MODE, GetExtendModeX)(
@@ -1530,6 +1478,7 @@ interface DX_DECLARE_INTERFACE("2cd906a9-12e2-11dc-9fed-001143a055f9") ID2D1Soli
     STDMETHOD_(D2D1_COLOR_F, GetColor)(
         ) CONST PURE;
     
+    COM_DECLSPEC_NOTHROW
     void
     SetColor(
         CONST D2D1_COLOR_F &color 
@@ -1839,6 +1788,7 @@ interface DX_DECLARE_INTERFACE("2cd906a1-12e2-11dc-9fed-001143a055f9") ID2D1Geom
     //
     // Retrieve the bounds of the geometry, with an optional applied transform.
     //
+    COM_DECLSPEC_NOTHROW
     HRESULT
     GetBounds(
         CONST D2D1_MATRIX_3X2_F &worldTransform,
@@ -1853,6 +1803,7 @@ interface DX_DECLARE_INTERFACE("2cd906a1-12e2-11dc-9fed-001143a055f9") ID2D1Geom
     // Get the bounds of the corresponding geometry after it has been widened or have
     // an optional pen style applied.
     //
+    COM_DECLSPEC_NOTHROW
     HRESULT
     GetWidenedBounds(
         FLOAT strokeWidth,
@@ -1870,6 +1821,7 @@ interface DX_DECLARE_INTERFACE("2cd906a1-12e2-11dc-9fed-001143a055f9") ID2D1Geom
     // Get the bounds of the corresponding geometry after it has been widened or have
     // an optional pen style applied.
     //
+    COM_DECLSPEC_NOTHROW
     HRESULT
     GetWidenedBounds(
         FLOAT strokeWidth,
@@ -1886,6 +1838,7 @@ interface DX_DECLARE_INTERFACE("2cd906a1-12e2-11dc-9fed-001143a055f9") ID2D1Geom
     // Get the bounds of the corresponding geometry after it has been widened or have
     // an optional pen style applied.
     //
+    COM_DECLSPEC_NOTHROW
     HRESULT
     GetWidenedBounds(
         FLOAT strokeWidth,
@@ -1897,6 +1850,7 @@ interface DX_DECLARE_INTERFACE("2cd906a1-12e2-11dc-9fed-001143a055f9") ID2D1Geom
         return GetWidenedBounds(strokeWidth, strokeStyle, &worldTransform, D2D1_DEFAULT_FLATTENING_TOLERANCE, bounds);
     }
     
+    COM_DECLSPEC_NOTHROW
     HRESULT
     StrokeContainsPoint(
         D2D1_POINT_2F point,
@@ -1915,6 +1869,7 @@ interface DX_DECLARE_INTERFACE("2cd906a1-12e2-11dc-9fed-001143a055f9") ID2D1Geom
     // Checks to see whether the corresponding penned and widened geometry contains the
     // given point.
     //
+    COM_DECLSPEC_NOTHROW
     HRESULT
     StrokeContainsPoint(
         D2D1_POINT_2F point,
@@ -1927,6 +1882,7 @@ interface DX_DECLARE_INTERFACE("2cd906a1-12e2-11dc-9fed-001143a055f9") ID2D1Geom
         return StrokeContainsPoint(point, strokeWidth, strokeStyle, worldTransform, D2D1_DEFAULT_FLATTENING_TOLERANCE, contains);
     }
     
+    COM_DECLSPEC_NOTHROW
     HRESULT
     StrokeContainsPoint(
         D2D1_POINT_2F point,
@@ -1939,6 +1895,7 @@ interface DX_DECLARE_INTERFACE("2cd906a1-12e2-11dc-9fed-001143a055f9") ID2D1Geom
         return StrokeContainsPoint(point, strokeWidth, strokeStyle, &worldTransform, D2D1_DEFAULT_FLATTENING_TOLERANCE, contains);
     }
     
+    COM_DECLSPEC_NOTHROW
     HRESULT
     FillContainsPoint(
         D2D1_POINT_2F point,
@@ -1954,6 +1911,7 @@ interface DX_DECLARE_INTERFACE("2cd906a1-12e2-11dc-9fed-001143a055f9") ID2D1Geom
     //
     // Test whether the given fill of this geometry would contain this point.
     //
+    COM_DECLSPEC_NOTHROW
     HRESULT
     FillContainsPoint(
         D2D1_POINT_2F point,
@@ -1964,6 +1922,7 @@ interface DX_DECLARE_INTERFACE("2cd906a1-12e2-11dc-9fed-001143a055f9") ID2D1Geom
         return FillContainsPoint(point, worldTransform, D2D1_DEFAULT_FLATTENING_TOLERANCE, contains);
     }
     
+    COM_DECLSPEC_NOTHROW
     HRESULT
     FillContainsPoint(
         D2D1_POINT_2F point,
@@ -1978,6 +1937,7 @@ interface DX_DECLARE_INTERFACE("2cd906a1-12e2-11dc-9fed-001143a055f9") ID2D1Geom
     //
     // Compare how one geometry intersects or contains another geometry.
     //
+    COM_DECLSPEC_NOTHROW
     HRESULT
     CompareWithGeometry(
         _In_ ID2D1Geometry *inputGeometry,
@@ -1993,6 +1953,7 @@ interface DX_DECLARE_INTERFACE("2cd906a1-12e2-11dc-9fed-001143a055f9") ID2D1Geom
     //
     // Compare how one geometry intersects or contains another geometry.
     //
+    COM_DECLSPEC_NOTHROW
     HRESULT
     CompareWithGeometry(
         _In_ ID2D1Geometry *inputGeometry,
@@ -2007,6 +1968,7 @@ interface DX_DECLARE_INTERFACE("2cd906a1-12e2-11dc-9fed-001143a055f9") ID2D1Geom
     //
     // Compare how one geometry intersects or contains another geometry.
     //
+    COM_DECLSPEC_NOTHROW
     HRESULT
     CompareWithGeometry(
         _In_ ID2D1Geometry *inputGeometry,
@@ -2022,6 +1984,7 @@ interface DX_DECLARE_INTERFACE("2cd906a1-12e2-11dc-9fed-001143a055f9") ID2D1Geom
     // Converts a geometry to a simplified geometry that has arcs and quadratic beziers
     // removed.
     //
+    COM_DECLSPEC_NOTHROW
     HRESULT
     Simplify(
         D2D1_GEOMETRY_SIMPLIFICATION_OPTION simplificationOption,
@@ -2038,6 +2001,7 @@ interface DX_DECLARE_INTERFACE("2cd906a1-12e2-11dc-9fed-001143a055f9") ID2D1Geom
     // Converts a geometry to a simplified geometry that has arcs and quadratic beziers
     // removed.
     //
+    COM_DECLSPEC_NOTHROW
     HRESULT
     Simplify(
         D2D1_GEOMETRY_SIMPLIFICATION_OPTION simplificationOption,
@@ -2053,6 +2017,7 @@ interface DX_DECLARE_INTERFACE("2cd906a1-12e2-11dc-9fed-001143a055f9") ID2D1Geom
     // Converts a geometry to a simplified geometry that has arcs and quadratic beziers
     // removed.
     //
+    COM_DECLSPEC_NOTHROW
     HRESULT
     Simplify(
         D2D1_GEOMETRY_SIMPLIFICATION_OPTION simplificationOption,
@@ -2067,6 +2032,7 @@ interface DX_DECLARE_INTERFACE("2cd906a1-12e2-11dc-9fed-001143a055f9") ID2D1Geom
     //
     // Tessellates a geometry into triangles.
     //
+    COM_DECLSPEC_NOTHROW
     HRESULT
     Tessellate(
         CONST D2D1_MATRIX_3X2_F &worldTransform,
@@ -2081,6 +2047,7 @@ interface DX_DECLARE_INTERFACE("2cd906a1-12e2-11dc-9fed-001143a055f9") ID2D1Geom
     //
     // Tessellates a geometry into triangles.
     //
+    COM_DECLSPEC_NOTHROW
     HRESULT
     Tessellate(
         _In_opt_ CONST D2D1_MATRIX_3X2_F *worldTransform,
@@ -2094,6 +2061,7 @@ interface DX_DECLARE_INTERFACE("2cd906a1-12e2-11dc-9fed-001143a055f9") ID2D1Geom
     //
     // Tessellates a geometry into triangles.
     //
+    COM_DECLSPEC_NOTHROW
     HRESULT
     Tessellate(
         CONST D2D1_MATRIX_3X2_F &worldTransform,
@@ -2108,6 +2076,7 @@ interface DX_DECLARE_INTERFACE("2cd906a1-12e2-11dc-9fed-001143a055f9") ID2D1Geom
     // Performs a combine operation between the two geometries to produce a resulting
     // geometry.
     //
+    COM_DECLSPEC_NOTHROW
     HRESULT
     CombineWithGeometry(
         _In_ ID2D1Geometry *inputGeometry,
@@ -2125,6 +2094,7 @@ interface DX_DECLARE_INTERFACE("2cd906a1-12e2-11dc-9fed-001143a055f9") ID2D1Geom
     // Performs a combine operation between the two geometries to produce a resulting
     // geometry.
     //
+    COM_DECLSPEC_NOTHROW
     HRESULT
     CombineWithGeometry(
         _In_ ID2D1Geometry *inputGeometry,
@@ -2141,6 +2111,7 @@ interface DX_DECLARE_INTERFACE("2cd906a1-12e2-11dc-9fed-001143a055f9") ID2D1Geom
     // Performs a combine operation between the two geometries to produce a resulting
     // geometry.
     //
+    COM_DECLSPEC_NOTHROW
     HRESULT
     CombineWithGeometry(
         _In_ ID2D1Geometry *inputGeometry,
@@ -2157,6 +2128,7 @@ interface DX_DECLARE_INTERFACE("2cd906a1-12e2-11dc-9fed-001143a055f9") ID2D1Geom
     // Computes the outline of the geometry. The result is written back into a
     // simplified geometry sink.
     //
+    COM_DECLSPEC_NOTHROW
     HRESULT
     Outline(
         CONST D2D1_MATRIX_3X2_F &worldTransform,
@@ -2172,6 +2144,7 @@ interface DX_DECLARE_INTERFACE("2cd906a1-12e2-11dc-9fed-001143a055f9") ID2D1Geom
     // Computes the outline of the geometry. The result is written back into a
     // simplified geometry sink.
     //
+    COM_DECLSPEC_NOTHROW
     HRESULT
     Outline(
         _In_opt_ CONST D2D1_MATRIX_3X2_F *worldTransform,
@@ -2186,6 +2159,7 @@ interface DX_DECLARE_INTERFACE("2cd906a1-12e2-11dc-9fed-001143a055f9") ID2D1Geom
     // Computes the outline of the geometry. The result is written back into a
     // simplified geometry sink.
     //
+    COM_DECLSPEC_NOTHROW
     HRESULT
     Outline(
         CONST D2D1_MATRIX_3X2_F &worldTransform,
@@ -2199,6 +2173,7 @@ interface DX_DECLARE_INTERFACE("2cd906a1-12e2-11dc-9fed-001143a055f9") ID2D1Geom
     //
     // Computes the area of the geometry.
     //
+    COM_DECLSPEC_NOTHROW
     HRESULT
     ComputeArea(
         CONST D2D1_MATRIX_3X2_F &worldTransform,
@@ -2213,6 +2188,7 @@ interface DX_DECLARE_INTERFACE("2cd906a1-12e2-11dc-9fed-001143a055f9") ID2D1Geom
     //
     // Computes the area of the geometry.
     //
+    COM_DECLSPEC_NOTHROW
     HRESULT
     ComputeArea(
         _In_opt_ CONST D2D1_MATRIX_3X2_F *worldTransform,
@@ -2226,6 +2202,7 @@ interface DX_DECLARE_INTERFACE("2cd906a1-12e2-11dc-9fed-001143a055f9") ID2D1Geom
     //
     // Computes the area of the geometry.
     //
+    COM_DECLSPEC_NOTHROW
     HRESULT
     ComputeArea(
         CONST D2D1_MATRIX_3X2_F &worldTransform,
@@ -2239,6 +2216,7 @@ interface DX_DECLARE_INTERFACE("2cd906a1-12e2-11dc-9fed-001143a055f9") ID2D1Geom
     //
     // Computes the length of the geometry.
     //
+    COM_DECLSPEC_NOTHROW
     HRESULT
     ComputeLength(
         CONST D2D1_MATRIX_3X2_F &worldTransform,
@@ -2253,6 +2231,7 @@ interface DX_DECLARE_INTERFACE("2cd906a1-12e2-11dc-9fed-001143a055f9") ID2D1Geom
     //
     // Computes the length of the geometry.
     //
+    COM_DECLSPEC_NOTHROW
     HRESULT
     ComputeLength(
         _In_opt_ CONST D2D1_MATRIX_3X2_F *worldTransform,
@@ -2266,6 +2245,7 @@ interface DX_DECLARE_INTERFACE("2cd906a1-12e2-11dc-9fed-001143a055f9") ID2D1Geom
     //
     // Computes the length of the geometry.
     //
+    COM_DECLSPEC_NOTHROW
     HRESULT
     ComputeLength(
         CONST D2D1_MATRIX_3X2_F &worldTransform,
@@ -2279,6 +2259,7 @@ interface DX_DECLARE_INTERFACE("2cd906a1-12e2-11dc-9fed-001143a055f9") ID2D1Geom
     //
     // Computes the point and tangent a given distance along the path.
     //
+    COM_DECLSPEC_NOTHROW
     HRESULT
     ComputePointAtLength(
         FLOAT length,
@@ -2295,6 +2276,7 @@ interface DX_DECLARE_INTERFACE("2cd906a1-12e2-11dc-9fed-001143a055f9") ID2D1Geom
     //
     // Computes the point and tangent a given distance along the path.
     //
+    COM_DECLSPEC_NOTHROW
     HRESULT
     ComputePointAtLength(
         FLOAT length,
@@ -2310,6 +2292,7 @@ interface DX_DECLARE_INTERFACE("2cd906a1-12e2-11dc-9fed-001143a055f9") ID2D1Geom
     //
     // Computes the point and tangent a given distance along the path.
     //
+    COM_DECLSPEC_NOTHROW
     HRESULT
     ComputePointAtLength(
         FLOAT length,
@@ -2325,6 +2308,7 @@ interface DX_DECLARE_INTERFACE("2cd906a1-12e2-11dc-9fed-001143a055f9") ID2D1Geom
     //
     // Get the geometry and widen it as well as apply an optional pen style.
     //
+    COM_DECLSPEC_NOTHROW
     HRESULT
     Widen(
         FLOAT strokeWidth,
@@ -2341,6 +2325,7 @@ interface DX_DECLARE_INTERFACE("2cd906a1-12e2-11dc-9fed-001143a055f9") ID2D1Geom
     //
     // Get the geometry and widen it as well as apply an optional pen style.
     //
+    COM_DECLSPEC_NOTHROW
     HRESULT
     Widen(
         FLOAT strokeWidth,
@@ -2356,6 +2341,7 @@ interface DX_DECLARE_INTERFACE("2cd906a1-12e2-11dc-9fed-001143a055f9") ID2D1Geom
     //
     // Get the geometry and widen it as well as apply an optional pen style.
     //
+    COM_DECLSPEC_NOTHROW
     HRESULT
     Widen(
         FLOAT strokeWidth,
@@ -2533,6 +2519,7 @@ interface DX_DECLARE_INTERFACE("2cd9069f-12e2-11dc-9fed-001143a055f9") ID2D1Geom
         _In_ CONST D2D1_ARC_SEGMENT *arc 
         ) PURE;
     
+    COM_DECLSPEC_NOTHROW
     void
     AddBezier(
         CONST D2D1_BEZIER_SEGMENT &bezier 
@@ -2541,6 +2528,7 @@ interface DX_DECLARE_INTERFACE("2cd9069f-12e2-11dc-9fed-001143a055f9") ID2D1Geom
         AddBezier(&bezier);
     }
     
+    COM_DECLSPEC_NOTHROW
     void
     AddQuadraticBezier(
         CONST D2D1_QUADRATIC_BEZIER_SEGMENT &bezier 
@@ -2549,6 +2537,7 @@ interface DX_DECLARE_INTERFACE("2cd9069f-12e2-11dc-9fed-001143a055f9") ID2D1Geom
         AddQuadraticBezier(&bezier);
     }
     
+    COM_DECLSPEC_NOTHROW
     void
     AddArc(
         CONST D2D1_ARC_SEGMENT &arc 
@@ -2695,6 +2684,7 @@ interface DX_DECLARE_INTERFACE("28506e39-ebf6-46a1-bb47-fd85565ab957") ID2D1Draw
         _Outptr_result_maybenull_ IDWriteRenderingParams **textRenderingParams 
         ) CONST PURE;
     
+    COM_DECLSPEC_NOTHROW
     void
     SetDescription(
         CONST D2D1_DRAWING_STATE_DESCRIPTION &stateDescription 
@@ -2757,7 +2747,7 @@ interface DX_DECLARE_INTERFACE("2cd90694-12e2-11dc-9fed-001143a055f9") ID2D1Rend
     // or pen a geometry.
     //
     STDMETHOD(CreateBitmapBrush)(
-        _In_ ID2D1Bitmap *bitmap,
+        _In_opt_ ID2D1Bitmap *bitmap,
         _In_opt_ CONST D2D1_BITMAP_BRUSH_PROPERTIES *bitmapBrushProperties,
         _In_opt_ CONST D2D1_BRUSH_PROPERTIES *brushProperties,
         _Outptr_ ID2D1BitmapBrush **bitmapBrush 
@@ -2986,7 +2976,7 @@ interface DX_DECLARE_INTERFACE("2cd90694-12e2-11dc-9fed-001143a055f9") ID2D1Rend
     
     //
     // Draw a snapped text layout object. Since the layout is not subsequently changed,
-    // this can be more effecient than DrawText when drawing the same layout
+    // this can be more efficient than DrawText when drawing the same layout
     // repeatedly.
     //
     STDMETHOD_(void, DrawTextLayout)(
@@ -3047,7 +3037,7 @@ interface DX_DECLARE_INTERFACE("2cd90694-12e2-11dc-9fed-001143a055f9") ID2D1Rend
     
     //
     // Set a tag to correspond to the succeeding primitives. If an error occurs
-    // rendering a primtive, the tags can be returned from the Flush or EndDraw call.
+    // rendering a primitive, the tags can be returned from the Flush or EndDraw call.
     //
     STDMETHOD_(void, SetTags)(
         D2D1_TAG tag1,
@@ -3069,7 +3059,7 @@ interface DX_DECLARE_INTERFACE("2cd90694-12e2-11dc-9fed-001143a055f9") ID2D1Rend
     // Start a layer of drawing calls. The way in which the layer must be resolved is
     // specified first as well as the logical resource that stores the layer
     // parameters. The supplied layer resource might grow if the specified content
-    // cannot fit inside it. The layer will grow monitonically on each axis.  If a NULL
+    // cannot fit inside it. The layer will grow monotonically on each axis.  If a NULL
     // ID2D1Layer is provided, then a layer resource will be allocated automatically.
     //
     STDMETHOD_(void, PushLayer)(
@@ -3149,7 +3139,7 @@ interface DX_DECLARE_INTERFACE("2cd90694-12e2-11dc-9fed-001143a055f9") ID2D1Rend
     
     //
     // Sets the DPI on the render target. This results in the render target being
-    // interpretted to a different scale. Neither DPI can be negative. If zero is
+    // interpreted to a different scale. Neither DPI can be negative. If zero is
     // specified for both, the system DPI is chosen. If one is zero and the other
     // unspecified, the DPI is not changed.
     //
@@ -3200,6 +3190,7 @@ interface DX_DECLARE_INTERFACE("2cd90694-12e2-11dc-9fed-001143a055f9") ID2D1Rend
         _In_ CONST D2D1_RENDER_TARGET_PROPERTIES *renderTargetProperties 
         ) CONST PURE;
     
+    COM_DECLSPEC_NOTHROW
     HRESULT
     CreateBitmap(
         D2D1_SIZE_U size,
@@ -3212,6 +3203,7 @@ interface DX_DECLARE_INTERFACE("2cd90694-12e2-11dc-9fed-001143a055f9") ID2D1Rend
         return CreateBitmap(size, srcData, pitch, &bitmapProperties, bitmap);
     }
     
+    COM_DECLSPEC_NOTHROW
     HRESULT
     CreateBitmap(
         D2D1_SIZE_U size,
@@ -3226,6 +3218,7 @@ interface DX_DECLARE_INTERFACE("2cd90694-12e2-11dc-9fed-001143a055f9") ID2D1Rend
     //
     // Create a D2D bitmap by copying a WIC bitmap.
     //
+    COM_DECLSPEC_NOTHROW
     HRESULT
     CreateBitmapFromWicBitmap(
         _In_ IWICBitmapSource *wicBitmapSource,
@@ -3240,6 +3233,7 @@ interface DX_DECLARE_INTERFACE("2cd90694-12e2-11dc-9fed-001143a055f9") ID2D1Rend
     //
     // Create a D2D bitmap by copying a WIC bitmap.
     //
+    COM_DECLSPEC_NOTHROW
     HRESULT
     CreateBitmapFromWicBitmap(
         _In_ IWICBitmapSource *wicBitmapSource,
@@ -3254,9 +3248,10 @@ interface DX_DECLARE_INTERFACE("2cd90694-12e2-11dc-9fed-001143a055f9") ID2D1Rend
     // Creates a bitmap brush. The bitmap is scaled, rotated, skewed or tiled to fill
     // or pen a geometry.
     //
+    COM_DECLSPEC_NOTHROW
     HRESULT
     CreateBitmapBrush(
-        _In_ ID2D1Bitmap *bitmap,
+        _In_opt_ ID2D1Bitmap *bitmap,
         _Outptr_ ID2D1BitmapBrush **bitmapBrush 
         )  
     {
@@ -3268,9 +3263,10 @@ interface DX_DECLARE_INTERFACE("2cd90694-12e2-11dc-9fed-001143a055f9") ID2D1Rend
     // Creates a bitmap brush. The bitmap is scaled, rotated, skewed or tiled to fill
     // or pen a geometry.
     //
+    COM_DECLSPEC_NOTHROW
     HRESULT
     CreateBitmapBrush(
-        _In_ ID2D1Bitmap *bitmap,
+        _In_opt_ ID2D1Bitmap *bitmap,
         CONST D2D1_BITMAP_BRUSH_PROPERTIES &bitmapBrushProperties,
         _Outptr_ ID2D1BitmapBrush **bitmapBrush 
         )  
@@ -3283,9 +3279,10 @@ interface DX_DECLARE_INTERFACE("2cd90694-12e2-11dc-9fed-001143a055f9") ID2D1Rend
     // Creates a bitmap brush. The bitmap is scaled, rotated, skewed or tiled to fill
     // or pen a geometry.
     //
+    COM_DECLSPEC_NOTHROW
     HRESULT
     CreateBitmapBrush(
-        _In_ ID2D1Bitmap *bitmap,
+        _In_opt_ ID2D1Bitmap *bitmap,
         CONST D2D1_BITMAP_BRUSH_PROPERTIES &bitmapBrushProperties,
         CONST D2D1_BRUSH_PROPERTIES &brushProperties,
         _Outptr_ ID2D1BitmapBrush **bitmapBrush 
@@ -3294,6 +3291,7 @@ interface DX_DECLARE_INTERFACE("2cd90694-12e2-11dc-9fed-001143a055f9") ID2D1Rend
         return CreateBitmapBrush(bitmap, &bitmapBrushProperties, &brushProperties, bitmapBrush);
     }
     
+    COM_DECLSPEC_NOTHROW
     HRESULT
     CreateSolidColorBrush(
         CONST D2D1_COLOR_F &color,
@@ -3303,6 +3301,7 @@ interface DX_DECLARE_INTERFACE("2cd90694-12e2-11dc-9fed-001143a055f9") ID2D1Rend
         return CreateSolidColorBrush(&color, NULL, solidColorBrush);
     }
     
+    COM_DECLSPEC_NOTHROW
     HRESULT
     CreateSolidColorBrush(
         CONST D2D1_COLOR_F &color,
@@ -3313,6 +3312,7 @@ interface DX_DECLARE_INTERFACE("2cd90694-12e2-11dc-9fed-001143a055f9") ID2D1Rend
         return CreateSolidColorBrush(&color, &brushProperties, solidColorBrush);
     }
     
+    COM_DECLSPEC_NOTHROW
     HRESULT
     CreateGradientStopCollection(
         _In_reads_(gradientStopsCount) CONST D2D1_GRADIENT_STOP *gradientStops,
@@ -3323,6 +3323,7 @@ interface DX_DECLARE_INTERFACE("2cd90694-12e2-11dc-9fed-001143a055f9") ID2D1Rend
         return CreateGradientStopCollection(gradientStops, gradientStopsCount, D2D1_GAMMA_2_2, D2D1_EXTEND_MODE_CLAMP, gradientStopCollection);
     }
     
+    COM_DECLSPEC_NOTHROW
     HRESULT
     CreateLinearGradientBrush(
         CONST D2D1_LINEAR_GRADIENT_BRUSH_PROPERTIES &linearGradientBrushProperties,
@@ -3333,6 +3334,7 @@ interface DX_DECLARE_INTERFACE("2cd90694-12e2-11dc-9fed-001143a055f9") ID2D1Rend
         return CreateLinearGradientBrush(&linearGradientBrushProperties, NULL, gradientStopCollection, linearGradientBrush);
     }
     
+    COM_DECLSPEC_NOTHROW
     HRESULT
     CreateLinearGradientBrush(
         CONST D2D1_LINEAR_GRADIENT_BRUSH_PROPERTIES &linearGradientBrushProperties,
@@ -3344,6 +3346,7 @@ interface DX_DECLARE_INTERFACE("2cd90694-12e2-11dc-9fed-001143a055f9") ID2D1Rend
         return CreateLinearGradientBrush(&linearGradientBrushProperties, &brushProperties, gradientStopCollection, linearGradientBrush);
     }
     
+    COM_DECLSPEC_NOTHROW
     HRESULT
     CreateRadialGradientBrush(
         CONST D2D1_RADIAL_GRADIENT_BRUSH_PROPERTIES &radialGradientBrushProperties,
@@ -3354,6 +3357,7 @@ interface DX_DECLARE_INTERFACE("2cd90694-12e2-11dc-9fed-001143a055f9") ID2D1Rend
         return CreateRadialGradientBrush(&radialGradientBrushProperties, NULL, gradientStopCollection, radialGradientBrush);
     }
     
+    COM_DECLSPEC_NOTHROW
     HRESULT
     CreateRadialGradientBrush(
         CONST D2D1_RADIAL_GRADIENT_BRUSH_PROPERTIES &radialGradientBrushProperties,
@@ -3365,6 +3369,7 @@ interface DX_DECLARE_INTERFACE("2cd90694-12e2-11dc-9fed-001143a055f9") ID2D1Rend
         return CreateRadialGradientBrush(&radialGradientBrushProperties, &brushProperties, gradientStopCollection, radialGradientBrush);
     }
     
+    COM_DECLSPEC_NOTHROW
     HRESULT
     CreateCompatibleRenderTarget(
         _Outptr_ ID2D1BitmapRenderTarget **bitmapRenderTarget 
@@ -3373,6 +3378,7 @@ interface DX_DECLARE_INTERFACE("2cd90694-12e2-11dc-9fed-001143a055f9") ID2D1Rend
         return CreateCompatibleRenderTarget(NULL, NULL, NULL, D2D1_COMPATIBLE_RENDER_TARGET_OPTIONS_NONE, bitmapRenderTarget);
     }
     
+    COM_DECLSPEC_NOTHROW
     HRESULT
     CreateCompatibleRenderTarget(
         D2D1_SIZE_F desiredSize,
@@ -3382,6 +3388,7 @@ interface DX_DECLARE_INTERFACE("2cd90694-12e2-11dc-9fed-001143a055f9") ID2D1Rend
         return CreateCompatibleRenderTarget(&desiredSize, NULL, NULL, D2D1_COMPATIBLE_RENDER_TARGET_OPTIONS_NONE, bitmapRenderTarget);
     }
     
+    COM_DECLSPEC_NOTHROW
     HRESULT
     CreateCompatibleRenderTarget(
         D2D1_SIZE_F desiredSize,
@@ -3392,6 +3399,7 @@ interface DX_DECLARE_INTERFACE("2cd90694-12e2-11dc-9fed-001143a055f9") ID2D1Rend
         return CreateCompatibleRenderTarget(&desiredSize, &desiredPixelSize, NULL, D2D1_COMPATIBLE_RENDER_TARGET_OPTIONS_NONE, bitmapRenderTarget);
     }
     
+    COM_DECLSPEC_NOTHROW
     HRESULT
     CreateCompatibleRenderTarget(
         D2D1_SIZE_F desiredSize,
@@ -3403,6 +3411,7 @@ interface DX_DECLARE_INTERFACE("2cd90694-12e2-11dc-9fed-001143a055f9") ID2D1Rend
         return CreateCompatibleRenderTarget(&desiredSize, &desiredPixelSize, &desiredFormat, D2D1_COMPATIBLE_RENDER_TARGET_OPTIONS_NONE, bitmapRenderTarget);
     }
     
+    COM_DECLSPEC_NOTHROW
     HRESULT
     CreateCompatibleRenderTarget(
         D2D1_SIZE_F desiredSize,
@@ -3415,6 +3424,7 @@ interface DX_DECLARE_INTERFACE("2cd90694-12e2-11dc-9fed-001143a055f9") ID2D1Rend
         return CreateCompatibleRenderTarget(&desiredSize, &desiredPixelSize, &desiredFormat, options, bitmapRenderTarget);
     }
     
+    COM_DECLSPEC_NOTHROW
     HRESULT
     CreateLayer(
         D2D1_SIZE_F size,
@@ -3424,6 +3434,7 @@ interface DX_DECLARE_INTERFACE("2cd90694-12e2-11dc-9fed-001143a055f9") ID2D1Rend
         return CreateLayer(&size, layer);
     }
     
+    COM_DECLSPEC_NOTHROW
     HRESULT
     CreateLayer(
         _Outptr_ ID2D1Layer **layer 
@@ -3432,6 +3443,7 @@ interface DX_DECLARE_INTERFACE("2cd90694-12e2-11dc-9fed-001143a055f9") ID2D1Rend
         return CreateLayer(NULL, layer);
     }
     
+    COM_DECLSPEC_NOTHROW
     void
     DrawRectangle(
         CONST D2D1_RECT_F &rect,
@@ -3443,6 +3455,7 @@ interface DX_DECLARE_INTERFACE("2cd90694-12e2-11dc-9fed-001143a055f9") ID2D1Rend
         DrawRectangle(&rect, brush, strokeWidth, strokeStyle);
     }
     
+    COM_DECLSPEC_NOTHROW
     void
     FillRectangle(
         CONST D2D1_RECT_F &rect,
@@ -3452,6 +3465,7 @@ interface DX_DECLARE_INTERFACE("2cd90694-12e2-11dc-9fed-001143a055f9") ID2D1Rend
         FillRectangle(&rect, brush);
     }
     
+    COM_DECLSPEC_NOTHROW
     void
     DrawRoundedRectangle(
         CONST D2D1_ROUNDED_RECT &roundedRect,
@@ -3463,6 +3477,7 @@ interface DX_DECLARE_INTERFACE("2cd90694-12e2-11dc-9fed-001143a055f9") ID2D1Rend
         DrawRoundedRectangle(&roundedRect, brush, strokeWidth, strokeStyle);
     }
     
+    COM_DECLSPEC_NOTHROW
     void
     FillRoundedRectangle(
         CONST D2D1_ROUNDED_RECT &roundedRect,
@@ -3472,6 +3487,7 @@ interface DX_DECLARE_INTERFACE("2cd90694-12e2-11dc-9fed-001143a055f9") ID2D1Rend
         FillRoundedRectangle(&roundedRect, brush);
     }
     
+    COM_DECLSPEC_NOTHROW
     void
     DrawEllipse(
         CONST D2D1_ELLIPSE &ellipse,
@@ -3483,6 +3499,7 @@ interface DX_DECLARE_INTERFACE("2cd90694-12e2-11dc-9fed-001143a055f9") ID2D1Rend
         DrawEllipse(&ellipse, brush, strokeWidth, strokeStyle);
     }
     
+    COM_DECLSPEC_NOTHROW
     void
     FillEllipse(
         CONST D2D1_ELLIPSE &ellipse,
@@ -3492,6 +3509,7 @@ interface DX_DECLARE_INTERFACE("2cd90694-12e2-11dc-9fed-001143a055f9") ID2D1Rend
         FillEllipse(&ellipse, brush);
     }
     
+    COM_DECLSPEC_NOTHROW
     void
     FillOpacityMask(
         _In_ ID2D1Bitmap *opacityMask,
@@ -3504,6 +3522,7 @@ interface DX_DECLARE_INTERFACE("2cd90694-12e2-11dc-9fed-001143a055f9") ID2D1Rend
         FillOpacityMask(opacityMask, brush, content, &destinationRectangle, &sourceRectangle);
     }
     
+    COM_DECLSPEC_NOTHROW
     void
     DrawBitmap(
         _In_ ID2D1Bitmap *bitmap,
@@ -3516,6 +3535,7 @@ interface DX_DECLARE_INTERFACE("2cd90694-12e2-11dc-9fed-001143a055f9") ID2D1Rend
         DrawBitmap(bitmap, &destinationRectangle, opacity, interpolationMode, sourceRectangle);
     }
     
+    COM_DECLSPEC_NOTHROW
     void
     DrawBitmap(
         _In_ ID2D1Bitmap *bitmap,
@@ -3528,6 +3548,7 @@ interface DX_DECLARE_INTERFACE("2cd90694-12e2-11dc-9fed-001143a055f9") ID2D1Rend
         DrawBitmap(bitmap, &destinationRectangle, opacity, interpolationMode, &sourceRectangle);
     }
     
+    COM_DECLSPEC_NOTHROW
     void
     SetTransform(
         CONST D2D1_MATRIX_3X2_F &transform 
@@ -3536,6 +3557,7 @@ interface DX_DECLARE_INTERFACE("2cd90694-12e2-11dc-9fed-001143a055f9") ID2D1Rend
         SetTransform(&transform);
     }
     
+    COM_DECLSPEC_NOTHROW
     void
     PushLayer(
         CONST D2D1_LAYER_PARAMETERS &layerParameters,
@@ -3545,6 +3567,7 @@ interface DX_DECLARE_INTERFACE("2cd90694-12e2-11dc-9fed-001143a055f9") ID2D1Rend
         PushLayer(&layerParameters, layer);
     }
     
+    COM_DECLSPEC_NOTHROW
     void
     PushAxisAlignedClip(
         CONST D2D1_RECT_F &clipRect,
@@ -3554,6 +3577,7 @@ interface DX_DECLARE_INTERFACE("2cd90694-12e2-11dc-9fed-001143a055f9") ID2D1Rend
         return PushAxisAlignedClip(&clipRect, antialiasMode);
     }
     
+    COM_DECLSPEC_NOTHROW
     void
     Clear(
         CONST D2D1_COLOR_F &clearColor 
@@ -3567,6 +3591,7 @@ interface DX_DECLARE_INTERFACE("2cd90694-12e2-11dc-9fed-001143a055f9") ID2D1Rend
     // Draws the text within the given layout rectangle and by default also snaps and
     // clips it.
     //
+    COM_DECLSPEC_NOTHROW
     void
     DrawText(
         _In_reads_(stringLength) CONST WCHAR *string,
@@ -3581,6 +3606,7 @@ interface DX_DECLARE_INTERFACE("2cd90694-12e2-11dc-9fed-001143a055f9") ID2D1Rend
         return DrawText(string, stringLength, textFormat, &layoutRect, defaultForegroundBrush, options, measuringMode);
     }
     
+    COM_DECLSPEC_NOTHROW
     BOOL
     IsSupported(
         CONST D2D1_RENDER_TARGET_PROPERTIES &renderTargetProperties 
@@ -3623,7 +3649,7 @@ interface DX_DECLARE_INTERFACE("2cd90698-12e2-11dc-9fed-001143a055f9") ID2D1Hwnd
     
     //
     // Resize the buffer underlying the render target. This operation might fail if
-    // there is insufficent video memory or system memory, or if the render target is
+    // there is insufficient video memory or system memory, or if the render target is
     // resized beyond the maximum bitmap size. If the method fails, the render target
     // will be placed in a zombie state and D2DERR_RECREATE_TARGET will be returned
     // from it when EndDraw is called. In addition an appropriate failure result will
@@ -3636,6 +3662,7 @@ interface DX_DECLARE_INTERFACE("2cd90698-12e2-11dc-9fed-001143a055f9") ID2D1Hwnd
     STDMETHOD_(HWND, GetHwnd)(
         ) CONST PURE;
     
+    COM_DECLSPEC_NOTHROW
     HRESULT
     Resize(
         CONST D2D1_SIZE_U &pixelSize 
@@ -3824,6 +3851,7 @@ interface DX_DECLARE_INTERFACE("06152247-6f50-465a-9245-118bfd3b6007") ID2D1Fact
         _Outptr_ ID2D1DCRenderTarget **dcRenderTarget 
         ) PURE;
     
+    COM_DECLSPEC_NOTHROW
     HRESULT
     CreateRectangleGeometry(
         CONST D2D1_RECT_F &rectangle,
@@ -3833,6 +3861,7 @@ interface DX_DECLARE_INTERFACE("06152247-6f50-465a-9245-118bfd3b6007") ID2D1Fact
         return CreateRectangleGeometry(&rectangle, rectangleGeometry);
     }
     
+    COM_DECLSPEC_NOTHROW
     HRESULT
     CreateRoundedRectangleGeometry(
         CONST D2D1_ROUNDED_RECT &roundedRectangle,
@@ -3842,6 +3871,7 @@ interface DX_DECLARE_INTERFACE("06152247-6f50-465a-9245-118bfd3b6007") ID2D1Fact
         return CreateRoundedRectangleGeometry(&roundedRectangle, roundedRectangleGeometry);
     }
     
+    COM_DECLSPEC_NOTHROW
     HRESULT
     CreateEllipseGeometry(
         CONST D2D1_ELLIPSE &ellipse,
@@ -3851,6 +3881,7 @@ interface DX_DECLARE_INTERFACE("06152247-6f50-465a-9245-118bfd3b6007") ID2D1Fact
         return CreateEllipseGeometry(&ellipse, ellipseGeometry);
     }
     
+    COM_DECLSPEC_NOTHROW
     HRESULT
     CreateTransformedGeometry(
         _In_ ID2D1Geometry *sourceGeometry,
@@ -3861,6 +3892,7 @@ interface DX_DECLARE_INTERFACE("06152247-6f50-465a-9245-118bfd3b6007") ID2D1Fact
         return CreateTransformedGeometry(sourceGeometry, &transform, transformedGeometry);
     }
     
+    COM_DECLSPEC_NOTHROW
     HRESULT
     CreateStrokeStyle(
         CONST D2D1_STROKE_STYLE_PROPERTIES &strokeStyleProperties,
@@ -3872,6 +3904,7 @@ interface DX_DECLARE_INTERFACE("06152247-6f50-465a-9245-118bfd3b6007") ID2D1Fact
         return CreateStrokeStyle(&strokeStyleProperties, dashes, dashesCount, strokeStyle);
     }
     
+    COM_DECLSPEC_NOTHROW
     HRESULT
     CreateDrawingStateBlock(
         CONST D2D1_DRAWING_STATE_DESCRIPTION &drawingStateDescription,
@@ -3881,6 +3914,7 @@ interface DX_DECLARE_INTERFACE("06152247-6f50-465a-9245-118bfd3b6007") ID2D1Fact
         return CreateDrawingStateBlock(&drawingStateDescription, NULL, drawingStateBlock);
     }
     
+    COM_DECLSPEC_NOTHROW
     HRESULT
     CreateDrawingStateBlock(
         _Outptr_ ID2D1DrawingStateBlock **drawingStateBlock 
@@ -3889,6 +3923,7 @@ interface DX_DECLARE_INTERFACE("06152247-6f50-465a-9245-118bfd3b6007") ID2D1Fact
         return CreateDrawingStateBlock(NULL, NULL, drawingStateBlock);
     }
     
+    COM_DECLSPEC_NOTHROW
     HRESULT
     CreateWicBitmapRenderTarget(
         _In_ IWICBitmap *target,
@@ -3899,6 +3934,7 @@ interface DX_DECLARE_INTERFACE("06152247-6f50-465a-9245-118bfd3b6007") ID2D1Fact
         return CreateWicBitmapRenderTarget(target, &renderTargetProperties, renderTarget);
     }
     
+    COM_DECLSPEC_NOTHROW
     HRESULT
     CreateHwndRenderTarget(
         CONST D2D1_RENDER_TARGET_PROPERTIES &renderTargetProperties,
@@ -3909,6 +3945,7 @@ interface DX_DECLARE_INTERFACE("06152247-6f50-465a-9245-118bfd3b6007") ID2D1Fact
         return CreateHwndRenderTarget(&renderTargetProperties, &hwndRenderTargetProperties, hwndRenderTarget);
     }
     
+    COM_DECLSPEC_NOTHROW
     HRESULT
     CreateDxgiSurfaceRenderTarget(
         _In_ IDXGISurface *dxgiSurface,
@@ -4131,7 +4168,7 @@ typedef struct ID2D1GradientStopCollectionVtbl
     
     STDMETHOD_(void, GetGradientStops)(
         ID2D1GradientStopCollection *This,
-        _Out_writes_to_(gradientStopsCount, _Inexpressible_("Retrieved through GetGradientStopCount") ) D2D1_GRADIENT_STOP *gradientStops,
+        _Out_writes_to_(gradientStopsCount, _Inexpressible_("Retrieved through GetGradientStopCount()") ) D2D1_GRADIENT_STOP *gradientStops,
         UINT32 gradientStopsCount 
         ) PURE;
     
@@ -4257,7 +4294,7 @@ typedef struct ID2D1BitmapBrushVtbl
     
     STDMETHOD_(void, SetBitmap)(
         ID2D1BitmapBrush *This,
-        _In_ ID2D1Bitmap *bitmap 
+        _In_opt_ ID2D1Bitmap *bitmap 
         ) PURE;
     
     STDMETHOD_(D2D1_EXTEND_MODE, GetExtendModeX)(
@@ -5693,7 +5730,7 @@ typedef struct ID2D1RenderTargetVtbl
     
     STDMETHOD(CreateBitmapBrush)(
         ID2D1RenderTarget *This,
-        _In_ ID2D1Bitmap *bitmap,
+        _In_opt_ ID2D1Bitmap *bitmap,
         _In_opt_ CONST D2D1_BITMAP_BRUSH_PROPERTIES *bitmapBrushProperties,
         _In_opt_ CONST D2D1_BRUSH_PROPERTIES *brushProperties,
         _Outptr_ ID2D1BitmapBrush **bitmapBrush 
@@ -7044,6 +7081,7 @@ extern "C"
 
 #ifndef D2D_USE_C_DEFINITIONS
 
+COM_DECLSPEC_NOTHROW
 inline
 HRESULT
 D2D1CreateFactory(
@@ -7062,6 +7100,7 @@ D2D1CreateFactory(
 
 
 template<class Factory>
+COM_DECLSPEC_NOTHROW
 HRESULT
 D2D1CreateFactory(
     _In_ D2D1_FACTORY_TYPE factoryType,
@@ -7076,6 +7115,7 @@ D2D1CreateFactory(
 }
 
 template<class Factory>
+COM_DECLSPEC_NOTHROW
 HRESULT
 D2D1CreateFactory(
     _In_ D2D1_FACTORY_TYPE factoryType,

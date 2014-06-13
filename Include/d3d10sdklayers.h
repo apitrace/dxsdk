@@ -8,7 +8,7 @@
 /* this ALWAYS GENERATED file contains the definitions for the interfaces */
 
 
- /* File created by MIDL compiler version 8.00.0594 */
+ /* File created by MIDL compiler version 8.00.0603 */
 /* @@MIDL_FILE_HEADING(  ) */
 
 #pragma warning( disable: 4049 )  /* more than 64k source lines */
@@ -871,7 +871,8 @@ enum D3D10_MESSAGE_ID
         D3D10_MESSAGE_ID_CREATERESOURCE_NON_POW_2_MIPMAP	= ( D3D10_MESSAGE_ID_SLOT_ZERO_MUST_BE_D3D10_INPUT_PER_VERTEX_DATA + 1 ) ,
         D3D10_MESSAGE_ID_CREATESAMPLERSTATE_BORDER_NOT_SUPPORTED	= ( D3D10_MESSAGE_ID_CREATERESOURCE_NON_POW_2_MIPMAP + 1 ) ,
         D3D10_MESSAGE_ID_OMSETRENDERTARGETS_NO_SRGB_MRT	= ( D3D10_MESSAGE_ID_CREATESAMPLERSTATE_BORDER_NOT_SUPPORTED + 1 ) ,
-        D3D10_MESSAGE_ID_D3D10L9_MESSAGES_END	= ( D3D10_MESSAGE_ID_OMSETRENDERTARGETS_NO_SRGB_MRT + 1 ) 
+        D3D10_MESSAGE_ID_COPYRESOURCE_NO_3D_MISMATCHED_UPDATES	= ( D3D10_MESSAGE_ID_OMSETRENDERTARGETS_NO_SRGB_MRT + 1 ) ,
+        D3D10_MESSAGE_ID_D3D10L9_MESSAGES_END	= ( D3D10_MESSAGE_ID_COPYRESOURCE_NO_3D_MISMATCHED_UPDATES + 1 ) 
     } 	D3D10_MESSAGE_ID;
 
 typedef struct D3D10_MESSAGE
@@ -879,18 +880,22 @@ typedef struct D3D10_MESSAGE
     D3D10_MESSAGE_CATEGORY Category;
     D3D10_MESSAGE_SEVERITY Severity;
     D3D10_MESSAGE_ID ID;
-    const char *pDescription;
+    /* [annotation] */ 
+    _Field_size_(DescriptionByteLength)  const char *pDescription;
     SIZE_T DescriptionByteLength;
     } 	D3D10_MESSAGE;
 
 typedef struct D3D10_INFO_QUEUE_FILTER_DESC
     {
     UINT NumCategories;
-    D3D10_MESSAGE_CATEGORY *pCategoryList;
+    /* [annotation] */ 
+    _Field_size_(NumCategories)  D3D10_MESSAGE_CATEGORY *pCategoryList;
     UINT NumSeverities;
-    D3D10_MESSAGE_SEVERITY *pSeverityList;
+    /* [annotation] */ 
+    _Field_size_(NumSeverities)  D3D10_MESSAGE_SEVERITY *pSeverityList;
     UINT NumIDs;
-    D3D10_MESSAGE_ID *pIDList;
+    /* [annotation] */ 
+    _Field_size_(NumIDs)  D3D10_MESSAGE_ID *pIDList;
     } 	D3D10_INFO_QUEUE_FILTER_DESC;
 
 typedef struct D3D10_INFO_QUEUE_FILTER

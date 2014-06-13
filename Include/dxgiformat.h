@@ -1,3 +1,6 @@
+//
+//    Copyright (C) Microsoft.  All rights reserved.
+//
 
 #ifndef __dxgiformat_h__
 #define __dxgiformat_h__

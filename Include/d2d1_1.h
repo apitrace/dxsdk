@@ -5,8 +5,9 @@
 //
 // File name: D2D1_1.h
 //---------------------------------------------------------------------------
+#ifdef _MSC_VER
 #pragma once
-
+#endif // #ifdef _MSC_VER
 
 #ifndef _D2D1_1_H_
 #define _D2D1_1_H_
@@ -18,6 +19,7 @@
 #include <d2d1effects.h>
 #endif // #ifndef _D2D1_EFFECTS_
 
+#if !WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
 #include <dxgi.h>
 
 
@@ -178,7 +180,7 @@ typedef enum D2D1_BITMAP_OPTIONS
         D2D1_BITMAP_OPTIONS_CPU_READ = 0x00000004,
         
         //
-        // The bitmap works with the ID2D1GdiInteropRenderTarget::GetDC Api.
+        // The bitmap works with the ID2D1GdiInteropRenderTarget::GetDC API.
         //
         D2D1_BITMAP_OPTIONS_GDI_COMPATIBLE = 0x00000008,
         D2D1_BITMAP_OPTIONS_FORCE_DWORD = 0xffffffff
@@ -194,7 +196,7 @@ DEFINE_ENUM_FLAG_OPERATORS(D2D1_BITMAP_OPTIONS);
 //      D2D1_COMPOSITE_MODE
 //
 //  Synopsis:
-//      Specifies the composite mode that will apply to all of the primitives.
+//      Specifies the composite mode that will be applied.
 //
 //------------------------------------------------------------------------------
 typedef enum D2D1_COMPOSITE_MODE
@@ -416,6 +418,8 @@ typedef enum D2D1_PRIMITIVE_BLEND
 {
         D2D1_PRIMITIVE_BLEND_SOURCE_OVER = 0,
         D2D1_PRIMITIVE_BLEND_COPY = 1,
+        D2D1_PRIMITIVE_BLEND_MIN = 2,
+        D2D1_PRIMITIVE_BLEND_ADD = 3,
         D2D1_PRIMITIVE_BLEND_FORCE_DWORD = 0xffffffff
 
 } D2D1_PRIMITIVE_BLEND;
@@ -569,7 +573,7 @@ typedef struct D2D1_EFFECT_INPUT_DESCRIPTION
     UINT32 inputIndex;
     
     //
-    // The rectangle which would be avaiable on the specified input connection during
+    // The rectangle which would be available on the specified input connection during
     // render operations.
     //
     D2D1_RECT_F inputRectangle;
@@ -640,7 +644,7 @@ typedef struct D2D1_BITMAP_BRUSH_PROPERTIES1
 //      D2D1_STROKE_STYLE_PROPERTIES1
 //
 //  Synopsis:
-//      This identifies a certain input connection of a certain effect.
+//      This defines how geometries should be drawn and widened.
 //
 //------------------------------------------------------------------------------
 typedef struct D2D1_STROKE_STYLE_PROPERTIES1
@@ -836,7 +840,7 @@ interface DX_DECLARE_INTERFACE("82237326-8111-4f7c-bcf4-b5c1175564fe") ID2D1GdiM
 //      ID2D1GdiMetafile
 //
 //  Synopsis:
-//      Interface for interop'ing with GDI/GDI+ metafiles.
+//      Interface encapsulating a GDI/GDI+ metafile.
 //
 //------------------------------------------------------------------------------
 interface DX_DECLARE_INTERFACE("2f543dc3-cfc1-4211-864f-cfd91c6f3395") ID2D1GdiMetafile  : public ID2D1Resource
@@ -1074,7 +1078,7 @@ interface DX_DECLARE_INTERFACE("fe9e984d-3f95-407c-b5db-cb94d4e8f87c") ID2D1Imag
 {
     
     STDMETHOD_(void, SetImage)(
-        _In_ ID2D1Image *image 
+        _In_opt_ ID2D1Image *image 
         ) PURE;
     
     STDMETHOD_(void, SetExtendModeX)(
@@ -1175,6 +1179,7 @@ interface DX_DECLARE_INTERFACE("62baa2d2-ab54-41b7-b872-787e0106a421") ID2D1Path
         _Out_ D2D1_POINT_DESCRIPTION *pointDescription 
         ) CONST PURE;
     
+    COM_DECLSPEC_NOTHROW
     HRESULT
     ComputePointAndSegmentAtLength(
         FLOAT length,
@@ -1187,6 +1192,7 @@ interface DX_DECLARE_INTERFACE("62baa2d2-ab54-41b7-b872-787e0106a421") ID2D1Path
         return ComputePointAndSegmentAtLength(length, startSegment, &worldTransform, flatteningTolerance, pointDescription);
     }
     
+    COM_DECLSPEC_NOTHROW
     HRESULT
     ComputePointAndSegmentAtLength(
         FLOAT length,
@@ -1198,6 +1204,7 @@ interface DX_DECLARE_INTERFACE("62baa2d2-ab54-41b7-b872-787e0106a421") ID2D1Path
         return ComputePointAndSegmentAtLength(length, startSegment, worldTransform, D2D1_DEFAULT_FLATTENING_TOLERANCE, pointDescription);
     }
     
+    COM_DECLSPEC_NOTHROW
     HRESULT
     ComputePointAndSegmentAtLength(
         FLOAT length,
@@ -1286,7 +1293,7 @@ interface DX_DECLARE_INTERFACE("483473d7-cd46-4f9d-9d3a-3112aa80159d") ID2D1Prop
     
     
     //
-    // Retrieves the given property or sub-property by name. '.' is the delimeter for
+    // Retrieves the given property or sub-property by name. '.' is the delimiter for
     // sub-properties.
     //
     STDMETHOD(GetValueByName)(
@@ -1324,6 +1331,7 @@ interface DX_DECLARE_INTERFACE("483473d7-cd46-4f9d-9d3a-3112aa80159d") ID2D1Prop
         _Outptr_opt_ ID2D1Properties **subProperties 
         ) CONST PURE;
     
+    COM_DECLSPEC_NOTHROW
     HRESULT
     SetValueByName(
         _In_ PCWSTR name,
@@ -1334,6 +1342,7 @@ interface DX_DECLARE_INTERFACE("483473d7-cd46-4f9d-9d3a-3112aa80159d") ID2D1Prop
         return SetValueByName(name, D2D1_PROPERTY_TYPE_UNKNOWN, data, dataSize);
     }
     
+    COM_DECLSPEC_NOTHROW
     HRESULT
     SetValue(
         UINT32 index,
@@ -1344,6 +1353,7 @@ interface DX_DECLARE_INTERFACE("483473d7-cd46-4f9d-9d3a-3112aa80159d") ID2D1Prop
         return SetValue(index, D2D1_PROPERTY_TYPE_UNKNOWN, data, dataSize);
     }
     
+    COM_DECLSPEC_NOTHROW
     HRESULT
     GetValueByName(
         _In_ PCWSTR name,
@@ -1354,6 +1364,7 @@ interface DX_DECLARE_INTERFACE("483473d7-cd46-4f9d-9d3a-3112aa80159d") ID2D1Prop
         return GetValueByName(name, D2D1_PROPERTY_TYPE_UNKNOWN, data, dataSize);
     }
     
+    COM_DECLSPEC_NOTHROW
     HRESULT
     GetValue(
         UINT32 index,
@@ -1556,6 +1567,7 @@ interface DX_DECLARE_INTERFACE("28211a43-7d89-476f-8181-2d6159b220ad") ID2D1Effe
         _Outptr_ ID2D1Image **outputImage 
         ) CONST PURE;
     
+    COM_DECLSPEC_NOTHROW
     void
     SetInputEffect(
         UINT32 index,
@@ -1682,7 +1694,7 @@ interface DX_DECLARE_INTERFACE("ae1572f4-5dd0-4777-998b-9279472ae63b") ID2D1Grad
     
     
     //
-    // Copies the gradient stops from the collecton into the caller's memory. If this
+    // Copies the gradient stops from the collection into the caller's memory. If this
     // object was created using ID2D1DeviceContext::CreateGradientStopCollection, this
     // method returns the same values as were specified in the creation method. If this
     // object was created using ID2D1RenderTarget::CreateGradientStopCollection, the
@@ -1690,7 +1702,7 @@ interface DX_DECLARE_INTERFACE("ae1572f4-5dd0-4777-998b-9279472ae63b") ID2D1Grad
     // the colorInterpolationGamma parameter.
     //
     STDMETHOD_(void, GetGradientStops1)(
-        _Out_writes_to_(gradientStopsCount, _Inexpressible_("Retrieved through GetGradientStopCount") ) D2D1_GRADIENT_STOP *gradientStops,
+        _Out_writes_to_(gradientStopsCount, _Inexpressible_("Retrieved through GetGradientStopCount()") ) D2D1_GRADIENT_STOP *gradientStops,
         UINT32 gradientStopsCount 
         ) CONST PURE;
     
@@ -1833,7 +1845,7 @@ interface DX_DECLARE_INTERFACE("e8f7fe7a-191c-466d-ad95-975678bda998") ID2D1Devi
     
     
     //
-    // Creates a bitmap from a Dxgi surface with a set of extended properties.
+    // Creates a bitmap from a DXGI surface with a set of extended properties.
     //
     STDMETHOD(CreateBitmapFromDxgiSurface)(
         _In_ IDXGISurface *surface,
@@ -1899,14 +1911,14 @@ interface DX_DECLARE_INTERFACE("e8f7fe7a-191c-466d-ad95-975678bda998") ID2D1Devi
     // bitmap, effect and a command list.
     //
     STDMETHOD(CreateImageBrush)(
-        _In_ ID2D1Image *image,
+        _In_opt_ ID2D1Image *image,
         _In_ CONST D2D1_IMAGE_BRUSH_PROPERTIES *imageBrushProperties,
         _In_opt_ CONST D2D1_BRUSH_PROPERTIES *brushProperties,
         _Outptr_ ID2D1ImageBrush **imageBrush 
         ) PURE;
     
     STDMETHOD(CreateBitmapBrush)(
-        _In_ ID2D1Bitmap *bitmap,
+        _In_opt_ ID2D1Bitmap *bitmap,
         _In_opt_ CONST D2D1_BITMAP_BRUSH_PROPERTIES1 *bitmapBrushProperties,
         _In_opt_ CONST D2D1_BRUSH_PROPERTIES *brushProperties,
         _Outptr_ ID2D1BitmapBrush1 **bitmapBrush 
@@ -2160,6 +2172,7 @@ interface DX_DECLARE_INTERFACE("e8f7fe7a-191c-466d-ad95-975678bda998") ID2D1Devi
     
     using ID2D1RenderTarget::FillOpacityMask;
     
+    COM_DECLSPEC_NOTHROW
     HRESULT
     CreateBitmap(
         D2D1_SIZE_U size,
@@ -2176,6 +2189,7 @@ interface DX_DECLARE_INTERFACE("e8f7fe7a-191c-466d-ad95-975678bda998") ID2D1Devi
     //
     // Create a D2D bitmap by copying a WIC bitmap.
     //
+    COM_DECLSPEC_NOTHROW
     HRESULT
     CreateBitmapFromWicBitmap(
         _In_ IWICBitmapSource *wicBitmapSource,
@@ -2190,6 +2204,7 @@ interface DX_DECLARE_INTERFACE("e8f7fe7a-191c-466d-ad95-975678bda998") ID2D1Devi
     //
     // Create a D2D bitmap by copying a WIC bitmap.
     //
+    COM_DECLSPEC_NOTHROW
     HRESULT
     CreateBitmapFromWicBitmap(
         _In_ IWICBitmapSource *wicBitmapSource,
@@ -2199,6 +2214,7 @@ interface DX_DECLARE_INTERFACE("e8f7fe7a-191c-466d-ad95-975678bda998") ID2D1Devi
         return CreateBitmapFromWicBitmap(wicBitmapSource, NULL, bitmap);
     }
     
+    COM_DECLSPEC_NOTHROW
     HRESULT
     CreateBitmapFromDxgiSurface(
         _In_ IDXGISurface *surface,
@@ -2209,9 +2225,10 @@ interface DX_DECLARE_INTERFACE("e8f7fe7a-191c-466d-ad95-975678bda998") ID2D1Devi
         return CreateBitmapFromDxgiSurface(surface, &bitmapProperties, bitmap);
     }
     
+    COM_DECLSPEC_NOTHROW
     HRESULT
     CreateImageBrush(
-        _In_ ID2D1Image *image,
+        _In_opt_ ID2D1Image *image,
         CONST D2D1_IMAGE_BRUSH_PROPERTIES &imageBrushProperties,
         CONST D2D1_BRUSH_PROPERTIES &brushProperties,
         _Outptr_ ID2D1ImageBrush **imageBrush 
@@ -2220,9 +2237,10 @@ interface DX_DECLARE_INTERFACE("e8f7fe7a-191c-466d-ad95-975678bda998") ID2D1Devi
         return CreateImageBrush(image, &imageBrushProperties, &brushProperties, imageBrush);
     }
     
+    COM_DECLSPEC_NOTHROW
     HRESULT
     CreateImageBrush(
-        _In_ ID2D1Image *image,
+        _In_opt_ ID2D1Image *image,
         CONST D2D1_IMAGE_BRUSH_PROPERTIES &imageBrushProperties,
         _Outptr_ ID2D1ImageBrush **imageBrush 
         )  
@@ -2230,18 +2248,20 @@ interface DX_DECLARE_INTERFACE("e8f7fe7a-191c-466d-ad95-975678bda998") ID2D1Devi
         return CreateImageBrush(image,&imageBrushProperties, NULL, imageBrush);
     }
     
+    COM_DECLSPEC_NOTHROW
     HRESULT
     CreateBitmapBrush(
-        _In_ ID2D1Bitmap *bitmap,
+        _In_opt_ ID2D1Bitmap *bitmap,
         _Outptr_ ID2D1BitmapBrush1 **bitmapBrush 
         )  
     {
         return CreateBitmapBrush(bitmap, NULL, NULL, bitmapBrush);
     }
     
+    COM_DECLSPEC_NOTHROW
     HRESULT
     CreateBitmapBrush(
-        _In_ ID2D1Bitmap *bitmap,
+        _In_opt_ ID2D1Bitmap *bitmap,
         CONST D2D1_BITMAP_BRUSH_PROPERTIES1 &bitmapBrushProperties,
         _Outptr_ ID2D1BitmapBrush1 **bitmapBrush 
         )  
@@ -2249,9 +2269,10 @@ interface DX_DECLARE_INTERFACE("e8f7fe7a-191c-466d-ad95-975678bda998") ID2D1Devi
         return CreateBitmapBrush(bitmap, &bitmapBrushProperties, NULL, bitmapBrush);
     }
     
+    COM_DECLSPEC_NOTHROW
     HRESULT
     CreateBitmapBrush(
-        _In_ ID2D1Bitmap *bitmap,
+        _In_opt_ ID2D1Bitmap *bitmap,
         CONST D2D1_BITMAP_BRUSH_PROPERTIES1 &bitmapBrushProperties,
         CONST D2D1_BRUSH_PROPERTIES &brushProperties,
         _Outptr_ ID2D1BitmapBrush1 **bitmapBrush 
@@ -2264,6 +2285,7 @@ interface DX_DECLARE_INTERFACE("e8f7fe7a-191c-466d-ad95-975678bda998") ID2D1Devi
     //
     // Draws the output of the effect as an image.
     //
+    COM_DECLSPEC_NOTHROW
     void
     DrawImage(
         _In_ ID2D1Effect *effect,
@@ -2280,6 +2302,7 @@ interface DX_DECLARE_INTERFACE("e8f7fe7a-191c-466d-ad95-975678bda998") ID2D1Devi
         output->Release();
     }
     
+    COM_DECLSPEC_NOTHROW
     void
     DrawImage(
         _In_ ID2D1Image *image,
@@ -2290,6 +2313,7 @@ interface DX_DECLARE_INTERFACE("e8f7fe7a-191c-466d-ad95-975678bda998") ID2D1Devi
         DrawImage(image, NULL, NULL, interpolationMode, compositeMode);
     }
     
+    COM_DECLSPEC_NOTHROW
     void
     DrawImage(
         _In_ ID2D1Effect *effect,
@@ -2300,6 +2324,7 @@ interface DX_DECLARE_INTERFACE("e8f7fe7a-191c-466d-ad95-975678bda998") ID2D1Devi
         DrawImage(effect, NULL, NULL, interpolationMode, compositeMode);
     }
     
+    COM_DECLSPEC_NOTHROW
     void
     DrawImage(
         _In_ ID2D1Image *image,
@@ -2311,6 +2336,7 @@ interface DX_DECLARE_INTERFACE("e8f7fe7a-191c-466d-ad95-975678bda998") ID2D1Devi
         DrawImage(image, &targetOffset, NULL, interpolationMode, compositeMode);
     }
     
+    COM_DECLSPEC_NOTHROW
     void
     DrawImage(
         _In_ ID2D1Effect *effect,
@@ -2322,6 +2348,7 @@ interface DX_DECLARE_INTERFACE("e8f7fe7a-191c-466d-ad95-975678bda998") ID2D1Devi
         DrawImage(effect, &targetOffset, NULL, interpolationMode, compositeMode);
     }
     
+    COM_DECLSPEC_NOTHROW
     void
     DrawImage(
         _In_ ID2D1Image *image,
@@ -2334,6 +2361,7 @@ interface DX_DECLARE_INTERFACE("e8f7fe7a-191c-466d-ad95-975678bda998") ID2D1Devi
         DrawImage(image, &targetOffset, &imageRectangle, interpolationMode, compositeMode);
     }
     
+    COM_DECLSPEC_NOTHROW
     void
     DrawImage(
         _In_ ID2D1Effect *effect,
@@ -2346,6 +2374,7 @@ interface DX_DECLARE_INTERFACE("e8f7fe7a-191c-466d-ad95-975678bda998") ID2D1Devi
         DrawImage(effect, &targetOffset, &imageRectangle, interpolationMode, compositeMode);
     }
     
+    COM_DECLSPEC_NOTHROW
     void
     PushLayer(
         CONST D2D1_LAYER_PARAMETERS1 &layerParameters,
@@ -2355,6 +2384,7 @@ interface DX_DECLARE_INTERFACE("e8f7fe7a-191c-466d-ad95-975678bda998") ID2D1Devi
         PushLayer(&layerParameters, layer);
     }
     
+    COM_DECLSPEC_NOTHROW
     void
     DrawGdiMetafile(
         _In_ ID2D1GdiMetafile *gdiMetafile,
@@ -2364,6 +2394,7 @@ interface DX_DECLARE_INTERFACE("e8f7fe7a-191c-466d-ad95-975678bda998") ID2D1Devi
         DrawGdiMetafile(gdiMetafile, &targetOffset);
     }
     
+    COM_DECLSPEC_NOTHROW
     void
     DrawBitmap(
         _In_ ID2D1Bitmap *bitmap,
@@ -2377,6 +2408,7 @@ interface DX_DECLARE_INTERFACE("e8f7fe7a-191c-466d-ad95-975678bda998") ID2D1Devi
         DrawBitmap(bitmap, &destinationRectangle, opacity, interpolationMode, sourceRectangle, perspectiveTransform);
     }
     
+    COM_DECLSPEC_NOTHROW
     void
     DrawBitmap(
         _In_ ID2D1Bitmap *bitmap,
@@ -2390,6 +2422,7 @@ interface DX_DECLARE_INTERFACE("e8f7fe7a-191c-466d-ad95-975678bda998") ID2D1Devi
         DrawBitmap(bitmap, &destinationRectangle, opacity, interpolationMode, &sourceRectangle, perspectiveTransform);
     }
     
+    COM_DECLSPEC_NOTHROW
     void
     DrawBitmap(
         _In_ ID2D1Bitmap *bitmap,
@@ -2403,6 +2436,7 @@ interface DX_DECLARE_INTERFACE("e8f7fe7a-191c-466d-ad95-975678bda998") ID2D1Devi
         DrawBitmap(bitmap, &destinationRectangle, opacity, interpolationMode, &sourceRectangle, &perspectiveTransform);
     }
     
+    COM_DECLSPEC_NOTHROW
     void
     FillOpacityMask(
         _In_ ID2D1Bitmap *opacityMask,
@@ -2414,6 +2448,7 @@ interface DX_DECLARE_INTERFACE("e8f7fe7a-191c-466d-ad95-975678bda998") ID2D1Devi
         FillOpacityMask(opacityMask, brush, &destinationRectangle, sourceRectangle);
     }
     
+    COM_DECLSPEC_NOTHROW
     void
     FillOpacityMask(
         _In_ ID2D1Bitmap *opacityMask,
@@ -2429,6 +2464,7 @@ interface DX_DECLARE_INTERFACE("e8f7fe7a-191c-466d-ad95-975678bda998") ID2D1Devi
     //
     // Sets tuning parameters for internal rendering inside the device context.
     //
+    COM_DECLSPEC_NOTHROW
     void
     SetRenderingControls(
         CONST D2D1_RENDERING_CONTROLS &renderingControls 
@@ -2497,6 +2533,7 @@ interface DX_DECLARE_INTERFACE("47dd575d-ac05-4cdd-8049-9b02cd16f44c") ID2D1Devi
         UINT32 millisecondsSinceUse = 0 
         ) PURE;
     
+    COM_DECLSPEC_NOTHROW
     HRESULT
     CreatePrintControl(
         _In_ IWICImagingFactory *wicFactory,
@@ -2642,6 +2679,7 @@ interface DX_DECLARE_INTERFACE("bb12d362-daee-4b9a-aa1d-14ba401cfa1f") ID2D1Fact
         _Outptr_ ID2D1Properties **properties 
         ) CONST PURE;
     
+    COM_DECLSPEC_NOTHROW
     HRESULT
     CreateStrokeStyle(
         CONST D2D1_STROKE_STYLE_PROPERTIES1 &strokeStyleProperties,
@@ -2653,6 +2691,7 @@ interface DX_DECLARE_INTERFACE("bb12d362-daee-4b9a-aa1d-14ba401cfa1f") ID2D1Fact
         return CreateStrokeStyle(&strokeStyleProperties, dashes, dashesCount, strokeStyle);
     }
     
+    COM_DECLSPEC_NOTHROW
     HRESULT
     CreateDrawingStateBlock(
         CONST D2D1_DRAWING_STATE_DESCRIPTION1 &drawingStateDescription,
@@ -2662,6 +2701,7 @@ interface DX_DECLARE_INTERFACE("bb12d362-daee-4b9a-aa1d-14ba401cfa1f") ID2D1Fact
         return CreateDrawingStateBlock(&drawingStateDescription, NULL, drawingStateBlock);
     }
     
+    COM_DECLSPEC_NOTHROW
     HRESULT
     CreateDrawingStateBlock(
         _Outptr_ ID2D1DrawingStateBlock1 **drawingStateBlock 
@@ -2670,6 +2710,40 @@ interface DX_DECLARE_INTERFACE("bb12d362-daee-4b9a-aa1d-14ba401cfa1f") ID2D1Fact
         return CreateDrawingStateBlock(NULL, NULL, drawingStateBlock);
     }
 }; // interface ID2D1Factory1
+
+
+
+//+-----------------------------------------------------------------------------
+//
+//  Interface:
+//      ID2D1Multithread
+//
+//------------------------------------------------------------------------------
+interface DX_DECLARE_INTERFACE("31e6e7bc-e0ff-4d46-8c64-a0a8c41c15d3") ID2D1Multithread  : public IUnknown
+{
+    
+    
+    //
+    // Returns whether the D2D factory was created with
+    // D2D1_FACTORY_TYPE_MULTI_THREADED.
+    //
+    STDMETHOD_(BOOL, GetMultithreadProtected)(
+        ) CONST PURE;
+    
+    
+    //
+    // Enters the D2D API critical section, if it exists.
+    //
+    STDMETHOD_(void, Enter)(
+        ) PURE;
+    
+    
+    //
+    // Leaves the D2D API critical section, if it exists.
+    //
+    STDMETHOD_(void, Leave)(
+        ) PURE;
+}; // interface ID2D1Multithread
 
 
 
@@ -2694,6 +2768,7 @@ EXTERN_C CONST IID IID_ID2D1DrawingStateBlock1;
 EXTERN_C CONST IID IID_ID2D1DeviceContext;
 EXTERN_C CONST IID IID_ID2D1Device;
 EXTERN_C CONST IID IID_ID2D1Factory1;
+EXTERN_C CONST IID IID_ID2D1Multithread;
 
 
 #ifdef D2D_USE_C_DEFINITIONS
@@ -3125,7 +3200,7 @@ typedef struct ID2D1ImageBrushVtbl
     
     STDMETHOD_(void, SetImage)(
         ID2D1ImageBrush *This,
-        _In_ ID2D1Image *image 
+        _In_opt_ ID2D1Image *image 
         ) PURE;
     
     STDMETHOD_(void, SetExtendModeX)(
@@ -3832,7 +3907,7 @@ typedef struct ID2D1GradientStopCollection1Vtbl
     
     STDMETHOD_(void, GetGradientStops1)(
         ID2D1GradientStopCollection1 *This,
-        _Out_writes_to_(gradientStopsCount, _Inexpressible_("Retrieved through GetGradientStopCount") ) D2D1_GRADIENT_STOP *gradientStops,
+        _Out_writes_to_(gradientStopsCount, _Inexpressible_("Retrieved through GetGradientStopCount()") ) D2D1_GRADIENT_STOP *gradientStops,
         UINT32 gradientStopsCount 
         ) PURE;
     
@@ -4018,7 +4093,7 @@ typedef struct ID2D1DeviceContextVtbl
     
     STDMETHOD(CreateImageBrush)(
         ID2D1DeviceContext *This,
-        _In_ ID2D1Image *image,
+        _In_opt_ ID2D1Image *image,
         _In_ CONST D2D1_IMAGE_BRUSH_PROPERTIES *imageBrushProperties,
         _In_opt_ CONST D2D1_BRUSH_PROPERTIES *brushProperties,
         _Outptr_ ID2D1ImageBrush **imageBrush 
@@ -4026,7 +4101,7 @@ typedef struct ID2D1DeviceContextVtbl
     
     STDMETHOD(CreateBitmapBrush)(
         ID2D1DeviceContext *This,
-        _In_ ID2D1Bitmap *bitmap,
+        _In_opt_ ID2D1Bitmap *bitmap,
         _In_opt_ CONST D2D1_BITMAP_BRUSH_PROPERTIES1 *bitmapBrushProperties,
         _In_opt_ CONST D2D1_BRUSH_PROPERTIES *brushProperties,
         _Outptr_ ID2D1BitmapBrush1 **bitmapBrush 
@@ -4671,6 +4746,51 @@ interface ID2D1Factory1
 
 #define ID2D1Factory1_GetEffectProperties(This, effectId, properties) \
     ((This)->lpVtbl->GetEffectProperties(This, effectId, properties))
+
+typedef interface ID2D1Multithread ID2D1Multithread;
+
+typedef struct ID2D1MultithreadVtbl
+{
+    
+    IUnknownVtbl Base;
+    
+    
+    STDMETHOD_(BOOL, GetMultithreadProtected)(
+        ID2D1Multithread *This 
+        ) PURE;
+    
+    STDMETHOD_(void, Enter)(
+        ID2D1Multithread *This 
+        ) PURE;
+    
+    STDMETHOD_(void, Leave)(
+        ID2D1Multithread *This 
+        ) PURE;
+} ID2D1MultithreadVtbl;
+
+interface ID2D1Multithread
+{
+    CONST struct ID2D1MultithreadVtbl *lpVtbl;
+};
+
+
+#define ID2D1Multithread_QueryInterface(This, riid, ppv) \
+    ((This)->lpVtbl->Base.QueryInterface((IUnknown *)This, riid, ppv))
+
+#define ID2D1Multithread_AddRef(This) \
+    ((This)->lpVtbl->Base.AddRef((IUnknown *)This))
+
+#define ID2D1Multithread_Release(This) \
+    ((This)->lpVtbl->Base.Release((IUnknown *)This))
+
+#define ID2D1Multithread_GetMultithreadProtected(This) \
+    ((This)->lpVtbl->GetMultithreadProtected(This))
+
+#define ID2D1Multithread_Enter(This) \
+    ((This)->lpVtbl->Enter(This))
+
+#define ID2D1Multithread_Leave(This) \
+    ((This)->lpVtbl->Leave(This))
 
 
 #endif

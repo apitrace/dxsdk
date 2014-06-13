@@ -10,6 +10,8 @@
 #ifndef __DDRAW_INCLUDED__
 #define __DDRAW_INCLUDED__
 
+
+
 //Disable the nameless union warning when building internally
 #undef ENABLE_NAMELESS_UNION_PRAGMA
 #ifdef DIRECTX_REDIST
@@ -17,6 +19,9 @@
 #endif
 
 #ifdef ENABLE_NAMELESS_UNION_PRAGMA
+#if _MSC_VER >= 1200
+#pragma warning(push)
+#endif
 #pragma warning(disable:4201)
 #endif
 
@@ -55,6 +60,7 @@ extern "C" {
 //
 // before #include <ddraw.h>
 //
+
 #ifndef DUMMYUNIONNAMEN
 #if defined(__cplusplus) || !defined(NONAMELESSUNION)
 #define DUMMYUNIONNAMEN(n)
@@ -130,7 +136,10 @@ typedef struct IDirectDrawColorControl          FAR *LPDIRECTDRAWCOLORCONTROL;
 typedef struct IDirectDrawGammaControl          FAR *LPDIRECTDRAWGAMMACONTROL;
 
 typedef struct _DDFXROP                 FAR *LPDDFXROP;
+
+
 typedef struct _DDSURFACEDESC           FAR *LPDDSURFACEDESC;
+
 typedef struct _DDSURFACEDESC2          FAR *LPDDSURFACEDESC2;
 typedef struct _DDCOLORCONTROL          FAR *LPDDCOLORCONTROL;
 
@@ -141,8 +150,8 @@ typedef struct _DDCOLORCONTROL          FAR *LPDDCOLORCONTROL;
 //#if defined( _WIN32 ) && !defined( _NO_ENUM )
     typedef BOOL (FAR PASCAL * LPDDENUMCALLBACKA)(GUID FAR *, LPSTR, LPSTR, LPVOID);
     typedef BOOL (FAR PASCAL * LPDDENUMCALLBACKW)(GUID FAR *, LPWSTR, LPWSTR, LPVOID);
-    extern HRESULT WINAPI DirectDrawEnumerateW( LPDDENUMCALLBACKW lpCallback, LPVOID lpContext );
-    extern HRESULT WINAPI DirectDrawEnumerateA( LPDDENUMCALLBACKA lpCallback, LPVOID lpContext );
+    extern _Check_return_ HRESULT WINAPI DirectDrawEnumerateW( LPDDENUMCALLBACKW lpCallback, LPVOID lpContext );
+    extern _Check_return_ HRESULT WINAPI DirectDrawEnumerateA( LPDDENUMCALLBACKA lpCallback, LPVOID lpContext );
     /*
      * Protect against old SDKs
      */
@@ -170,9 +179,9 @@ typedef struct _DDCOLORCONTROL          FAR *LPDDCOLORCONTROL;
         typedef LPDIRECTDRAWENUMERATEEXA        LPDIRECTDRAWENUMERATEEX;
         #define DirectDrawEnumerateEx       DirectDrawEnumerateExA
     #endif
-    extern HRESULT WINAPI DirectDrawCreate( GUID FAR *lpGUID, LPDIRECTDRAW FAR *lplpDD, IUnknown FAR *pUnkOuter );
+    extern _Check_return_ HRESULT WINAPI DirectDrawCreate( GUID FAR *lpGUID, LPDIRECTDRAW FAR *lplpDD, IUnknown FAR *pUnkOuter );
     extern HRESULT WINAPI DirectDrawCreateEx( GUID FAR * lpGuid, LPVOID  *lplpDD, REFIID  iid,IUnknown FAR *pUnkOuter );
-    extern HRESULT WINAPI DirectDrawCreateClipper( DWORD dwFlags, LPDIRECTDRAWCLIPPER FAR *lplpDDClipper, IUnknown FAR *pUnkOuter );
+    extern _Check_return_ HRESULT WINAPI DirectDrawCreateClipper( DWORD dwFlags, LPDIRECTDRAWCLIPPER FAR *lplpDDClipper, IUnknown FAR *pUnkOuter );
 #endif
 /*
  * Flags for DirectDrawEnumerateEx
@@ -210,7 +219,7 @@ typedef struct _DDCOLORCONTROL          FAR *LPDDCOLORCONTROL;
 #if defined(WINNT) || !defined(WIN32)
 #ifndef _HRESULT_DEFINED
 #define _HRESULT_DEFINED
-typedef __success(return >= 0) long HRESULT;
+typedef _Return_type_success_(return >= 0) long HRESULT;
 #endif // !_HRESULT_DEFINED
 #endif
 
@@ -693,8 +702,6 @@ typedef DDCAPS_DX7 FAR* LPDDCAPS_DX7;
 #endif
 
 typedef DDCAPS FAR* LPDDCAPS;
-
-
 
 /*
  * DDPIXELFORMAT
@@ -5848,9 +5855,14 @@ typedef struct _DDCOLORCONTROL
 #endif
 
 #ifdef ENABLE_NAMELESS_UNION_PRAGMA
+#if _MSC_VER >= 1200
+#pragma warning(pop)
+#else
 #pragma warning(default:4201)
 #endif
+#endif
+
+
 
 #endif //__DDRAW_INCLUDED__
-
 

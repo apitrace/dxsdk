@@ -8,7 +8,7 @@
 /* this ALWAYS GENERATED file contains the definitions for the interfaces */
 
 
- /* File created by MIDL compiler version 8.00.0594 */
+ /* File created by MIDL compiler version 8.00.0603 */
 /* @@MIDL_FILE_HEADING(  ) */
 
 #pragma warning( disable: 4049 )  /* more than 64k source lines */
@@ -629,12 +629,7 @@ extern "C"{
 
 #define MAKE_D3D10_HRESULT( code )  MAKE_HRESULT( 1, _FACD3D10, code )
 #define MAKE_D3D10_STATUS( code )    MAKE_HRESULT( 0, _FACD3D10, code )
-#ifdef __MINGW32__
-#define D3D10_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS  MAKE_D3D10_HRESULT(1)
-#define D3D10_ERROR_FILE_NOT_FOUND  MAKE_D3D10_HRESULT(2)
-#else
 /* Direct3D errors are now found in winerror.h */
-#endif
 typedef 
 enum D3D10_INPUT_CLASSIFICATION
     {
@@ -5320,7 +5315,7 @@ EXTERN_C const IID IID_ID3D10Device;
             /* [annotation] */ 
             _In_  const D3D10_TEXTURE1D_DESC *pDesc,
             /* [annotation] */ 
-            _In_reads_opt_(_Inexpressible(pDesc->MipLevels * pDesc->ArraySize))  const D3D10_SUBRESOURCE_DATA *pInitialData,
+            _In_reads_opt_(_Inexpressible_(pDesc->MipLevels * pDesc->ArraySize))  const D3D10_SUBRESOURCE_DATA *pInitialData,
             /* [annotation] */ 
             _Out_  ID3D10Texture1D **ppTexture1D) = 0;
         
@@ -5370,7 +5365,7 @@ EXTERN_C const IID IID_ID3D10Device;
             /* [annotation] */ 
             _In_range_( 0, D3D10_1_IA_VERTEX_INPUT_STRUCTURE_ELEMENT_COUNT )  UINT NumElements,
             /* [annotation] */ 
-            _In_  const void *pShaderBytecodeWithInputSignature,
+            _In_reads_(BytecodeLength)  const void *pShaderBytecodeWithInputSignature,
             /* [annotation] */ 
             _In_  SIZE_T BytecodeLength,
             /* [annotation] */ 
@@ -5378,7 +5373,7 @@ EXTERN_C const IID IID_ID3D10Device;
         
         virtual HRESULT STDMETHODCALLTYPE CreateVertexShader( 
             /* [annotation] */ 
-            _In_  const void *pShaderBytecode,
+            _In_reads_(BytecodeLength)  const void *pShaderBytecode,
             /* [annotation] */ 
             _In_  SIZE_T BytecodeLength,
             /* [annotation] */ 
@@ -5386,7 +5381,7 @@ EXTERN_C const IID IID_ID3D10Device;
         
         virtual HRESULT STDMETHODCALLTYPE CreateGeometryShader( 
             /* [annotation] */ 
-            _In_  const void *pShaderBytecode,
+            _In_reads_(BytecodeLength)  const void *pShaderBytecode,
             /* [annotation] */ 
             _In_  SIZE_T BytecodeLength,
             /* [annotation] */ 
@@ -5394,7 +5389,7 @@ EXTERN_C const IID IID_ID3D10Device;
         
         virtual HRESULT STDMETHODCALLTYPE CreateGeometryShaderWithStreamOutput( 
             /* [annotation] */ 
-            _In_  const void *pShaderBytecode,
+            _In_reads_(BytecodeLength)  const void *pShaderBytecode,
             /* [annotation] */ 
             _In_  SIZE_T BytecodeLength,
             /* [annotation] */ 
@@ -5408,7 +5403,7 @@ EXTERN_C const IID IID_ID3D10Device;
         
         virtual HRESULT STDMETHODCALLTYPE CreatePixelShader( 
             /* [annotation] */ 
-            _In_  const void *pShaderBytecode,
+            _In_reads_(BytecodeLength)  const void *pShaderBytecode,
             /* [annotation] */ 
             _In_  SIZE_T BytecodeLength,
             /* [annotation] */ 
@@ -6088,7 +6083,7 @@ EXTERN_C const IID IID_ID3D10Device;
             /* [annotation] */ 
             _In_  const D3D10_TEXTURE1D_DESC *pDesc,
             /* [annotation] */ 
-            _In_reads_opt_(_Inexpressible(pDesc->MipLevels * pDesc->ArraySize))  const D3D10_SUBRESOURCE_DATA *pInitialData,
+            _In_reads_opt_(_Inexpressible_(pDesc->MipLevels * pDesc->ArraySize))  const D3D10_SUBRESOURCE_DATA *pInitialData,
             /* [annotation] */ 
             _Out_  ID3D10Texture1D **ppTexture1D);
         
@@ -6144,7 +6139,7 @@ EXTERN_C const IID IID_ID3D10Device;
             /* [annotation] */ 
             _In_range_( 0, D3D10_1_IA_VERTEX_INPUT_STRUCTURE_ELEMENT_COUNT )  UINT NumElements,
             /* [annotation] */ 
-            _In_  const void *pShaderBytecodeWithInputSignature,
+            _In_reads_(BytecodeLength)  const void *pShaderBytecodeWithInputSignature,
             /* [annotation] */ 
             _In_  SIZE_T BytecodeLength,
             /* [annotation] */ 
@@ -6153,7 +6148,7 @@ EXTERN_C const IID IID_ID3D10Device;
         HRESULT ( STDMETHODCALLTYPE *CreateVertexShader )( 
             ID3D10Device * This,
             /* [annotation] */ 
-            _In_  const void *pShaderBytecode,
+            _In_reads_(BytecodeLength)  const void *pShaderBytecode,
             /* [annotation] */ 
             _In_  SIZE_T BytecodeLength,
             /* [annotation] */ 
@@ -6162,7 +6157,7 @@ EXTERN_C const IID IID_ID3D10Device;
         HRESULT ( STDMETHODCALLTYPE *CreateGeometryShader )( 
             ID3D10Device * This,
             /* [annotation] */ 
-            _In_  const void *pShaderBytecode,
+            _In_reads_(BytecodeLength)  const void *pShaderBytecode,
             /* [annotation] */ 
             _In_  SIZE_T BytecodeLength,
             /* [annotation] */ 
@@ -6171,7 +6166,7 @@ EXTERN_C const IID IID_ID3D10Device;
         HRESULT ( STDMETHODCALLTYPE *CreateGeometryShaderWithStreamOutput )( 
             ID3D10Device * This,
             /* [annotation] */ 
-            _In_  const void *pShaderBytecode,
+            _In_reads_(BytecodeLength)  const void *pShaderBytecode,
             /* [annotation] */ 
             _In_  SIZE_T BytecodeLength,
             /* [annotation] */ 
@@ -6186,7 +6181,7 @@ EXTERN_C const IID IID_ID3D10Device;
         HRESULT ( STDMETHODCALLTYPE *CreatePixelShader )( 
             ID3D10Device * This,
             /* [annotation] */ 
-            _In_  const void *pShaderBytecode,
+            _In_reads_(BytecodeLength)  const void *pShaderBytecode,
             /* [annotation] */ 
             _In_  SIZE_T BytecodeLength,
             /* [annotation] */ 

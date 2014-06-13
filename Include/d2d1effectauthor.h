@@ -5,8 +5,9 @@
 //
 // File name: D2D1EffectAuthor.h
 //---------------------------------------------------------------------------
+#ifdef _MSC_VER
 #pragma once
-
+#endif // #ifdef _MSC_VER
 
 #ifndef _D2D1_EFFECT_AUTHOR_H_
 #define _D2D1_EFFECT_AUTHOR_H_
@@ -608,7 +609,7 @@ interface DX_DECLARE_INTERFACE("519ae1bd-d19a-420d-b849-364f594776b7") ID2D1Rend
     //
     // Provides a hint of the approximate shader instruction count per pixel.  If
     // provided, it may improve performance when processing large images.  Instructions
-    // should be counted multiple times if occuring within loops.
+    // should be counted multiple times if occurring within loops.
     //
     STDMETHOD_(void, SetInstructionCountHint)(
         UINT32 instructionCount 
@@ -847,13 +848,8 @@ interface DX_DECLARE_INTERFACE("13d29038-c3e6-4034-9081-13b53a417992") ID2D1Tran
 //      The interface implemented by a transform author.
 //
 //------------------------------------------------------------------------------
-interface DX_DECLARE_INTERFACE("8418fb10-a398-45c0-9bc5-fbe4b3e09695") ID2D1Transform  : public ID2D1TransformNode
+interface DX_DECLARE_INTERFACE("ef1a287d-342a-4f76-8fdb-da0d6ea9f92b") ID2D1Transform  : public ID2D1TransformNode
 {
-    
-    STDMETHOD(SetInputRects)(
-        _In_reads_(inputRectsCount) CONST D2D1_RECT_L *inputRects,
-        UINT32 inputRectsCount 
-        ) PURE;
     
     STDMETHOD(MapOutputRectToInputRects)(
         _In_ CONST D2D1_RECT_L *outputRect,
@@ -862,9 +858,17 @@ interface DX_DECLARE_INTERFACE("8418fb10-a398-45c0-9bc5-fbe4b3e09695") ID2D1Tran
         ) CONST PURE;
     
     STDMETHOD(MapInputRectsToOutputRect)(
-        _In_reads_(inputRectsCount) CONST D2D1_RECT_L *inputRects,
-        UINT32 inputRectsCount,
-        _Out_ D2D1_RECT_L *outputRect 
+        _In_reads_(inputRectCount) CONST D2D1_RECT_L *inputRects,
+        _In_reads_(inputRectCount) CONST D2D1_RECT_L *inputOpaqueSubRects,
+        UINT32 inputRectCount,
+        _Out_ D2D1_RECT_L *outputRect,
+        _Out_ D2D1_RECT_L *outputOpaqueSubRect 
+        ) PURE;
+    
+    STDMETHOD(MapInvalidRect)(
+        UINT32 inputIndex,
+        D2D1_RECT_L invalidInputRect,
+        _Out_ D2D1_RECT_L *invalidOutputRect 
         ) CONST PURE;
 }; // interface ID2D1Transform
 
@@ -923,7 +927,7 @@ interface DX_DECLARE_INTERFACE("0d85573c-01e3-4f7d-bfd9-0d60608bf3c3") ID2D1Comp
 //
 //  Synopsis:
 //      The interface implemented by a transform author to indicate that it should
-//      recieve an analysis result callback.
+//      receive an analysis result callback.
 //
 //------------------------------------------------------------------------------
 interface DX_DECLARE_INTERFACE("0359dc30-95e6-4568-9055-27720d130e93") ID2D1AnalysisTransform  : public IUnknown
@@ -1738,12 +1742,6 @@ typedef struct ID2D1TransformVtbl
     ID2D1TransformNodeVtbl Base;
     
     
-    STDMETHOD(SetInputRects)(
-        ID2D1Transform *This,
-        _In_reads_(inputRectsCount) CONST D2D1_RECT_L *inputRects,
-        UINT32 inputRectsCount 
-        ) PURE;
-    
     STDMETHOD(MapOutputRectToInputRects)(
         ID2D1Transform *This,
         _In_ CONST D2D1_RECT_L *outputRect,
@@ -1753,9 +1751,18 @@ typedef struct ID2D1TransformVtbl
     
     STDMETHOD(MapInputRectsToOutputRect)(
         ID2D1Transform *This,
-        _In_reads_(inputRectsCount) CONST D2D1_RECT_L *inputRects,
-        UINT32 inputRectsCount,
-        _Out_ D2D1_RECT_L *outputRect 
+        _In_reads_(inputRectCount) CONST D2D1_RECT_L *inputRects,
+        _In_reads_(inputRectCount) CONST D2D1_RECT_L *inputOpaqueSubRects,
+        UINT32 inputRectCount,
+        _Out_ D2D1_RECT_L *outputRect,
+        _Out_ D2D1_RECT_L *outputOpaqueSubRect 
+        ) PURE;
+    
+    STDMETHOD(MapInvalidRect)(
+        ID2D1Transform *This,
+        UINT32 inputIndex,
+        D2D1_RECT_L invalidInputRect,
+        _Out_ D2D1_RECT_L *invalidOutputRect 
         ) PURE;
 } ID2D1TransformVtbl;
 
@@ -1777,14 +1784,14 @@ interface ID2D1Transform
 #define ID2D1Transform_GetInputCount(This) \
     ((This)->lpVtbl->Base.GetInputCount((ID2D1TransformNode *)This))
 
-#define ID2D1Transform_SetInputRects(This, inputRects, inputRectsCount) \
-    ((This)->lpVtbl->SetInputRects(This, inputRects, inputRectsCount))
-
 #define ID2D1Transform_MapOutputRectToInputRects(This, outputRect, inputRects, inputRectsCount) \
     ((This)->lpVtbl->MapOutputRectToInputRects(This, outputRect, inputRects, inputRectsCount))
 
-#define ID2D1Transform_MapInputRectsToOutputRect(This, inputRects, inputRectsCount, outputRect) \
-    ((This)->lpVtbl->MapInputRectsToOutputRect(This, inputRects, inputRectsCount, outputRect))
+#define ID2D1Transform_MapInputRectsToOutputRect(This, inputRects, inputOpaqueSubRects, inputRectCount, outputRect, outputOpaqueSubRect) \
+    ((This)->lpVtbl->MapInputRectsToOutputRect(This, inputRects, inputOpaqueSubRects, inputRectCount, outputRect, outputOpaqueSubRect))
+
+#define ID2D1Transform_MapInvalidRect(This, inputIndex, invalidInputRect, invalidOutputRect) \
+    ((This)->lpVtbl->MapInvalidRect(This, inputIndex, invalidInputRect, invalidOutputRect))
 
 typedef interface ID2D1DrawTransform ID2D1DrawTransform;
 
@@ -1818,14 +1825,14 @@ interface ID2D1DrawTransform
 #define ID2D1DrawTransform_GetInputCount(This) \
     ((This)->lpVtbl->Base.Base.GetInputCount((ID2D1TransformNode *)This))
 
-#define ID2D1DrawTransform_SetInputRects(This, inputRects, inputRectsCount) \
-    ((This)->lpVtbl->Base.SetInputRects((ID2D1Transform *)This, inputRects, inputRectsCount))
-
 #define ID2D1DrawTransform_MapOutputRectToInputRects(This, outputRect, inputRects, inputRectsCount) \
     ((This)->lpVtbl->Base.MapOutputRectToInputRects((ID2D1Transform *)This, outputRect, inputRects, inputRectsCount))
 
-#define ID2D1DrawTransform_MapInputRectsToOutputRect(This, inputRects, inputRectsCount, outputRect) \
-    ((This)->lpVtbl->Base.MapInputRectsToOutputRect((ID2D1Transform *)This, inputRects, inputRectsCount, outputRect))
+#define ID2D1DrawTransform_MapInputRectsToOutputRect(This, inputRects, inputOpaqueSubRects, inputRectCount, outputRect, outputOpaqueSubRect) \
+    ((This)->lpVtbl->Base.MapInputRectsToOutputRect((ID2D1Transform *)This, inputRects, inputOpaqueSubRects, inputRectCount, outputRect, outputOpaqueSubRect))
+
+#define ID2D1DrawTransform_MapInvalidRect(This, inputIndex, invalidInputRect, invalidOutputRect) \
+    ((This)->lpVtbl->Base.MapInvalidRect((ID2D1Transform *)This, inputIndex, invalidInputRect, invalidOutputRect))
 
 #define ID2D1DrawTransform_SetDrawInfo(This, drawInfo) \
     ((This)->lpVtbl->SetDrawInfo(This, drawInfo))
@@ -1870,14 +1877,14 @@ interface ID2D1ComputeTransform
 #define ID2D1ComputeTransform_GetInputCount(This) \
     ((This)->lpVtbl->Base.Base.GetInputCount((ID2D1TransformNode *)This))
 
-#define ID2D1ComputeTransform_SetInputRects(This, inputRects, inputRectsCount) \
-    ((This)->lpVtbl->Base.SetInputRects((ID2D1Transform *)This, inputRects, inputRectsCount))
-
 #define ID2D1ComputeTransform_MapOutputRectToInputRects(This, outputRect, inputRects, inputRectsCount) \
     ((This)->lpVtbl->Base.MapOutputRectToInputRects((ID2D1Transform *)This, outputRect, inputRects, inputRectsCount))
 
-#define ID2D1ComputeTransform_MapInputRectsToOutputRect(This, inputRects, inputRectsCount, outputRect) \
-    ((This)->lpVtbl->Base.MapInputRectsToOutputRect((ID2D1Transform *)This, inputRects, inputRectsCount, outputRect))
+#define ID2D1ComputeTransform_MapInputRectsToOutputRect(This, inputRects, inputOpaqueSubRects, inputRectCount, outputRect, outputOpaqueSubRect) \
+    ((This)->lpVtbl->Base.MapInputRectsToOutputRect((ID2D1Transform *)This, inputRects, inputOpaqueSubRects, inputRectCount, outputRect, outputOpaqueSubRect))
+
+#define ID2D1ComputeTransform_MapInvalidRect(This, inputIndex, invalidInputRect, invalidOutputRect) \
+    ((This)->lpVtbl->Base.MapInvalidRect((ID2D1Transform *)This, inputIndex, invalidInputRect, invalidOutputRect))
 
 #define ID2D1ComputeTransform_SetComputeInfo(This, computeInfo) \
     ((This)->lpVtbl->SetComputeInfo(This, computeInfo))
@@ -1957,14 +1964,14 @@ interface ID2D1SourceTransform
 #define ID2D1SourceTransform_GetInputCount(This) \
     ((This)->lpVtbl->Base.Base.GetInputCount((ID2D1TransformNode *)This))
 
-#define ID2D1SourceTransform_SetInputRects(This, inputRects, inputRectsCount) \
-    ((This)->lpVtbl->Base.SetInputRects((ID2D1Transform *)This, inputRects, inputRectsCount))
-
 #define ID2D1SourceTransform_MapOutputRectToInputRects(This, outputRect, inputRects, inputRectsCount) \
     ((This)->lpVtbl->Base.MapOutputRectToInputRects((ID2D1Transform *)This, outputRect, inputRects, inputRectsCount))
 
-#define ID2D1SourceTransform_MapInputRectsToOutputRect(This, inputRects, inputRectsCount, outputRect) \
-    ((This)->lpVtbl->Base.MapInputRectsToOutputRect((ID2D1Transform *)This, inputRects, inputRectsCount, outputRect))
+#define ID2D1SourceTransform_MapInputRectsToOutputRect(This, inputRects, inputOpaqueSubRects, inputRectCount, outputRect, outputOpaqueSubRect) \
+    ((This)->lpVtbl->Base.MapInputRectsToOutputRect((ID2D1Transform *)This, inputRects, inputOpaqueSubRects, inputRectCount, outputRect, outputOpaqueSubRect))
+
+#define ID2D1SourceTransform_MapInvalidRect(This, inputIndex, invalidInputRect, invalidOutputRect) \
+    ((This)->lpVtbl->Base.MapInvalidRect((ID2D1Transform *)This, inputIndex, invalidInputRect, invalidOutputRect))
 
 #define ID2D1SourceTransform_SetRenderInfo(This, renderInfo) \
     ((This)->lpVtbl->SetRenderInfo(This, renderInfo))

@@ -7,6 +7,8 @@
  *
  ***************************************************************************/
 
+
+
 #ifndef _D3DTYPES_H_
 #define _D3DTYPES_H_
 
@@ -14,8 +16,10 @@
 #define DIRECT3D_VERSION         0x0700
 #endif
 
+#ifndef _D3DHAL_H_
 #if (DIRECT3D_VERSION >= 0x0800)
 #pragma message("should not include d3dtypes.h when compiling for DX8 or newer interfaces")
+#endif
 #endif
 
 #include <windows.h>
@@ -23,6 +27,7 @@
 #include <float.h>
 #include "ddraw.h"
 
+#pragma warning(push)
 #pragma warning(disable:4201) // anonymous unions warning
 #if defined(_X86_) || defined(_IA64_)
 #pragma pack(4)
@@ -2113,7 +2118,8 @@ typedef enum _D3DVERTEXBLENDFLAGS D3DVERTEXBLENDFLAGS;
 #endif //(DIRECT3D_VERSION < 0x0800)
 
 #pragma pack()
-#pragma warning(default:4201)
+#pragma warning(pop)
 
 #endif /* _D3DTYPES_H_ */
+
 
