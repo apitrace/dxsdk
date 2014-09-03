@@ -3,7 +3,7 @@
 /* this ALWAYS GENERATED file contains the definitions for the interfaces */
 
 
- /* File created by MIDL compiler version 8.00.0594 */
+ /* File created by MIDL compiler version 8.00.0603 */
 /* @@MIDL_FILE_HEADING(  ) */
 
 #pragma warning( disable: 4049 )  /* more than 64k source lines */
@@ -2153,8 +2153,8 @@ EXTERN_C const IID IID_IDXGIFactory;
 /* interface __MIDL_itf_dxgi_0000_0010 */
 /* [local] */ 
 
-HRESULT WINAPI CreateDXGIFactory(REFIID riid, void **ppFactory);
-HRESULT WINAPI CreateDXGIFactory1(REFIID riid, void **ppFactory);
+HRESULT WINAPI CreateDXGIFactory(REFIID riid, _Out_ void **ppFactory);
+HRESULT WINAPI CreateDXGIFactory1(REFIID riid, _Out_ void **ppFactory);
 
 
 extern RPC_IF_HANDLE __MIDL_itf_dxgi_0000_0010_v0_0_c_ifspec;
