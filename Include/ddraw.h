@@ -11,19 +11,12 @@
 #define __DDRAW_INCLUDED__
 
 
-
-//Disable the nameless union warning when building internally
-#undef ENABLE_NAMELESS_UNION_PRAGMA
-#ifdef DIRECTX_REDIST
-#define ENABLE_NAMELESS_UNION_PRAGMA
-#endif
-
-#ifdef ENABLE_NAMELESS_UNION_PRAGMA
+// Always disable warning C4201: "nonstandard extension used :
+// nameless struct/union"
 #if _MSC_VER >= 1200
 #pragma warning(push)
 #endif
 #pragma warning(disable:4201)
-#endif
 
 /*
  * If you wish an application built against the newest version of DirectDraw
@@ -706,6 +699,8 @@ typedef DDCAPS FAR* LPDDCAPS;
 /*
  * DDPIXELFORMAT
  */
+#ifndef _DDPIXELFORMAT_DEFINED
+#define _DDPIXELFORMAT_DEFINED
 typedef struct _DDPIXELFORMAT
 {
     DWORD       dwSize;                 // size of structure
@@ -760,6 +755,7 @@ typedef struct _DDPIXELFORMAT
         DWORD   dwYUVZBitMask;          // mask for Z channel
     } DUMMYUNIONNAMEN(5);
 } DDPIXELFORMAT;
+#endif // _DDPIXELFORMAT_DEFINED
 
 typedef DDPIXELFORMAT FAR* LPDDPIXELFORMAT;
 
@@ -5854,12 +5850,10 @@ typedef struct _DDCOLORCONTROL
 };
 #endif
 
-#ifdef ENABLE_NAMELESS_UNION_PRAGMA
 #if _MSC_VER >= 1200
 #pragma warning(pop)
 #else
 #pragma warning(default:4201)
-#endif
 #endif
 
 

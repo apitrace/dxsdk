@@ -557,7 +557,7 @@ interface DWRITE_DECLARE_INTERFACE("EFA008F9-F7A1-48BF-B05C-F224713CC0FF") IDWri
         _Deref_out_range_(0, textLength) UINT32* mappedLength,
         _COM_Outptr_ IDWriteFont** mappedFont,
         _Out_ FLOAT* scale
-        );
+        ) PURE;
 };
 
 
@@ -589,11 +589,11 @@ interface DWRITE_DECLARE_INTERFACE("FD882D06-8ABA-4FB8-B849-8BE8B73E14DE") IDWri
         UINT32 rangesCount,
         _In_reads_(targetFamilyNamesCount) WCHAR const** targetFamilyNames,
         UINT32 targetFamilyNamesCount,
-        __in_opt IDWriteFontCollection* fontCollection = NULL,
+        _In_opt_ IDWriteFontCollection* fontCollection = NULL,
         _In_opt_z_ WCHAR const* localeName = NULL,
         _In_opt_z_ WCHAR const* baseFamilyName = NULL,
         FLOAT scale = 1.0f
-        );
+        ) PURE;
 
     /// <summary>
     /// Appends all the mappings from an existing font fallback object.
@@ -604,7 +604,7 @@ interface DWRITE_DECLARE_INTERFACE("FD882D06-8ABA-4FB8-B849-8BE8B73E14DE") IDWri
     /// </returns>
     STDMETHOD(AddMappings)(
         IDWriteFontFallback* fontFallback
-        );
+        ) PURE;
 
     /// <summary>
     /// Creates the finalized fallback object from the mappings added.
@@ -615,7 +615,7 @@ interface DWRITE_DECLARE_INTERFACE("FD882D06-8ABA-4FB8-B849-8BE8B73E14DE") IDWri
     /// </returns>
    STDMETHOD(CreateFontFallback)(
         _COM_Outptr_ IDWriteFontFallback** fontFallback
-        );
+        ) PURE;
 };
 
 /// <summary>
@@ -935,7 +935,7 @@ interface DWRITE_DECLARE_INTERFACE("0439fc60-ca44-4994-8dee-3a9af7b732ec") IDWri
     /// </summary>
     /// <param name="glyphRun">Structure specifying the properties of the glyph run.</param>
     /// <param name="transform">Optional transform applied to the glyphs and their positions. This transform is applied after the
-    /// scaling specified the emSize and pixelsPerDip.</param>
+    /// scaling specified by the emSize and pixelsPerDip.</param>
     /// <param name="renderingMode">Specifies the rendering mode, which must be one of the raster rendering modes (i.e., not default
     /// and not outline).</param>
     /// <param name="measuringMode">Specifies the method to measure glyphs.</param>

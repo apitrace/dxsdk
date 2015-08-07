@@ -383,6 +383,13 @@ typedef struct D2D1_INPUT_ELEMENT_DESC
 } D2D1_INPUT_ELEMENT_DESC;
 
 
+// 
+// Set to alignedByteOffset within D2D1_INPUT_ELEMENT_DESC for elements that 
+// immediately follow preceding elements in memory
+//
+#define D2D1_APPEND_ALIGNED_ELEMENT ( 0xffffffff )
+
+
 //+-----------------------------------------------------------------------------
 //
 //  Struct:

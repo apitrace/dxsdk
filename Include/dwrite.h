@@ -434,7 +434,12 @@ enum DWRITE_INFORMATIONAL_STRING_ID
     /// <summary>
     /// The postscript CID findfont name, from name id 20 in the name table.
     /// </summary>
-    DWRITE_INFORMATIONAL_STRING_POSTSCRIPT_CID_NAME
+    DWRITE_INFORMATIONAL_STRING_POSTSCRIPT_CID_NAME,
+
+    /// <summary>
+    /// Family name for the weight-width-slope model.
+    /// </summary>
+    DWRITE_INFORMATIONAL_STRING_WWS_FAMILY_NAME,
 };
 
 
@@ -1616,7 +1621,7 @@ interface DWRITE_DECLARE_INTERFACE("acd16696-8c14-4f5d-877e-fe3fc1d32737") IDWri
     /// </returns>
     STDMETHOD(GetInformationalStrings)(
         DWRITE_INFORMATIONAL_STRING_ID informationalStringID,
-        _COM_Outptr_ IDWriteLocalizedStrings** informationalStrings,
+        _COM_Outptr_result_maybenull_ IDWriteLocalizedStrings** informationalStrings,
         _Out_ BOOL* exists
         ) PURE;
 
@@ -1807,7 +1812,12 @@ enum DWRITE_LINE_SPACING_METHOD
     /// Lines are explicitly set to uniform spacing, regardless of contained font sizes.
     /// This can be useful to avoid the uneven appearance that can occur from font fallback.
     /// </summary>
-    DWRITE_LINE_SPACING_METHOD_UNIFORM
+    DWRITE_LINE_SPACING_METHOD_UNIFORM,
+
+    /// <summary>
+    /// Line spacing and baseline distances are proportional to the computed values based on the content, the size of the fonts and inline objects.
+    /// </summary>
+    DWRITE_LINE_SPACING_METHOD_PROPORTIONAL
 };
 
 /// <summary>
@@ -1985,12 +1995,13 @@ struct DWRITE_TRIMMING
 
     /// <summary>
     /// Character code used as the delimiter signaling the beginning of the portion of text to be preserved,
-    /// most useful for path ellipsis, where the delimiter would be a slash.
+    /// most useful for path ellipsis, where the delimiter would be a slash. Leave this zero if there is no
+    /// delimiter.
     /// </summary>
     UINT32 delimiter;
 
     /// <summary>
-    /// How many occurrences of the delimiter to step back.
+    /// How many occurrences of the delimiter to step back. Leave this zero if there is no delimiter.
     /// </summary>
     UINT32 delimiterCount;
 };
@@ -2586,7 +2597,7 @@ interface DECLSPEC_UUID("688e1a58-5094-47c8-adc8-fbcea60ae92b") DECLSPEC_NOVTABL
     STDMETHOD(GetNumberSubstitution)(
         UINT32 textPosition,
         _Out_ UINT32* textLength,
-        _Outptr_ IDWriteNumberSubstitution** numberSubstitution
+        _COM_Outptr_ IDWriteNumberSubstitution** numberSubstitution
         ) PURE;
 };
 
@@ -4476,7 +4487,8 @@ interface DWRITE_DECLARE_INTERFACE("5e5a32a3-8dff-4773-9ff6-0696eab77267") IDWri
 interface DWRITE_DECLARE_INTERFACE("1edd9491-9853-4299-898f-6432983b6f3a") IDWriteGdiInterop : public IUnknown
 {
     /// <summary>
-    /// Creates a font object that matches the properties specified by the LOGFONT structure.
+    /// Creates a font object that matches the properties specified by the LOGFONT structure
+    /// in the system font collection (GetSystemFontCollection).
     /// </summary>
     /// <param name="logFont">Structure containing a GDI-compatible font description.</param>
     /// <param name="font">Receives a newly created font object if successful, or NULL in case of error.</param>
@@ -4491,7 +4503,7 @@ interface DWRITE_DECLARE_INTERFACE("1edd9491-9853-4299-898f-6432983b6f3a") IDWri
     /// <summary>
     /// Initializes a LOGFONT structure based on the GDI-compatible properties of the specified font.
     /// </summary>
-    /// <param name="font">Specifies a font in the system font collection.</param>
+    /// <param name="font">Specifies a font.</param>
     /// <param name="logFont">Structure that receives a GDI-compatible font description.</param>
     /// <param name="isSystemFont">Contains TRUE if the specified font object is part of the system font collection
     /// or FALSE otherwise.</param>
@@ -5004,7 +5016,7 @@ interface DWRITE_DECLARE_INTERFACE("b859ee5a-d838-4b5b-a2e8-1adc7d93db48") IDWri
     /// <param name="pixelsPerDip">Number of physical pixels per DIP. For example, if rendering onto a 96 DPI bitmap then pixelsPerDip
     /// is 1. If rendering onto a 120 DPI bitmap then pixelsPerDip is 120/96.</param>
     /// <param name="transform">Optional transform applied to the glyphs and their positions. This transform is applied after the
-    /// scaling specified the emSize and pixelsPerDip.</param>
+    /// scaling specified by the emSize and pixelsPerDip.</param>
     /// <param name="renderingMode">Specifies the rendering mode, which must be one of the raster rendering modes (i.e., not default
     /// and not outline).</param>
     /// <param name="measuringMode">Specifies the method to measure glyphs.</param>

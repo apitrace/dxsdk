@@ -3,10 +3,9 @@
 /* this ALWAYS GENERATED file contains the definitions for the interfaces */
 
 
- /* File created by MIDL compiler version 8.00.0603 */
+ /* File created by MIDL compiler version 8.00.0611 */
 /* @@MIDL_FILE_HEADING(  ) */
 
-#pragma warning( disable: 4049 )  /* more than 64k source lines */
 
 
 /* verify that the <rpcndr.h> version is high enough to compile this file*/
@@ -24,15 +23,15 @@
 
 #ifndef __RPCNDR_H_VERSION__
 #error this stub requires an updated version of <rpcndr.h>
-#endif // __RPCNDR_H_VERSION__
+#endif /* __RPCNDR_H_VERSION__ */
 
 #ifndef COM_NO_WINDOWS_H
 #include "windows.h"
 #include "ole2.h"
 #endif /*COM_NO_WINDOWS_H*/
 
-#ifndef __D3D11ShaderTracing_h__
-#define __D3D11ShaderTracing_h__
+#ifndef __d3d11ShaderTracing_h__
+#define __d3d11ShaderTracing_h__
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1020)
 #pragma once
@@ -63,7 +62,7 @@ extern "C"{
 #endif 
 
 
-/* interface __MIDL_itf_D3D11ShaderTracing_0000_0000 */
+/* interface __MIDL_itf_d3d11ShaderTracing_0000_0000 */
 /* [local] */ 
 
 typedef 
@@ -255,8 +254,8 @@ typedef struct D3D11_TRACE_STEP
 
 
 
-extern RPC_IF_HANDLE __MIDL_itf_D3D11ShaderTracing_0000_0000_v0_0_c_ifspec;
-extern RPC_IF_HANDLE __MIDL_itf_D3D11ShaderTracing_0000_0000_v0_0_s_ifspec;
+extern RPC_IF_HANDLE __MIDL_itf_d3d11ShaderTracing_0000_0000_v0_0_c_ifspec;
+extern RPC_IF_HANDLE __MIDL_itf_d3d11ShaderTracing_0000_0000_v0_0_s_ifspec;
 
 #ifndef __ID3D11ShaderTrace_INTERFACE_DEFINED__
 #define __ID3D11ShaderTrace_INTERFACE_DEFINED__
@@ -473,7 +472,7 @@ EXTERN_C const IID IID_ID3D11ShaderTraceFactory;
             /* [annotation] */ 
             _In_  D3D11_SHADER_TRACE_DESC *pTraceDesc,
             /* [annotation] */ 
-            _Out_  ID3D11ShaderTrace **ppShaderTrace) = 0;
+            _COM_Outptr_  ID3D11ShaderTrace **ppShaderTrace) = 0;
         
     };
     
@@ -503,7 +502,7 @@ EXTERN_C const IID IID_ID3D11ShaderTraceFactory;
             /* [annotation] */ 
             _In_  D3D11_SHADER_TRACE_DESC *pTraceDesc,
             /* [annotation] */ 
-            _Out_  ID3D11ShaderTrace **ppShaderTrace);
+            _COM_Outptr_  ID3D11ShaderTrace **ppShaderTrace);
         
         END_INTERFACE
     } ID3D11ShaderTraceFactoryVtbl;
@@ -542,7 +541,7 @@ EXTERN_C const IID IID_ID3D11ShaderTraceFactory;
 #endif 	/* __ID3D11ShaderTraceFactory_INTERFACE_DEFINED__ */
 
 
-/* interface __MIDL_itf_D3D11ShaderTracing_0000_0002 */
+/* interface __MIDL_itf_d3d11ShaderTracing_0000_0002 */
 /* [local] */ 
 
 HRESULT WINAPI
@@ -552,11 +551,11 @@ D3DDisassemble11Trace(_In_reads_bytes_(SrcDataSize) LPCVOID pSrcData,
                       _In_ UINT StartStep,
                       _In_ UINT NumSteps,
                       _In_ UINT Flags,
-                      _Out_ interface ID3D10Blob** ppDisassembly);
+                      _COM_Outptr_ interface ID3D10Blob** ppDisassembly);
 
 
-extern RPC_IF_HANDLE __MIDL_itf_D3D11ShaderTracing_0000_0002_v0_0_c_ifspec;
-extern RPC_IF_HANDLE __MIDL_itf_D3D11ShaderTracing_0000_0002_v0_0_s_ifspec;
+extern RPC_IF_HANDLE __MIDL_itf_d3d11ShaderTracing_0000_0002_v0_0_c_ifspec;
+extern RPC_IF_HANDLE __MIDL_itf_d3d11ShaderTracing_0000_0002_v0_0_s_ifspec;
 
 /* Additional Prototypes for ALL interfaces */
 

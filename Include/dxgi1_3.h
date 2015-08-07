@@ -3,10 +3,9 @@
 /* this ALWAYS GENERATED file contains the definitions for the interfaces */
 
 
- /* File created by MIDL compiler version 8.00.0603 */
+ /* File created by MIDL compiler version 8.00.0611 */
 /* @@MIDL_FILE_HEADING(  ) */
 
-#pragma warning( disable: 4049 )  /* more than 64k source lines */
 
 
 /* verify that the <rpcndr.h> version is high enough to compile this file*/
@@ -24,7 +23,7 @@
 
 #ifndef __RPCNDR_H_VERSION__
 #error this stub requires an updated version of <rpcndr.h>
-#endif // __RPCNDR_H_VERSION__
+#endif /* __RPCNDR_H_VERSION__ */
 
 #ifndef COM_NO_WINDOWS_H
 #include "windows.h"
@@ -108,7 +107,7 @@ extern "C"{
 /* [local] */ 
 
 #define DXGI_CREATE_FACTORY_DEBUG 0x1
-HRESULT WINAPI CreateDXGIFactory2(UINT Flags, REFIID riid, _Out_ void **ppFactory);
+HRESULT WINAPI CreateDXGIFactory2(UINT Flags, REFIID riid, _COM_Outptr_ void **ppFactory);
 HRESULT WINAPI DXGIGetDebugInterface1(UINT Flags, REFIID riid, _COM_Outptr_ void **pDebug);
 
 
@@ -182,12 +181,12 @@ EXTERN_C const IID IID_IDXGIDevice3;
             /* [annotation][in] */ 
             _In_  REFIID riid,
             /* [annotation][retval][out] */ 
-            _Out_  void **ppParent);
+            _COM_Outptr_  void **ppParent);
         
         HRESULT ( STDMETHODCALLTYPE *GetAdapter )( 
             IDXGIDevice3 * This,
             /* [annotation][out] */ 
-            _Out_  IDXGIAdapter **pAdapter);
+            _COM_Outptr_  IDXGIAdapter **pAdapter);
         
         HRESULT ( STDMETHODCALLTYPE *CreateSurface )( 
             IDXGIDevice3 * This,
@@ -198,7 +197,7 @@ EXTERN_C const IID IID_IDXGIDevice3;
             /* [annotation][in] */ 
             _In_opt_  const DXGI_SHARED_RESOURCE *pSharedResource,
             /* [annotation][out] */ 
-            _Out_  IDXGISurface **ppSurface);
+            _COM_Outptr_  IDXGISurface **ppSurface);
         
         HRESULT ( STDMETHODCALLTYPE *QueryResourceResidency )( 
             IDXGIDevice3 * This,
@@ -444,14 +443,14 @@ EXTERN_C const IID IID_IDXGISwapChain2;
             /* [annotation][in] */ 
             _In_  REFIID riid,
             /* [annotation][retval][out] */ 
-            _Out_  void **ppParent);
+            _COM_Outptr_  void **ppParent);
         
         HRESULT ( STDMETHODCALLTYPE *GetDevice )( 
             IDXGISwapChain2 * This,
             /* [annotation][in] */ 
             _In_  REFIID riid,
             /* [annotation][retval][out] */ 
-            _Out_  void **ppDevice);
+            _COM_Outptr_  void **ppDevice);
         
         HRESULT ( STDMETHODCALLTYPE *Present )( 
             IDXGISwapChain2 * This,
@@ -464,7 +463,7 @@ EXTERN_C const IID IID_IDXGISwapChain2;
             /* [annotation][in] */ 
             _In_  REFIID riid,
             /* [annotation][out][in] */ 
-            _Out_  void **ppSurface);
+            _COM_Outptr_  void **ppSurface);
         
         HRESULT ( STDMETHODCALLTYPE *SetFullscreenState )( 
             IDXGISwapChain2 * This,
@@ -477,7 +476,7 @@ EXTERN_C const IID IID_IDXGISwapChain2;
             /* [annotation][out] */ 
             _Out_opt_  BOOL *pFullscreen,
             /* [annotation][out] */ 
-            _Out_opt_  IDXGIOutput **ppTarget);
+            _COM_Outptr_opt_result_maybenull_  IDXGIOutput **ppTarget);
         
         HRESULT ( STDMETHODCALLTYPE *GetDesc )( 
             IDXGISwapChain2 * This,
@@ -500,7 +499,7 @@ EXTERN_C const IID IID_IDXGISwapChain2;
         HRESULT ( STDMETHODCALLTYPE *GetContainingOutput )( 
             IDXGISwapChain2 * This,
             /* [annotation][out] */ 
-            _Out_  IDXGIOutput **ppOutput);
+            _COM_Outptr_  IDXGIOutput **ppOutput);
         
         HRESULT ( STDMETHODCALLTYPE *GetFrameStatistics )( 
             IDXGISwapChain2 * This,
@@ -532,7 +531,7 @@ EXTERN_C const IID IID_IDXGISwapChain2;
             /* [annotation][in] */ 
             _In_  REFIID refiid,
             /* [annotation][out] */ 
-            _Out_  void **ppUnk);
+            _COM_Outptr_  void **ppUnk);
         
         HRESULT ( STDMETHODCALLTYPE *Present1 )( 
             IDXGISwapChain2 * This,
@@ -806,7 +805,7 @@ EXTERN_C const IID IID_IDXGIOutput2;
             /* [annotation][in] */ 
             _In_  REFIID riid,
             /* [annotation][retval][out] */ 
-            _Out_  void **ppParent);
+            _COM_Outptr_  void **ppParent);
         
         HRESULT ( STDMETHODCALLTYPE *GetDesc )( 
             IDXGIOutput2 * This,
@@ -901,7 +900,7 @@ EXTERN_C const IID IID_IDXGIOutput2;
             /* [annotation][in] */ 
             _In_  IUnknown *pDevice,
             /* [annotation][out] */ 
-            _Out_  IDXGIOutputDuplication **ppOutputDuplication);
+            _COM_Outptr_  IDXGIOutputDuplication **ppOutputDuplication);
         
         BOOL ( STDMETHODCALLTYPE *SupportsOverlays )( 
             IDXGIOutput2 * This);
@@ -1073,13 +1072,13 @@ EXTERN_C const IID IID_IDXGIFactory3;
             /* [annotation][in] */ 
             _In_  REFIID riid,
             /* [annotation][retval][out] */ 
-            _Out_  void **ppParent);
+            _COM_Outptr_  void **ppParent);
         
         HRESULT ( STDMETHODCALLTYPE *EnumAdapters )( 
             IDXGIFactory3 * This,
             /* [in] */ UINT Adapter,
             /* [annotation][out] */ 
-            _Out_  IDXGIAdapter **ppAdapter);
+            _COM_Outptr_  IDXGIAdapter **ppAdapter);
         
         HRESULT ( STDMETHODCALLTYPE *MakeWindowAssociation )( 
             IDXGIFactory3 * This,
@@ -1098,19 +1097,19 @@ EXTERN_C const IID IID_IDXGIFactory3;
             /* [annotation][in] */ 
             _In_  DXGI_SWAP_CHAIN_DESC *pDesc,
             /* [annotation][out] */ 
-            _Out_  IDXGISwapChain **ppSwapChain);
+            _COM_Outptr_  IDXGISwapChain **ppSwapChain);
         
         HRESULT ( STDMETHODCALLTYPE *CreateSoftwareAdapter )( 
             IDXGIFactory3 * This,
             /* [in] */ HMODULE Module,
             /* [annotation][out] */ 
-            _Out_  IDXGIAdapter **ppAdapter);
+            _COM_Outptr_  IDXGIAdapter **ppAdapter);
         
         HRESULT ( STDMETHODCALLTYPE *EnumAdapters1 )( 
             IDXGIFactory3 * This,
             /* [in] */ UINT Adapter,
             /* [annotation][out] */ 
-            _Out_  IDXGIAdapter1 **ppAdapter);
+            _COM_Outptr_  IDXGIAdapter1 **ppAdapter);
         
         BOOL ( STDMETHODCALLTYPE *IsCurrent )( 
             IDXGIFactory3 * This);
@@ -1131,7 +1130,7 @@ EXTERN_C const IID IID_IDXGIFactory3;
             /* [annotation][in] */ 
             _In_opt_  IDXGIOutput *pRestrictToOutput,
             /* [annotation][out] */ 
-            _Out_  IDXGISwapChain1 **ppSwapChain);
+            _COM_Outptr_  IDXGISwapChain1 **ppSwapChain);
         
         HRESULT ( STDMETHODCALLTYPE *CreateSwapChainForCoreWindow )( 
             IDXGIFactory3 * This,
@@ -1144,7 +1143,7 @@ EXTERN_C const IID IID_IDXGIFactory3;
             /* [annotation][in] */ 
             _In_opt_  IDXGIOutput *pRestrictToOutput,
             /* [annotation][out] */ 
-            _Out_  IDXGISwapChain1 **ppSwapChain);
+            _COM_Outptr_  IDXGISwapChain1 **ppSwapChain);
         
         HRESULT ( STDMETHODCALLTYPE *GetSharedResourceAdapterLuid )( 
             IDXGIFactory3 * This,
@@ -1204,7 +1203,7 @@ EXTERN_C const IID IID_IDXGIFactory3;
             /* [annotation][in] */ 
             _In_opt_  IDXGIOutput *pRestrictToOutput,
             /* [annotation][out] */ 
-            _Outptr_  IDXGISwapChain1 **ppSwapChain);
+            _COM_Outptr_  IDXGISwapChain1 **ppSwapChain);
         
         UINT ( STDMETHODCALLTYPE *GetCreationFlags )( 
             IDXGIFactory3 * This);
@@ -1536,16 +1535,21 @@ EXTERN_C const IID IID_IDXGIFactoryMedia;
             /* [annotation][in] */ 
             _In_opt_  IDXGIOutput *pRestrictToOutput,
             /* [annotation][out] */ 
-            _Out_  IDXGISwapChain1 **ppSwapChain) = 0;
+            _COM_Outptr_  IDXGISwapChain1 **ppSwapChain) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE CreateDecodeSwapChainForCompositionSurfaceHandle( 
-            IUnknown *pDevice,
-            HANDLE hSurface,
-            DXGI_DECODE_SWAP_CHAIN_DESC *pDesc,
-            IDXGIResource *pYuvDecodeBuffers,
-            IDXGIOutput *pRestrictToOutput,
+            /* [annotation][in] */ 
+            _In_  IUnknown *pDevice,
+            /* [annotation][in] */ 
+            _In_opt_  HANDLE hSurface,
+            /* [annotation][in] */ 
+            _In_  DXGI_DECODE_SWAP_CHAIN_DESC *pDesc,
+            /* [annotation][in] */ 
+            _In_  IDXGIResource *pYuvDecodeBuffers,
+            /* [annotation][in] */ 
+            _In_opt_  IDXGIOutput *pRestrictToOutput,
             /* [annotation][out] */ 
-            _Out_  IDXGIDecodeSwapChain **ppSwapChain) = 0;
+            _COM_Outptr_  IDXGIDecodeSwapChain **ppSwapChain) = 0;
         
     };
     
@@ -1579,17 +1583,22 @@ EXTERN_C const IID IID_IDXGIFactoryMedia;
             /* [annotation][in] */ 
             _In_opt_  IDXGIOutput *pRestrictToOutput,
             /* [annotation][out] */ 
-            _Out_  IDXGISwapChain1 **ppSwapChain);
+            _COM_Outptr_  IDXGISwapChain1 **ppSwapChain);
         
         HRESULT ( STDMETHODCALLTYPE *CreateDecodeSwapChainForCompositionSurfaceHandle )( 
             IDXGIFactoryMedia * This,
-            IUnknown *pDevice,
-            HANDLE hSurface,
-            DXGI_DECODE_SWAP_CHAIN_DESC *pDesc,
-            IDXGIResource *pYuvDecodeBuffers,
-            IDXGIOutput *pRestrictToOutput,
+            /* [annotation][in] */ 
+            _In_  IUnknown *pDevice,
+            /* [annotation][in] */ 
+            _In_opt_  HANDLE hSurface,
+            /* [annotation][in] */ 
+            _In_  DXGI_DECODE_SWAP_CHAIN_DESC *pDesc,
+            /* [annotation][in] */ 
+            _In_  IDXGIResource *pYuvDecodeBuffers,
+            /* [annotation][in] */ 
+            _In_opt_  IDXGIOutput *pRestrictToOutput,
             /* [annotation][out] */ 
-            _Out_  IDXGIDecodeSwapChain **ppSwapChain);
+            _COM_Outptr_  IDXGIDecodeSwapChain **ppSwapChain);
         
         END_INTERFACE
     } IDXGIFactoryMediaVtbl;
@@ -1639,7 +1648,8 @@ enum DXGI_FRAME_PRESENTATION_MODE
     {
         DXGI_FRAME_PRESENTATION_MODE_COMPOSED	= 0,
         DXGI_FRAME_PRESENTATION_MODE_OVERLAY	= 1,
-        DXGI_FRAME_PRESENTATION_MODE_NONE	= 2
+        DXGI_FRAME_PRESENTATION_MODE_NONE	= 2,
+        DXGI_FRAME_PRESENTATION_MODE_COMPOSITION_FAILURE	= 3
     } 	DXGI_FRAME_PRESENTATION_MODE;
 
 typedef struct DXGI_FRAME_STATISTICS_MEDIA
@@ -1856,7 +1866,7 @@ EXTERN_C const IID IID_IDXGIOutput3;
             /* [annotation][in] */ 
             _In_  REFIID riid,
             /* [annotation][retval][out] */ 
-            _Out_  void **ppParent);
+            _COM_Outptr_  void **ppParent);
         
         HRESULT ( STDMETHODCALLTYPE *GetDesc )( 
             IDXGIOutput3 * This,
@@ -1951,7 +1961,7 @@ EXTERN_C const IID IID_IDXGIOutput3;
             /* [annotation][in] */ 
             _In_  IUnknown *pDevice,
             /* [annotation][out] */ 
-            _Out_  IDXGIOutputDuplication **ppOutputDuplication);
+            _COM_Outptr_  IDXGIOutputDuplication **ppOutputDuplication);
         
         BOOL ( STDMETHODCALLTYPE *SupportsOverlays )( 
             IDXGIOutput3 * This);

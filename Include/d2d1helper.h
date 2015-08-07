@@ -689,16 +689,16 @@ namespace D2D1
         COM_DECLSPEC_NOTHROW
         D2D1FORCEINLINE
         ColorF(
-            FLOAT r,
-            FLOAT g,
-            FLOAT b,
-            FLOAT a = 1.0
+            FLOAT red,
+            FLOAT green,
+            FLOAT blue,
+            FLOAT alpha = 1.0
             )
         {
-            this->r = r;
-            this->g = g;
-            this->b = b;
-            this->a = a;
+            r = red;
+            g = green;
+            b = blue;
+            a = alpha;
         }
 
     private:
@@ -708,13 +708,13 @@ namespace D2D1
         void
         Init(
             UINT32 rgb,
-            FLOAT a
+            FLOAT alpha
             )
         {
-            this->r = static_cast<FLOAT>((rgb & sc_redMask) >> sc_redShift) / 255.f;
-            this->g = static_cast<FLOAT>((rgb & sc_greenMask) >> sc_greenShift) / 255.f;
-            this->b = static_cast<FLOAT>((rgb & sc_blueMask) >> sc_blueShift) / 255.f;
-            this->a = a;
+            r = static_cast<FLOAT>((rgb & sc_redMask) >> sc_redShift) / 255.f;
+            g = static_cast<FLOAT>((rgb & sc_greenMask) >> sc_greenShift) / 255.f;
+            b = static_cast<FLOAT>((rgb & sc_blueMask) >> sc_blueShift) / 255.f;
+            a = alpha;
         }
 
         static const UINT32 sc_redShift   = 16;
@@ -733,20 +733,20 @@ namespace D2D1
         COM_DECLSPEC_NOTHROW
         D2D1FORCEINLINE
         Matrix3x2F(
-            FLOAT _11,
-            FLOAT _12,
-            FLOAT _21,
-            FLOAT _22,
-            FLOAT _31,
-            FLOAT _32
+            FLOAT m11,
+            FLOAT m12,
+            FLOAT m21,
+            FLOAT m22,
+            FLOAT m31,
+            FLOAT m32
             )
         {
-            this->_11 = _11;
-            this->_12 = _12;
-            this->_21 = _21;
-            this->_22 = _22;
-            this->_31 = _31;
-            this->_32 = _32;
+            _11 = m11;
+            _12 = m12;
+            _21 = m21;
+            _22 = m22;
+            _31 = m31;
+            _32 = m32;
         }
 
         //

@@ -3,10 +3,9 @@
 /* this ALWAYS GENERATED file contains the definitions for the interfaces */
 
 
- /* File created by MIDL compiler version 8.00.0603 */
+ /* File created by MIDL compiler version 8.00.0611 */
 /* @@MIDL_FILE_HEADING(  ) */
 
-#pragma warning( disable: 4049 )  /* more than 64k source lines */
 
 
 /* verify that the <rpcndr.h> version is high enough to compile this file*/
@@ -24,7 +23,7 @@
 
 #ifndef __RPCNDR_H_VERSION__
 #error this stub requires an updated version of <rpcndr.h>
-#endif // __RPCNDR_H_VERSION__
+#endif /* __RPCNDR_H_VERSION__ */
 
 #ifndef COM_NO_WINDOWS_H
 #include "windows.h"
@@ -80,7 +79,8 @@ enum DXGI_DEBUG_RLO_FLAGS
     {
         DXGI_DEBUG_RLO_SUMMARY	= 0x1,
         DXGI_DEBUG_RLO_DETAIL	= 0x2,
-        DXGI_DEBUG_RLO_ALL	= 0x3
+        DXGI_DEBUG_RLO_IGNORE_INTERNAL	= 0x4,
+        DXGI_DEBUG_RLO_ALL	= 0x7
     } 	DXGI_DEBUG_RLO_FLAGS;
 
 typedef GUID DXGI_DEBUG_ID;

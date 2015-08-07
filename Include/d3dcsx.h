@@ -245,9 +245,9 @@ DECLARE_INTERFACE_(ID3DX11FFT, IUnknown)
     // ppPrecomputeBufferSizes      buffers to hold precomputed data
     STDMETHOD(AttachBuffersAndPrecompute)(  THIS_
         _In_range_(0,D3DX11_FFT_MAX_TEMP_BUFFERS) UINT NumTempBuffers,
-        _In_reads_(NumTempBuffers) ID3D11UnorderedAccessView*const* ppTempBuffers,    
+        _In_reads_(NumTempBuffers) ID3D11UnorderedAccessView* const* ppTempBuffers,    
         _In_range_(0,D3DX11_FFT_MAX_PRECOMPUTE_BUFFERS) UINT NumPrecomputeBuffers,
-        _In_reads_(NumPrecomputeBuffers) ID3D11UnorderedAccessView*const* ppPrecomputeBufferSizes ) PURE;
+        _In_reads_(NumPrecomputeBuffers) ID3D11UnorderedAccessView* const* ppPrecomputeBufferSizes ) PURE;
 
     //------------------------------------------------------------------------------
     // Call after buffers have been attached to the context, pInput and *ppOuput can 

@@ -43,13 +43,6 @@
 #define DXGI_CPU_ACCESS_SCRATCH                 ( 3 )
 #define DXGI_CPU_ACCESS_FIELD                   15
 
-#define DXGI_USAGE_SHADER_INPUT                 ( 1L << (0 + 4) )
-#define DXGI_USAGE_RENDER_TARGET_OUTPUT         ( 1L << (1 + 4) )
-#define DXGI_USAGE_BACK_BUFFER                  ( 1L << (2 + 4) )
-#define DXGI_USAGE_SHARED                       ( 1L << (3 + 4) )
-#define DXGI_USAGE_READ_ONLY                    ( 1L << (4 + 4) )
-#define DXGI_USAGE_DISCARD_ON_PRESENT           ( 1L << (5 + 4) )
-#define DXGI_USAGE_UNORDERED_ACCESS             ( 1L << (6 + 4) )
 
 typedef struct DXGI_RGB
 {
@@ -127,11 +120,49 @@ typedef struct DXGI_MODE_DESC
     DXGI_MODE_SCALING Scaling;
 } DXGI_MODE_DESC;
 
+// The following values are used with DXGI_SAMPLE_DESC::Quality:
+#define DXGI_STANDARD_MULTISAMPLE_QUALITY_PATTERN 0xffffffff
+#define DXGI_CENTER_MULTISAMPLE_QUALITY_PATTERN 0xfffffffe
+
 typedef struct DXGI_SAMPLE_DESC
 {
     UINT Count;
     UINT Quality;
 } DXGI_SAMPLE_DESC;
+
+typedef enum DXGI_COLOR_SPACE_TYPE
+{
+    DXGI_COLOR_SPACE_RGB_FULL_G22_NONE_P709             = 0,
+    DXGI_COLOR_SPACE_RGB_FULL_G10_NONE_P709             = 1,
+    DXGI_COLOR_SPACE_RGB_STUDIO_G22_NONE_P709           = 2,
+    DXGI_COLOR_SPACE_RGB_STUDIO_G22_NONE_P2020          = 3,
+    DXGI_COLOR_SPACE_RESERVED                           = 4,
+    DXGI_COLOR_SPACE_YCBCR_FULL_G22_NONE_P709_X601      = 5,
+    DXGI_COLOR_SPACE_YCBCR_STUDIO_G22_LEFT_P601         = 6,
+    DXGI_COLOR_SPACE_YCBCR_FULL_G22_LEFT_P601           = 7,
+    DXGI_COLOR_SPACE_YCBCR_STUDIO_G22_LEFT_P709         = 8,
+    DXGI_COLOR_SPACE_YCBCR_FULL_G22_LEFT_P709           = 9,
+    DXGI_COLOR_SPACE_YCBCR_STUDIO_G22_LEFT_P2020        = 10,
+    DXGI_COLOR_SPACE_YCBCR_FULL_G22_LEFT_P2020          = 11,
+    DXGI_COLOR_SPACE_CUSTOM                             = 0xFFFFFFFF
+} DXGI_COLOR_SPACE_TYPE;
+
+typedef struct DXGI_JPEG_DC_HUFFMAN_TABLE
+{
+    BYTE CodeCounts[12];
+    BYTE CodeValues[12];
+} DXGI_JPEG_DC_HUFFMAN_TABLE;
+
+typedef struct DXGI_JPEG_AC_HUFFMAN_TABLE
+{
+    BYTE CodeCounts[16];
+    BYTE CodeValues[162];
+} DXGI_JPEG_AC_HUFFMAN_TABLE;
+
+typedef struct DXGI_JPEG_QUANTIZATION_TABLE
+{
+    BYTE Elements[64];
+} DXGI_JPEG_QUANTIZATION_TABLE;
 
 #endif // __dxgitype_h__
 

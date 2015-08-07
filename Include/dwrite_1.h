@@ -1055,7 +1055,7 @@ interface DWRITE_DECLARE_INTERFACE("30572f99-dac6-41db-a16e-0486307e606a") IDWri
     STDMETHOD(GetEudcFontCollection)(
         _COM_Outptr_ IDWriteFontCollection** fontCollection,
         BOOL checkForUpdates = FALSE
-        );
+        ) PURE;
 
     /// <summary>
     /// Creates a rendering parameters object with the specified properties.
@@ -1270,7 +1270,7 @@ interface DWRITE_DECLARE_INTERFACE("a71efdb4-9fdb-4838-ad90-cfc3be8c3daf") IDWri
     /// <returns>
     /// Whether the font supports kerning pairs.
     /// </returns>
-    STDMETHOD_(BOOL, HasKerningPairs)();
+    STDMETHOD_(BOOL, HasKerningPairs)() PURE;
 
     /// <summary>
     /// Determines the recommended text rendering mode to be used based on the
@@ -1324,7 +1324,7 @@ interface DWRITE_DECLARE_INTERFACE("a71efdb4-9fdb-4838-ad90-cfc3be8c3daf") IDWri
         UINT32 glyphCount,
         _In_reads_(glyphCount) UINT16 const* nominalGlyphIndices,
         _Out_writes_(glyphCount) UINT16* verticalGlyphIndices
-        );
+        ) PURE;
 
     /// <summary>
     /// Returns whether or not the font has any vertical glyph variants.
@@ -1336,7 +1336,7 @@ interface DWRITE_DECLARE_INTERFACE("a71efdb4-9fdb-4838-ad90-cfc3be8c3daf") IDWri
     /// <returns>
     /// True if the font contains vertical glyph variants.
     /// </returns>
-    STDMETHOD_(BOOL, HasVerticalGlyphVariants)();
+    STDMETHOD_(BOOL, HasVerticalGlyphVariants)() PURE;
 };
 
 

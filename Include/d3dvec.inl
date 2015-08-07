@@ -9,10 +9,7 @@
  *                                                                *
  ******************************************************************/
 
-#include <winapifamily.h>
 
-#pragma region Desktop Family
-#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
 
 #include <math.h>
 
@@ -258,5 +255,3 @@ operator* (const _D3DMATRIX& a, const _D3DMATRIX& b)
     return ret;
 }
 
-#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
-#pragma endregion

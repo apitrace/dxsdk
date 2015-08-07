@@ -3,10 +3,9 @@
 /* this ALWAYS GENERATED file contains the definitions for the interfaces */
 
 
- /* File created by MIDL compiler version 8.00.0603 */
+ /* File created by MIDL compiler version 8.00.0611 */
 /* @@MIDL_FILE_HEADING(  ) */
 
-#pragma warning( disable: 4049 )  /* more than 64k source lines */
 
 
 /* verify that the <rpcndr.h> version is high enough to compile this file*/
@@ -24,7 +23,7 @@
 
 #ifndef __RPCNDR_H_VERSION__
 #error this stub requires an updated version of <rpcndr.h>
-#endif // __RPCNDR_H_VERSION__
+#endif /* __RPCNDR_H_VERSION__ */
 
 #ifndef COM_NO_WINDOWS_H
 #include "windows.h"
@@ -185,6 +184,8 @@ DEFINE_GUID(IID_IDirectXVideoMemoryConfiguration, 0xb7f916dd,0xdb3b,0x49c1,0x84,
 #ifndef MAX_SUBSTREAMS
 #define MAX_SUBSTREAMS 15
 #endif
+#pragma warning( push )
+#pragma warning( disable : 4201 ) // nonstandard extension used : nameless struct/union
 typedef struct _DXVA2_ExtendedFormat
     {
     union 
@@ -203,6 +204,7 @@ typedef struct _DXVA2_ExtendedFormat
         } 	;
     } 	DXVA2_ExtendedFormat;
 
+#pragma warning( pop )
 typedef 
 enum _DXVA2_SampleFormat
     {
@@ -443,6 +445,8 @@ typedef struct _DXVA2_VideoProcessorCaps
 typedef LONG DXVA2_Fixed32;
 
 #else
+#pragma warning( push )
+#pragma warning( disable : 4201 ) // nonstandard extension used : nameless struct/union
 typedef struct _DXVA2_Fixed32
 {
     union {
@@ -453,6 +457,7 @@ typedef struct _DXVA2_Fixed32
         LONG ll;
     };
 } DXVA2_Fixed32;
+#pragma warning( pop )
 #endif
 typedef struct _DXVA2_AYUVSample8
     {

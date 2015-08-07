@@ -1328,7 +1328,7 @@ interface DX_DECLARE_INTERFACE("483473d7-cd46-4f9d-9d3a-3112aa80159d") ID2D1Prop
     //
     STDMETHOD(GetSubProperties)(
         UINT32 index,
-        _Outptr_opt_ ID2D1Properties **subProperties 
+        _Outptr_result_maybenull_ ID2D1Properties **subProperties 
         ) CONST PURE;
     
     COM_DECLSPEC_NOTHROW
@@ -1499,7 +1499,7 @@ interface DX_DECLARE_INTERFACE("483473d7-cd46-4f9d-9d3a-3112aa80159d") ID2D1Prop
     template<typename U>
     HRESULT GetSubProperties(
         U index,
-        _Outptr_opt_ ID2D1Properties **subProperties
+        _Outptr_result_maybenull_ ID2D1Properties **subProperties
         ) CONST
     {
         return GetSubProperties(static_cast<UINT32>(index), subProperties);
@@ -1548,7 +1548,7 @@ interface DX_DECLARE_INTERFACE("28211a43-7d89-476f-8181-2d6159b220ad") ID2D1Effe
     //
     STDMETHOD_(void, GetInput)(
         UINT32 index,
-        _Outptr_opt_ ID2D1Image **input 
+        _Outptr_result_maybenull_ ID2D1Image **input 
         ) CONST PURE;
     
     
@@ -3609,7 +3609,7 @@ typedef struct ID2D1PropertiesVtbl
     STDMETHOD(GetSubProperties)(
         ID2D1Properties *This,
         UINT32 index,
-        _Outptr_opt_ ID2D1Properties **subProperties 
+        _Outptr_result_maybenull_ ID2D1Properties **subProperties 
         ) PURE;
 } ID2D1PropertiesVtbl;
 
@@ -3684,7 +3684,7 @@ typedef struct ID2D1EffectVtbl
     STDMETHOD_(void, GetInput)(
         ID2D1Effect *This,
         UINT32 index,
-        _Outptr_opt_ ID2D1Image **input 
+        _Outptr_result_maybenull_ ID2D1Image **input 
         ) PURE;
     
     STDMETHOD_(UINT32, GetInputCount)(

@@ -46,7 +46,7 @@
 //
 
 //
-// The supplied buffer was too small to accomodate the data.
+// The supplied buffer was too small to accommodate the data.
 //
 #define D2DERR_INSUFFICIENT_BUFFER          HRESULT_FROM_WIN32(ERROR_INSUFFICIENT_BUFFER)
 

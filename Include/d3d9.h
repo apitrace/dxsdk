@@ -18,6 +18,7 @@
 #if(DIRECT3D_VERSION >= 0x0900)
 
 
+
 /* This identifier is passed to Direct3DCreate9 in order to ensure that an
  * application was built against the correct header files. This number is
  * incremented whenever a header (or other) change would require applications
@@ -47,7 +48,6 @@
 #endif
 
 #define D3DAPI WINAPI
-
 /*
  * Interface IID's
  */
@@ -1809,7 +1809,6 @@ typedef struct IDirect3DQuery9 *LPDIRECT3DQUERY9, *PDIRECT3DQUERY9;
 #define IDirect3DQuery9_GetData(p,a,b,c) (p)->GetData(a,b,c)
 #endif
 
-
 /****************************************************************************
  * Flags for SetPrivateData method on all D3D9 interfaces
  *
@@ -2041,6 +2040,7 @@ DECLARE_INTERFACE_(IDirect3D9Ex, IDirect3D9)
     STDMETHOD_(ULONG,Release)(THIS) PURE;
 
     /*** IDirect3D9 methods ***/
+    STDMETHOD(RegisterSoftwareDevice)(THIS_ void* pInitializeFunction) PURE;
     STDMETHOD_(UINT, GetAdapterCount)(THIS) PURE;
     STDMETHOD(GetAdapterIdentifier)(THIS_ UINT Adapter,DWORD Flags,D3DADAPTER_IDENTIFIER9* pIdentifier) PURE;
     STDMETHOD_(UINT, GetAdapterModeCount)(THIS_ UINT Adapter,D3DFORMAT Format) PURE;
@@ -2067,6 +2067,7 @@ typedef struct IDirect3D9Ex *LPDIRECT3D9EX, *PDIRECT3D9EX;
 #define IDirect3D9Ex_QueryInterface(p,a,b) (p)->lpVtbl->QueryInterface(p,a,b)
 #define IDirect3D9Ex_AddRef(p) (p)->lpVtbl->AddRef(p)
 #define IDirect3D9Ex_Release(p) (p)->lpVtbl->Release(p)
+#define IDirect3D9Ex_RegisterSoftwareDevice(p,a) (p)->lpVtbl->RegisterSoftwareDevice(p,a)
 #define IDirect3D9Ex_GetAdapterCount(p) (p)->lpVtbl->GetAdapterCount(p)
 #define IDirect3D9Ex_GetAdapterIdentifier(p,a,b,c) (p)->lpVtbl->GetAdapterIdentifier(p,a,b,c)
 #define IDirect3D9Ex_GetAdapterModeCount(p,a,b) (p)->lpVtbl->GetAdapterModeCount(p,a,b)
@@ -2089,6 +2090,7 @@ typedef struct IDirect3D9Ex *LPDIRECT3D9EX, *PDIRECT3D9EX;
 #define IDirect3D9Ex_QueryInterface(p,a,b) (p)->QueryInterface(a,b)
 #define IDirect3D9Ex_AddRef(p) (p)->AddRef()
 #define IDirect3D9Ex_Release(p) (p)->Release()
+#define IDirect3D9Ex_RegisterSoftwareDevice(p,a) (p)->RegisterSoftwareDevice(a)
 #define IDirect3D9Ex_GetAdapterCount(p) (p)->GetAdapterCount()
 #define IDirect3D9Ex_GetAdapterIdentifier(p,a,b,c) (p)->GetAdapterIdentifier(a,b,c)
 #define IDirect3D9Ex_GetAdapterModeCount(p,a,b) (p)->GetAdapterModeCount(a,b)
@@ -2785,6 +2787,7 @@ typedef struct IDirect3DCryptoSession9 *LPDIRECT3DCRYPTOSESSION9, *PDIRECT3DCRYP
 #ifdef __cplusplus
 };
 #endif
+
 
 #endif /* (DIRECT3D_VERSION >= 0x0900) */
 #endif /* _D3D_H_ */
