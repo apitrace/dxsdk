@@ -14,7 +14,7 @@
 #pragma once
 #endif
 
-#include <DWrite_1.h>
+#include <dwrite_1.h>
 
 
 interface IDWriteFontFallback;

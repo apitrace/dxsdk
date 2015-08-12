@@ -40,6 +40,7 @@ extern "C" {
 #endif //__cplusplus
 
 
+
 //----------------------------------------------------------------------------
 // D3DReadFileToBlob:
 // -----------------
@@ -61,8 +62,6 @@ HRESULT WINAPI
 D3DWriteBlobToFile(_In_ ID3DBlob* pBlob,
                    _In_ LPCWSTR pFileName,
                    _In_ BOOL bOverwrite);
-
-
 
 //----------------------------------------------------------------------------
 // D3DCOMPILE flags:
@@ -149,6 +148,7 @@ D3DWriteBlobToFile(_In_ ID3DBlob* pBlob,
 #define D3DCOMPILE_WARNINGS_ARE_ERRORS                  (1 << 18)
 #define D3DCOMPILE_RESOURCES_MAY_ALIAS                  (1 << 19)
 #define D3DCOMPILE_ENABLE_UNBOUNDED_DESCRIPTOR_TABLES   (1 << 20)
+#define D3DCOMPILE_ALL_RESOURCES_BOUND                  (1 << 21)
 
 //----------------------------------------------------------------------------
 // D3DCOMPILE_EFFECT flags:
@@ -233,8 +233,6 @@ D3DCompile2(_In_reads_bytes_(SrcDataSize) LPCVOID pSrcData,
             _Out_ ID3DBlob** ppCode,
             _Always_(_Outptr_opt_result_maybenull_) ID3DBlob** ppErrorMsgs);
 
-
-
 HRESULT WINAPI
 D3DCompileFromFile(_In_ LPCWSTR pFileName,
                    _In_reads_opt_(_Inexpressible_(pDefines->Name != NULL)) CONST D3D_SHADER_MACRO* pDefines,
@@ -245,8 +243,6 @@ D3DCompileFromFile(_In_ LPCWSTR pFileName,
                    _In_ UINT Flags2,
                    _Out_ ID3DBlob** ppCode,
                    _Always_(_Outptr_opt_result_maybenull_) ID3DBlob** ppErrorMsgs);
-
-
 
 //----------------------------------------------------------------------------
 // D3DPreprocess:
@@ -280,14 +276,10 @@ typedef HRESULT (WINAPI *pD3DPreprocess)
 // embedded in the body of the shader.
 //----------------------------------------------------------------------------
 
-
-
 HRESULT WINAPI
 D3DGetDebugInfo(_In_reads_bytes_(SrcDataSize) LPCVOID pSrcData,
                 _In_ SIZE_T SrcDataSize,
                 _Out_ ID3DBlob** ppDebugInfo);
-
-
 
 //----------------------------------------------------------------------------
 // D3DReflect:
@@ -369,23 +361,6 @@ HRESULT WINAPI
 D3DCreateFunctionLinkingGraph(_In_ UINT uFlags,
                               _Out_ interface ID3D11FunctionLinkingGraph ** ppFunctionLinkingGraph);
 
-
-
-
-//----------------------------------------------------------------------------
-// D3DDisassemble10Effect:
-// -----------------------
-// Takes a D3D10 effect interface and returns a
-// buffer containing text assembly.
-//----------------------------------------------------------------------------
-
-HRESULT WINAPI
-D3DDisassemble10Effect(_In_ interface ID3D10Effect *pEffect, 
-                       _In_ UINT Flags,
-                       _Out_ ID3DBlob** ppDisassembly);
-
-
-
 //----------------------------------------------------------------------------
 // D3DGetTraceInstructionOffsets:
 // -----------------------
@@ -404,8 +379,6 @@ D3DGetTraceInstructionOffsets(_In_reads_bytes_(SrcDataSize) LPCVOID pSrcData,
                               _In_ SIZE_T NumInsts,
                               _Out_writes_to_opt_(NumInsts, min(NumInsts, *pTotalInsts)) SIZE_T* pOffsets,
                               _Out_opt_ SIZE_T* pTotalInsts);
-
-
 
 //----------------------------------------------------------------------------
 // D3DGetInputSignatureBlob:
@@ -439,8 +412,6 @@ HRESULT WINAPI
 D3DGetInputAndOutputSignatureBlob(_In_reads_bytes_(SrcDataSize) LPCVOID pSrcData,
                                   _In_ SIZE_T SrcDataSize,
                                   _Out_ ID3DBlob** ppSignatureBlob);
-
-
 
 //----------------------------------------------------------------------------
 // D3DStripShader:
@@ -525,7 +496,6 @@ HRESULT WINAPI
 D3DCreateBlob(_In_ SIZE_T Size,
               _Out_ ID3DBlob** ppBlob);
 
-
 //----------------------------------------------------------------------------
 // D3DCompressShaders:
 // -----------------------
@@ -539,7 +509,6 @@ typedef struct _D3D_SHADER_DATA
 } D3D_SHADER_DATA;
 
 #define D3D_COMPRESS_SHADER_KEEP_ALL_PARTS 0x00000001
-
 
 HRESULT WINAPI
 D3DCompressShaders(_In_ UINT uNumShaders,
@@ -562,6 +531,22 @@ D3DDecompressShaders(_In_reads_bytes_(SrcDataSize) LPCVOID pSrcData,
                      _In_ UINT uFlags,
                      _Out_writes_(uNumShaders) ID3DBlob** ppShaders,
                      _Out_opt_ UINT* pTotalShaders);
+
+
+
+
+//----------------------------------------------------------------------------
+// D3DDisassemble10Effect:
+// -----------------------
+// Takes a D3D10 effect interface and returns a
+// buffer containing text assembly.
+//----------------------------------------------------------------------------
+
+HRESULT WINAPI
+D3DDisassemble10Effect(_In_ interface ID3D10Effect *pEffect, 
+                       _In_ UINT Flags,
+                       _Out_ ID3DBlob** ppDisassembly);
+
 
 
 #ifdef __cplusplus

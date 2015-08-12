@@ -440,6 +440,19 @@ enum DWRITE_INFORMATIONAL_STRING_ID
     /// Family name for the weight-width-slope model.
     /// </summary>
     DWRITE_INFORMATIONAL_STRING_WWS_FAMILY_NAME,
+
+    /// <summary>
+    /// Script/language tag to identify the scripts or languages that the font was
+    /// primarily designed to support. See DWRITE_FONT_PROPERTY_ID_DESIGN_SCRIPT_LANGUAGE_TAG
+    /// for a longer description.
+    /// </summary>
+    DWRITE_INFORMATIONAL_STRING_DESIGN_SCRIPT_LANGUAGE_TAG,
+
+    /// <summary>
+    /// Script/language tag to identify the scripts or languages that the font declares
+    /// it is able to support.
+    /// </summary>
+    DWRITE_INFORMATIONAL_STRING_SUPPORTED_SCRIPT_LANGUAGE_TAG,
 };
 
 

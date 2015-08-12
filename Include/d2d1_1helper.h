@@ -877,31 +877,34 @@ namespace D2D1
 
         if (SUCCEEDED(hr))
         {
-            dpiCompensationEffect->SetInput(0, inputBitmap);
+                if (SUCCEEDED(hr))
+                {
+                    dpiCompensationEffect->SetInput(0, inputBitmap);
 
-            D2D1_POINT_2F bitmapDpi;
-            inputBitmap->GetDpi(&bitmapDpi.x, &bitmapDpi.y);
-            hr = dpiCompensationEffect->SetValue(D2D1_DPICOMPENSATION_PROP_INPUT_DPI, bitmapDpi);
-        }
+                    D2D1_POINT_2F bitmapDpi;
+                    inputBitmap->GetDpi(&bitmapDpi.x, &bitmapDpi.y);
+                    hr = dpiCompensationEffect->SetValue(D2D1_DPICOMPENSATION_PROP_INPUT_DPI, bitmapDpi);
+                }
 
-        if (SUCCEEDED(hr))
-        {
-            hr = dpiCompensationEffect->SetValue(D2D1_DPICOMPENSATION_PROP_INTERPOLATION_MODE, interpolationMode);
-        }
+                if (SUCCEEDED(hr))
+                {
+                    hr = dpiCompensationEffect->SetValue(D2D1_DPICOMPENSATION_PROP_INTERPOLATION_MODE, interpolationMode);
+                }
 
-        if (SUCCEEDED(hr))
-        {
-            hr = dpiCompensationEffect->SetValue(D2D1_DPICOMPENSATION_PROP_BORDER_MODE, borderMode);
-        }
+                if (SUCCEEDED(hr))
+                {
+                    hr = dpiCompensationEffect->SetValue(D2D1_DPICOMPENSATION_PROP_BORDER_MODE, borderMode);
+                }
 
-        if (SUCCEEDED(hr))
-        {
-            effect->SetInputEffect(inputIndex, dpiCompensationEffect);
-        }
+                if (SUCCEEDED(hr))
+                {
+                    effect->SetInputEffect(inputIndex, dpiCompensationEffect);
+                }
 
-        if (dpiCompensationEffect)
-        {
-            dpiCompensationEffect->Release();
+                if (dpiCompensationEffect)
+                {
+                    dpiCompensationEffect->Release();
+                }
         }
 
         return hr;

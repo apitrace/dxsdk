@@ -8,7 +8,7 @@
 /* this ALWAYS GENERATED file contains the definitions for the interfaces */
 
 
- /* File created by MIDL compiler version 8.00.0611 */
+ /* File created by MIDL compiler version 8.00.0613 */
 /* @@MIDL_FILE_HEADING(  ) */
 
 
@@ -2125,6 +2125,14 @@ EXTERN_C const IID IID_ID3D11DeviceContext3;
             /* [annotation] */ 
             _In_opt_  HANDLE hEvent) = 0;
         
+        virtual void STDMETHODCALLTYPE SetHardwareProtectionState( 
+            /* [annotation] */ 
+            _In_  BOOL HwProtectionEnable) = 0;
+        
+        virtual void STDMETHODCALLTYPE GetHardwareProtectionState( 
+            /* [annotation] */ 
+            _Out_  BOOL *pHwProtectionEnable) = 0;
+        
     };
     
     
@@ -3418,6 +3426,16 @@ EXTERN_C const IID IID_ID3D11DeviceContext3;
             /* [annotation] */ 
             _In_opt_  HANDLE hEvent);
         
+        void ( STDMETHODCALLTYPE *SetHardwareProtectionState )( 
+            ID3D11DeviceContext3 * This,
+            /* [annotation] */ 
+            _In_  BOOL HwProtectionEnable);
+        
+        void ( STDMETHODCALLTYPE *GetHardwareProtectionState )( 
+            ID3D11DeviceContext3 * This,
+            /* [annotation] */ 
+            _Out_  BOOL *pHwProtectionEnable);
+        
         END_INTERFACE
     } ID3D11DeviceContext3Vtbl;
 
@@ -3870,6 +3888,12 @@ EXTERN_C const IID IID_ID3D11DeviceContext3;
 
 #define ID3D11DeviceContext3_Flush1(This,ContextType,hEvent)	\
     ( (This)->lpVtbl -> Flush1(This,ContextType,hEvent) ) 
+
+#define ID3D11DeviceContext3_SetHardwareProtectionState(This,HwProtectionEnable)	\
+    ( (This)->lpVtbl -> SetHardwareProtectionState(This,HwProtectionEnable) ) 
+
+#define ID3D11DeviceContext3_GetHardwareProtectionState(This,pHwProtectionEnable)	\
+    ( (This)->lpVtbl -> GetHardwareProtectionState(This,pHwProtectionEnable) ) 
 
 #endif /* COBJMACROS */
 

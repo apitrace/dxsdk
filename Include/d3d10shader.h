@@ -104,6 +104,7 @@
 #define D3D10_SHADER_WARNINGS_ARE_ERRORS            (1 << 18)
 #define D3D10_SHADER_RESOURCES_MAY_ALIAS            (1 << 19)
 #define D3D10_ENABLE_UNBOUNDED_DESCRIPTOR_TABLES    (1 << 20)
+#define D3D10_ALL_RESOURCES_BOUND                   (1 << 21)
 
 
 // optimization level flags
