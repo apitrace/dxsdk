@@ -12,7 +12,9 @@ set (DirectX_D3DX10_INCLUDE_DIR "${DirectX_ROOT_DIR}/Include" CACHE PATH "" FORC
 set (DirectX_D3D11_INCLUDE_DIR "${DirectX_ROOT_DIR}/Include" CACHE PATH "" FORCE)
 set (DirectX_D3D11_1_INCLUDE_DIR "${DirectX_ROOT_DIR}/Include" CACHE PATH "" FORCE)
 set (DirectX_D3D11_2_INCLUDE_DIR "${DirectX_ROOT_DIR}/Include" CACHE PATH "" FORCE)
+set (DirectX_D3D11_3_INCLUDE_DIR "${DirectX_ROOT_DIR}/Include" CACHE PATH "" FORCE)
 set (DirectX_D2D1_INCLUDE_DIR "${DirectX_ROOT_DIR}/Include" CACHE PATH "" FORCE)
+set (DirectX_D2D1_1_INCLUDE_DIR "${DirectX_ROOT_DIR}/Include" CACHE PATH "" FORCE)
 
 set (DirectX_D3D9_LIBRARY "${DirectX_ROOT_DIR}/Lib/x64/libd3d9.a" CACHE FILEPATH "" FORCE)
 set (DirectX_D3DX9_LIBRARY "${DirectX_ROOT_DIR}/Lib/x64/libd3dx9.a" CACHE FILEPATH "" FORCE)
