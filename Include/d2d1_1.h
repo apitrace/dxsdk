@@ -19,7 +19,6 @@
 #include <d2d1effects.h>
 #endif // #ifndef _D2D1_EFFECTS_
 
-#if !WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
 #include <dxgi.h>
 
 
