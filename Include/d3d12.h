@@ -4520,7 +4520,7 @@ EXTERN_C const IID IID_ID3D12GraphicsCommandList;
         
         virtual void STDMETHODCALLTYPE SetDescriptorHeaps( 
             _In_  UINT NumDescriptorHeaps,
-            _In_reads_(NumDescriptorHeaps)  ID3D12DescriptorHeap **ppDescriptorHeaps) = 0;
+            _In_reads_(NumDescriptorHeaps)  ID3D12DescriptorHeap *const *ppDescriptorHeaps) = 0;
         
         virtual void STDMETHODCALLTYPE SetComputeRootSignature( 
             _In_  ID3D12RootSignature *pRootSignature) = 0;
