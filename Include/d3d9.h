@@ -126,6 +126,10 @@ DEFINE_GUID(IID_IDirect3DQuery9, 0xd9771460, 0xa695, 0x4f26, 0xbb, 0xd3, 0x27, 0
 /* {E4A36723-FDFE-4b22-B146-3C04C07F4CC8} */
 DEFINE_GUID(IID_HelperName, 0xe4a36723, 0xfdfe, 0x4b22, 0xb1, 0x46, 0x3c, 0x4, 0xc0, 0x7f, 0x4c, 0xc8);
 
+/* IID_IDirect3DShaderValidator9 */
+/* {81BDCBCB-64D4-426D-AE8D-AD0147F4275C} */
+DEFINE_GUID(IID_IDirect3DShaderValidator9, 0x81BDCBCB, 0x64D4, 0x426D, 0xAE, 0x8D, 0xAD, 0x1, 0x47, 0xF4, 0x27, 0x5C);
+
 /* D3D9Ex only -- */
 #if !defined(D3D_DISABLE_9EX)
 
@@ -195,6 +199,7 @@ interface DECLSPEC_UUID("24F416E6-1F67-4aa7-B88E-D33F6F3128A1") IDirect3DVolume9
 interface DECLSPEC_UUID("794950F2-ADFC-458a-905E-10A10B0B503B") IDirect3DSwapChain9;
 interface DECLSPEC_UUID("d9771460-a695-4f26-bbd3-27b840b541cc") IDirect3DQuery9;
 
+interface DECLSPEC_UUID("81BDCBCB-64D4-426D-AE8D-AD0147F4275C") IDirect3DShaderValidator9;
 
 /* D3D9Ex only -- */
 #if !defined(D3D_DISABLE_9EX)
@@ -233,6 +238,7 @@ _COM_SMARTPTR_TYPEDEF(IDirect3DVolume9, __uuidof(IDirect3DVolume9));
 _COM_SMARTPTR_TYPEDEF(IDirect3DSwapChain9, __uuidof(IDirect3DSwapChain9));
 _COM_SMARTPTR_TYPEDEF(IDirect3DQuery9, __uuidof(IDirect3DQuery9));
 
+_COM_SMARTPTR_TYPEDEF(IDirect3DShaderValidator9, __uuidof(IDirect3DShaderValidator9));
 
 /* D3D9Ex only -- */
 #if !defined(D3D_DISABLE_9EX)
@@ -271,6 +277,7 @@ typedef interface IDirect3DVolume9              IDirect3DVolume9;
 typedef interface IDirect3DSwapChain9           IDirect3DSwapChain9;
 typedef interface IDirect3DQuery9               IDirect3DQuery9;
 
+typedef interface IDirect3DShaderValidator9     IDirect3DShaderValidator9;
 
 /* D3D9Ex only -- */
 #if !defined(D3D_DISABLE_9EX)
@@ -1807,6 +1814,45 @@ typedef struct IDirect3DQuery9 *LPDIRECT3DQUERY9, *PDIRECT3DQUERY9;
 #define IDirect3DQuery9_GetDataSize(p) (p)->GetDataSize()
 #define IDirect3DQuery9_Issue(p,a) (p)->Issue(a)
 #define IDirect3DQuery9_GetData(p,a,b,c) (p)->GetData(a,b,c)
+#endif
+
+
+#undef INTERFACE
+#define INTERFACE IDirect3DShaderValidator9
+
+DECLARE_INTERFACE_(IDirect3DShaderValidator9, IUnknown)
+{
+    /*** IUnknown methods ***/
+    STDMETHOD(QueryInterface)(THIS_ REFIID riid, void** ppvObj) PURE;
+    STDMETHOD_(ULONG,AddRef)(THIS) PURE;
+    STDMETHOD_(ULONG,Release)(THIS) PURE;
+
+    /*** IDirect3DShaderValidator9 methods ***/
+    STDMETHOD_(LONG,Begin)(THIS_ void* callback, void* unknown1, ULONG unknown2) PURE;
+    STDMETHOD_(LONG,Instruction)(THIS_ void* unknown1, unsigned int unknown2, unsigned long unknown3, unsigned int unknown4) PURE;
+    STDMETHOD_(LONG,End)(THIS) PURE;
+
+    #ifdef D3D_DEBUG_INFO
+    LPCWSTR CreationCallStack;
+    #endif
+};
+
+typedef struct IDirect3DShaderValidator9 *LPDIRECT3DSHADERVALIDATOR9, *PDIRECT3DSHADERVALIDATOR9;
+
+#if !defined(__cplusplus) || defined(CINTERFACE)
+#define IDirect3DShaderValidator9_QueryInterface(p,a,b) (p)->lpVtbl->QueryInterface(p,a,b)
+#define IDirect3DShaderValidator9_AddRef(p) (p)->lpVtbl->AddRef(p)
+#define IDirect3DShaderValidator9_Release(p) (p)->lpVtbl->Release(p)
+#define IDirect3DShaderValidator9_Begin(p,a,b,c) (p)->lpVtbl->Begin(p,a,b,c)
+#define IDirect3DShaderValidator9_Instruction(p,a,b,c,d) (p)->lpVtbl->Instruction(p,a,b,c,d)
+#define IDirect3DShaderValidator9_End(p) (p)->lpVtbl->End(p)
+#else
+#define IDirect3DShaderValidator9_QueryInterface(p,a,b) (p)->QueryInterface(a,b)
+#define IDirect3DShaderValidator9_AddRef(p) (p)->AddRef()
+#define IDirect3DShaderValidator9_Release(p) (p)->Release()
+#define IDirect3DShaderValidator9_Begin(p,a,b,c) (p)->Begin(a,b,c)
+#define IDirect3DShaderValidator9_Instruction(p,a,b,c,d) (p)->Instruction(a,b,c,d)
+#define IDirect3DShaderValidator9_End(p) (p)->End()
 #endif
 
 /****************************************************************************
