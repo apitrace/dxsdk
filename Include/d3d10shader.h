@@ -114,6 +114,12 @@
 #define D3D10_SHADER_OPTIMIZATION_LEVEL3            (1 << 15)
 
 
+// Force root signature flags. (Passed in Flags2)
+#define D3D10_SHADER_FLAGS2_FORCE_ROOT_SIGNATURE_LATEST   0
+#define D3D10_SHADER_FLAGS2_FORCE_ROOT_SIGNATURE_1_0      (1 << 4)
+#define D3D10_SHADER_FLAGS2_FORCE_ROOT_SIGNATURE_1_1      (1 << 5)
+
+
 
 
 typedef D3D_SHADER_MACRO D3D10_SHADER_MACRO;

@@ -47,7 +47,7 @@ typedef interface IDCompositionSaturationEffect          IDCompositionSaturation
 typedef interface IDCompositionTurbulenceEffect          IDCompositionTurbulenceEffect;
 typedef interface IDCompositionLinearTransferEffect      IDCompositionLinearTransferEffect;
 typedef interface IDCompositionTableTransferEffect       IDCompositionTableTransferEffect;
-typedef interface IDCompositionCompositeEffect		 IDCompositionCompositeEffect;
+typedef interface IDCompositionCompositeEffect           IDCompositionCompositeEffect;
 typedef interface IDCompositionBlendEffect               IDCompositionBlendEffect;
 typedef interface IDCompositionArithmeticCompositeEffect IDCompositionArithmeticCompositeEffect;
 typedef interface IDCompositionAffineTransform2DEffect   IDCompositionAffineTransform2DEffect;
@@ -134,6 +134,42 @@ STDAPI DCompositionCreateSurfaceHandle(
     _In_ DWORD desiredAccess,
     _In_opt_ SECURITY_ATTRIBUTES *securityAttributes,
     _Out_ HANDLE *surfaceHandle
+    );
+
+//+-----------------------------------------------------------------------------
+//
+//  Function:
+//      DCompositionAttachMouseWheelToHwnd
+//
+//  Synopsis:
+//      Creates an Interaction/InputSink to route mouse wheel messages to the
+//      given HWND. After calling this API, the device owning the visual must
+//      be committed.
+//
+//------------------------------------------------------------------------------
+STDAPI DCompositionAttachMouseWheelToHwnd(
+    _In_ IDCompositionVisual* visual,
+    _In_ HWND hwnd,
+    _In_ BOOL enable
+    );
+
+//+-----------------------------------------------------------------------------
+//
+//  Function:
+//      DCompositionAttachMouseDragToHwnd
+//
+//  Synopsis:
+//      Creates an Interaction/InputSink to route mouse button down and any 
+//      subsequent move and up events to the given HWND. There is no move 
+//      thresholding; when enabled, all events including and following the down 
+//      are unconditionally redirected to the specified window. After calling this 
+//      API, the device owning the visual must be committed.
+//
+//------------------------------------------------------------------------------
+STDAPI DCompositionAttachMouseDragToHwnd(
+    _In_ IDCompositionVisual* visual,
+    _In_ HWND hwnd,
+    _In_ BOOL enable
     );
 
 //+-----------------------------------------------------------------------------
@@ -1474,6 +1510,63 @@ DECLARE_INTERFACE_IID_(IDCompositionVisualDebug, IDCompositionVisual2, "FED2B808
 
 #if (_WIN32_WINNT >= _WIN32_WINNT_WINTHRESHOLD)
 typedef interface IDCompositionDevice3                      IDCompositionDevice3;
+typedef interface IDCompositionVisual3                      IDCompositionVisual3;
+
+//+-----------------------------------------------------------------------------
+//
+//  Interface:
+//      IDCompositionVisual3
+//
+//  Synopsis:
+//      An IDCompositionVisual3 interface represents a visual that participates in
+//      a visual tree.
+//
+//------------------------------------------------------------------------------
+#undef INTERFACE
+#define INTERFACE IDCompositionVisual3
+DECLARE_INTERFACE_IID_(IDCompositionVisual3, IDCompositionVisualDebug, "2775F462-B6C1-4015-B0BE-B3E7D6A4976D")
+{
+    // Sets depth mode property associated with this visual
+    STDMETHOD(SetDepthMode)(THIS_
+        _In_ DCOMPOSITION_DEPTH_MODE mode
+        ) PURE;
+
+    // Changes the value of OffsetZ property.
+    STDMETHOD(SetOffsetZ)(THIS_
+        float offsetZ
+        ) PURE;
+
+    // Animates the value of the OffsetZ property.
+    STDMETHOD(SetOffsetZ)(THIS_
+        _In_ IDCompositionAnimation* animation
+        ) PURE;
+
+    // Changes the value of the Opacity property.
+    STDMETHOD(SetOpacity)(THIS_
+        float opacity
+        ) PURE;
+
+    // Animates the value of the Opacity property.
+    STDMETHOD(SetOpacity)(THIS_
+        _In_ IDCompositionAnimation* animation
+        ) PURE;
+
+    // Sets the matrix that modifies the coordinate system of this visual.
+    STDMETHOD(SetTransform)(THIS_
+        const D2D_MATRIX_4X4_F& matrix
+        ) PURE;
+
+    // Sets the transformation object that modifies the coordinate system of this visual.
+    STDMETHOD(SetTransform)(THIS_
+        _In_opt_ IDCompositionTransform3D* transform
+        ) PURE;
+
+    // Changes the value of the Visible property
+    STDMETHOD(SetVisible)(THIS_
+        BOOL visible
+        ) PURE;
+};
+
 //+-----------------------------------------------------------------------------
 //
 //  Interface:

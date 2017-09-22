@@ -750,7 +750,7 @@ namespace D2D1
         }
 
         //
-        // Creates an identity matrix
+        // Creates an uninitialized matrix
         // 
         COM_DECLSPEC_NOTHROW
         D2D1FORCEINLINE
