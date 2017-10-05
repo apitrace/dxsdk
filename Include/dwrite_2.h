@@ -10,9 +10,7 @@
 #ifndef DWRITE_2_H_INCLUDED
 #define DWRITE_2_H_INCLUDED
 
-#if _MSC_VER > 1000
 #pragma once
-#endif
 
 #include <dwrite_1.h>
 
@@ -238,6 +236,11 @@ interface DWRITE_DECLARE_INTERFACE("D3E0E934-22A0-427E-AAE4-7D9574B59DB1") IDWri
         BOOL isRightToLeft,
         _In_opt_ IUnknown* clientDrawingEffect
         ) PURE;
+
+    using IDWriteTextRenderer::DrawGlyphRun;
+    using IDWriteTextRenderer::DrawUnderline;
+    using IDWriteTextRenderer::DrawStrikethrough;
+    using IDWriteTextRenderer::DrawInlineObject;
 };
 
 
@@ -510,6 +513,8 @@ interface DWRITE_DECLARE_INTERFACE("553A9FF3-5693-4DF7-B52B-74806F7F2EB9") IDWri
         _In_reads_(glyphCount) UINT16 const* glyphIndices,
         _Out_writes_(glyphCount) UINT8* featureApplies
         ) PURE;
+
+    using IDWriteTextAnalyzer1::GetGlyphOrientationTransform;
 };
 
 
@@ -643,7 +648,7 @@ typedef struct _D3DCOLORVALUE {
 } D3DCOLORVALUE;
 
 #define D3DCOLORVALUE_DEFINED
-#endif D3DCOLORVALUE_DEFINED
+#endif // D3DCOLORVALUE_DEFINED
 
 typedef D3DCOLORVALUE DWRITE_COLOR_F;
 
@@ -751,6 +756,8 @@ interface DWRITE_DECLARE_INTERFACE("d8b768ff-64bc-4e66-982b-ec8e87f693f7") IDWri
         _Out_ DWRITE_RENDERING_MODE* renderingMode,
         _Out_ DWRITE_GRID_FIT_MODE* gridFitMode
         ) PURE;
+
+    using IDWriteFontFace1::GetRecommendedRenderingMode;
 };
 
 /// <summary>

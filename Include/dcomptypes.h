@@ -5,7 +5,7 @@
 #pragma once
 
 #include <dxgitype.h>   // for DXGI_RATIONAL
-#include <dxgi1_2.h>    // for DXGI_ALPHA_MODE
+#include <dxgi1_5.h>    // for DXGI_ALPHA_MODE, DXGI_HDR_METADATA_TYPE
 
 
 

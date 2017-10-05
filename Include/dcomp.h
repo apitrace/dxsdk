@@ -103,21 +103,8 @@ STDAPI DCompositionCreateDevice3(
     _Outptr_ void **dcompositionDevice
     );
 
-//+-----------------------------------------------------------------------------
-//
-//  Function:
-//      DCompositionGetFrameStatistics
-//
-//  Synopsis:
-//      Returns composition statistics information.
-//
-//------------------------------------------------------------------------------
-STDAPI DCompositionGetFrameStatistics(
-    _Out_ DCOMPOSITION_FRAME_STATISTICS *statistics,
-    _Out_opt_ D3D_FEATURE_LEVEL *minSafeFeaturelLevel,
-    _Out_opt_ D3D_FEATURE_LEVEL *maxHardwareFeaturelLevel);
-
 #endif  // (_WIN32_WINNT >= _WIN32_WINNT_WINTHRESHOLD)
+
 
 //+-----------------------------------------------------------------------------
 //

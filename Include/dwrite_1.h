@@ -10,9 +10,7 @@
 #ifndef DWRITE_1_H_INCLUDED
 #define DWRITE_1_H_INCLUDED
 
-#if _MSC_VER > 1000
 #pragma once
-#endif
 
 #include <dwrite.h>
 
@@ -1101,8 +1099,6 @@ interface DWRITE_DECLARE_INTERFACE("a71efdb4-9fdb-4838-ad90-cfc3be8c3daf") IDWri
         _Out_ DWRITE_FONT_METRICS1* fontMetrics
         ) PURE;
 
-    using IDWriteFontFace::GetMetrics;
-
     /// <summary>
     /// Gets common metrics for the font in design units.
     /// These metrics are applicable to all the glyphs within a font,
@@ -1339,6 +1335,10 @@ interface DWRITE_DECLARE_INTERFACE("a71efdb4-9fdb-4838-ad90-cfc3be8c3daf") IDWri
     /// True if the font contains vertical glyph variants.
     /// </returns>
     STDMETHOD_(BOOL, HasVerticalGlyphVariants)() PURE;
+
+    using IDWriteFontFace::GetMetrics;
+    using IDWriteFontFace::GetGdiCompatibleMetrics;
+    using IDWriteFontFace::GetRecommendedRenderingMode;
 };
 
 

@@ -4375,6 +4375,16 @@ interface DWRITE_DECLARE_INTERFACE("53737037-6d14-410b-9bfe-0b182bb70961") IDWri
         UINT32 maxHitTestMetricsCount,
         _Out_ UINT32* actualHitTestMetricsCount
         ) PURE;
+
+    using IDWriteTextFormat::GetFontCollection;
+    using IDWriteTextFormat::GetFontFamilyNameLength;
+    using IDWriteTextFormat::GetFontFamilyName;
+    using IDWriteTextFormat::GetFontWeight;
+    using IDWriteTextFormat::GetFontStyle;
+    using IDWriteTextFormat::GetFontStretch;
+    using IDWriteTextFormat::GetFontSize;
+    using IDWriteTextFormat::GetLocaleNameLength;
+    using IDWriteTextFormat::GetLocaleName;
 };
 
 

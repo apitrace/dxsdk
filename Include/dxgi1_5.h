@@ -3,7 +3,7 @@
 /* this ALWAYS GENERATED file contains the definitions for the interfaces */
 
 
- /* File created by MIDL compiler version 8.01.0618 */
+ /* File created by MIDL compiler version 8.01.0622 */
 /* @@MIDL_FILE_HEADING(  ) */
 
 
@@ -78,9 +78,12 @@ extern "C"{
 /* interface __MIDL_itf_dxgi1_5_0000_0000 */
 /* [local] */ 
 
-#include <winapifamily.h>
-#pragma region App Family
-#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP)
+typedef 
+enum DXGI_OUTDUPL_FLAG
+    {
+        DXGI_OUTDUPL_COMPOSITED_UI_CAPTURE_ONLY	= 1
+    } 	DXGI_OUTDUPL_FLAG;
+
 
 
 extern RPC_IF_HANDLE __MIDL_itf_dxgi1_5_0000_0000_v0_0_c_ifspec;
@@ -146,7 +149,7 @@ EXTERN_C const IID IID_IDXGIOutput5;
             /* [annotation][in] */ 
             _In_  REFGUID Name,
             /* [annotation][in] */ 
-            _In_  const IUnknown *pUnknown);
+            _In_opt_  const IUnknown *pUnknown);
         
         HRESULT ( STDMETHODCALLTYPE *GetPrivateData )( 
             IDXGIOutput5 * This,
@@ -490,7 +493,7 @@ EXTERN_C const IID IID_IDXGISwapChain4;
             /* [annotation][in] */ 
             _In_  REFGUID Name,
             /* [annotation][in] */ 
-            _In_  const IUnknown *pUnknown);
+            _In_opt_  const IUnknown *pUnknown);
         
         HRESULT ( STDMETHODCALLTYPE *GetPrivateData )( 
             IDXGISwapChain4 * This,
@@ -948,7 +951,7 @@ EXTERN_C const IID IID_IDXGIDevice4;
             /* [annotation][in] */ 
             _In_  REFGUID Name,
             /* [annotation][in] */ 
-            _In_  const IUnknown *pUnknown);
+            _In_opt_  const IUnknown *pUnknown);
         
         HRESULT ( STDMETHODCALLTYPE *GetPrivateData )( 
             IDXGIDevice4 * This,
@@ -1213,7 +1216,7 @@ EXTERN_C const IID IID_IDXGIFactory5;
             /* [annotation][in] */ 
             _In_  REFGUID Name,
             /* [annotation][in] */ 
-            _In_  const IUnknown *pUnknown);
+            _In_opt_  const IUnknown *pUnknown);
         
         HRESULT ( STDMETHODCALLTYPE *GetPrivateData )( 
             IDXGIFactory5 * This,
@@ -1509,8 +1512,6 @@ EXTERN_C const IID IID_IDXGIFactory5;
 /* interface __MIDL_itf_dxgi1_5_0000_0004 */
 /* [local] */ 
 
-#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP) */
-#pragma endregion
 DEFINE_GUID(IID_IDXGIOutput5,0x80A07424,0xAB52,0x42EB,0x83,0x3C,0x0C,0x42,0xFD,0x28,0x2D,0x98);
 DEFINE_GUID(IID_IDXGISwapChain4,0x3D585D5A,0xBD4A,0x489E,0xB1,0xF4,0x3D,0xBC,0xB6,0x45,0x2F,0xFB);
 DEFINE_GUID(IID_IDXGIDevice4,0x95B4F95F,0xD8DA,0x4CA4,0x9E,0xE6,0x3B,0x76,0xD5,0x96,0x8A,0x10);
