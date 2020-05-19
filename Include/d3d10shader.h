@@ -105,6 +105,8 @@
 #define D3D10_SHADER_RESOURCES_MAY_ALIAS            (1 << 19)
 #define D3D10_ENABLE_UNBOUNDED_DESCRIPTOR_TABLES    (1 << 20)
 #define D3D10_ALL_RESOURCES_BOUND                   (1 << 21)
+#define D3D10_SHADER_DEBUG_NAME_FOR_SOURCE          (1 << 22)
+#define D3D10_SHADER_DEBUG_NAME_FOR_BINARY          (1 << 23)
 
 
 // optimization level flags

@@ -410,15 +410,15 @@ enum DWRITE_INFORMATIONAL_STRING_ID
     DWRITE_INFORMATIONAL_STRING_WIN32_SUBFAMILY_NAMES,
 
     /// <summary>
-    /// Family name preferred by the designer. This enables font designers to group more than four fonts in a single family without losing compatibility with
+    /// Typographic family name preferred by the designer. This enables font designers to group more than four fonts in a single family without losing compatibility with
     /// GDI. This name is typically only present if it differs from the GDI-compatible family name.
     /// </summary>
-    DWRITE_INFORMATIONAL_STRING_PREFERRED_FAMILY_NAMES,
+    DWRITE_INFORMATIONAL_STRING_TYPOGRAPHIC_FAMILY_NAMES,
 
     /// <summary>
-    /// Subfamily name preferred by the designer. This name is typically only present if it differs from the GDI-compatible subfamily name. 
+    /// Typographic subfamily name preferred by the designer. This name is typically only present if it differs from the GDI-compatible subfamily name. 
     /// </summary>
-    DWRITE_INFORMATIONAL_STRING_PREFERRED_SUBFAMILY_NAMES,
+    DWRITE_INFORMATIONAL_STRING_TYPOGRAPHIC_SUBFAMILY_NAMES,
 
     /// <summary>
     /// Sample text. This can be the font name or any other text that the designer thinks is the best example to display the font in.
@@ -441,9 +441,9 @@ enum DWRITE_INFORMATIONAL_STRING_ID
     DWRITE_INFORMATIONAL_STRING_POSTSCRIPT_CID_NAME,
 
     /// <summary>
-    /// Family name for the weight-width-slope model.
+    /// Family name for the weight-stretch-style model.
     /// </summary>
-    DWRITE_INFORMATIONAL_STRING_WWS_FAMILY_NAME,
+    DWRITE_INFORMATIONAL_STRING_WEIGHT_STRETCH_STYLE_FAMILY_NAME,
 
     /// <summary>
     /// Script/language tag to identify the scripts or languages that the font was
@@ -457,6 +457,11 @@ enum DWRITE_INFORMATIONAL_STRING_ID
     /// it is able to support.
     /// </summary>
     DWRITE_INFORMATIONAL_STRING_SUPPORTED_SCRIPT_LANGUAGE_TAG,
+
+    // Obsolete aliases kept to avoid breaking existing code.
+    DWRITE_INFORMATIONAL_STRING_PREFERRED_FAMILY_NAMES = DWRITE_INFORMATIONAL_STRING_TYPOGRAPHIC_FAMILY_NAMES,
+    DWRITE_INFORMATIONAL_STRING_PREFERRED_SUBFAMILY_NAMES = DWRITE_INFORMATIONAL_STRING_TYPOGRAPHIC_SUBFAMILY_NAMES,
+    DWRITE_INFORMATIONAL_STRING_WWS_FAMILY_NAME = DWRITE_INFORMATIONAL_STRING_WEIGHT_STRETCH_STYLE_FAMILY_NAME,
 };
 
 
@@ -631,20 +636,26 @@ enum DWRITE_FACTORY_TYPE
     DWRITE_FACTORY_TYPE_ISOLATED
 };
 
-// Creates an OpenType tag as a 32bit integer such that
-// the first character in the tag is the lowest byte,
-// (least significant on little endian architectures)
-// which can be used to compare with tags in the font file.
-// This macro is compatible with DWRITE_FONT_FEATURE_TAG.
-//
-// Example: DWRITE_MAKE_OPENTYPE_TAG('c','c','m','p')
-// Dword:   0x706D6363
-//
+/// <summary>
+/// Creates an OpenType tag as a 32bit integer such that
+/// the first character in the tag is the lowest byte,
+/// (least significant on little endian architectures)
+/// which can be used to compare with tags in the font file.
+/// This macro is compatible with DWRITE_FONT_FEATURE_TAG.
+///
+/// Example: DWRITE_MAKE_OPENTYPE_TAG('c','c','m','p')
+/// Dword:   0x706D6363
+/// </summary>
 #define DWRITE_MAKE_OPENTYPE_TAG(a,b,c,d) ( \
     (static_cast<UINT32>(static_cast<UINT8>(d)) << 24) | \
     (static_cast<UINT32>(static_cast<UINT8>(c)) << 16) | \
     (static_cast<UINT32>(static_cast<UINT8>(b)) << 8)  | \
      static_cast<UINT32>(static_cast<UINT8>(a)))
+
+/// <summary>
+/// Creates an OpenType tag for glyph positioning and substitution font features.
+/// </summary>
+#define DWRITE_MAKE_FONT_FEATURE_TAG(a,b,c,d) (static_cast<DWRITE_FONT_FEATURE_TAG>(DWRITE_MAKE_OPENTYPE_TAG(a,b,c,d)))
 
 interface IDWriteFontFileStream;
 
@@ -1026,9 +1037,8 @@ interface ID2D1SimplifiedGeometrySink;
 typedef ID2D1SimplifiedGeometrySink IDWriteGeometrySink;
 
 /// <summary>
-/// The interface that represents an absolute reference to a font face.
+/// This interface exposes various font data such as metrics, names, and glyph outlines.
 /// It contains font face type, appropriate file references and face identification data.
-/// Various font data such as metrics, names and glyph outlines is obtained from IDWriteFontFace.
 /// </summary>
 interface DWRITE_DECLARE_INTERFACE("5f49804d-7024-4d43-bfa9-d25984f53849") IDWriteFontFace : public IUnknown
 {
@@ -1440,7 +1450,7 @@ interface IDWriteFontFamily;
 interface IDWriteFont;
 
 /// <summary>
-/// The IDWriteFontCollection encapsulates a collection of fonts.
+/// The IDWriteFontCollection encapsulates a collection of font families.
 /// </summary>
 interface DWRITE_DECLARE_INTERFACE("a84cee02-3eea-4eee-a827-87c1a02a0fcc") IDWriteFontCollection : public IUnknown
 {
@@ -1493,7 +1503,7 @@ interface DWRITE_DECLARE_INTERFACE("a84cee02-3eea-4eee-a827-87c1a02a0fcc") IDWri
 };
 
 /// <summary>
-/// The IDWriteFontList interface represents a list of fonts.
+/// The IDWriteFontList interface represents an ordered set of fonts that are part of an IDWriteFontCollection.
 /// </summary>
 interface DWRITE_DECLARE_INTERFACE("1a0d8438-1d97-4ec1-aef9-a2fb86ed6acb") IDWriteFontList : public IUnknown
 {
@@ -1851,99 +1861,102 @@ enum DWRITE_TRIMMING_GRANULARITY
     /// Trimming occurs at character cluster boundary.
     /// </summary>
     DWRITE_TRIMMING_GRANULARITY_CHARACTER,
-    
+
     /// <summary>
     /// Trimming occurs at word boundary.
     /// </summary>
-    DWRITE_TRIMMING_GRANULARITY_WORD    
+    DWRITE_TRIMMING_GRANULARITY_WORD
 };
 
 /// <summary>
 /// Typographic feature of text supplied by the font.
 /// </summary>
+/// <remarks>
+/// Use DWRITE_MAKE_FONT_FEATURE_TAG() to create a custom one.
+/// <remarks>
 enum DWRITE_FONT_FEATURE_TAG
 {
-    DWRITE_FONT_FEATURE_TAG_ALTERNATIVE_FRACTIONS               = 0x63726661, // 'afrc'
-    DWRITE_FONT_FEATURE_TAG_PETITE_CAPITALS_FROM_CAPITALS       = 0x63703263, // 'c2pc'
-    DWRITE_FONT_FEATURE_TAG_SMALL_CAPITALS_FROM_CAPITALS        = 0x63733263, // 'c2sc'
-    DWRITE_FONT_FEATURE_TAG_CONTEXTUAL_ALTERNATES               = 0x746c6163, // 'calt'
-    DWRITE_FONT_FEATURE_TAG_CASE_SENSITIVE_FORMS                = 0x65736163, // 'case'
-    DWRITE_FONT_FEATURE_TAG_GLYPH_COMPOSITION_DECOMPOSITION     = 0x706d6363, // 'ccmp'
-    DWRITE_FONT_FEATURE_TAG_CONTEXTUAL_LIGATURES                = 0x67696c63, // 'clig'
-    DWRITE_FONT_FEATURE_TAG_CAPITAL_SPACING                     = 0x70737063, // 'cpsp'
-    DWRITE_FONT_FEATURE_TAG_CONTEXTUAL_SWASH                    = 0x68777363, // 'cswh'
-    DWRITE_FONT_FEATURE_TAG_CURSIVE_POSITIONING                 = 0x73727563, // 'curs'
-    DWRITE_FONT_FEATURE_TAG_DEFAULT                             = 0x746c6664, // 'dflt'
-    DWRITE_FONT_FEATURE_TAG_DISCRETIONARY_LIGATURES             = 0x67696c64, // 'dlig'
-    DWRITE_FONT_FEATURE_TAG_EXPERT_FORMS                        = 0x74707865, // 'expt'
-    DWRITE_FONT_FEATURE_TAG_FRACTIONS                           = 0x63617266, // 'frac'
-    DWRITE_FONT_FEATURE_TAG_FULL_WIDTH                          = 0x64697766, // 'fwid'
-    DWRITE_FONT_FEATURE_TAG_HALF_FORMS                          = 0x666c6168, // 'half'
-    DWRITE_FONT_FEATURE_TAG_HALANT_FORMS                        = 0x6e6c6168, // 'haln'
-    DWRITE_FONT_FEATURE_TAG_ALTERNATE_HALF_WIDTH                = 0x746c6168, // 'halt'
-    DWRITE_FONT_FEATURE_TAG_HISTORICAL_FORMS                    = 0x74736968, // 'hist'
-    DWRITE_FONT_FEATURE_TAG_HORIZONTAL_KANA_ALTERNATES          = 0x616e6b68, // 'hkna'
-    DWRITE_FONT_FEATURE_TAG_HISTORICAL_LIGATURES                = 0x67696c68, // 'hlig'
-    DWRITE_FONT_FEATURE_TAG_HALF_WIDTH                          = 0x64697768, // 'hwid'
-    DWRITE_FONT_FEATURE_TAG_HOJO_KANJI_FORMS                    = 0x6f6a6f68, // 'hojo'
-    DWRITE_FONT_FEATURE_TAG_JIS04_FORMS                         = 0x3430706a, // 'jp04'
-    DWRITE_FONT_FEATURE_TAG_JIS78_FORMS                         = 0x3837706a, // 'jp78'
-    DWRITE_FONT_FEATURE_TAG_JIS83_FORMS                         = 0x3338706a, // 'jp83'
-    DWRITE_FONT_FEATURE_TAG_JIS90_FORMS                         = 0x3039706a, // 'jp90'
-    DWRITE_FONT_FEATURE_TAG_KERNING                             = 0x6e72656b, // 'kern'
-    DWRITE_FONT_FEATURE_TAG_STANDARD_LIGATURES                  = 0x6167696c, // 'liga'
-    DWRITE_FONT_FEATURE_TAG_LINING_FIGURES                      = 0x6d756e6c, // 'lnum'
-    DWRITE_FONT_FEATURE_TAG_LOCALIZED_FORMS                     = 0x6c636f6c, // 'locl'
-    DWRITE_FONT_FEATURE_TAG_MARK_POSITIONING                    = 0x6b72616d, // 'mark'
-    DWRITE_FONT_FEATURE_TAG_MATHEMATICAL_GREEK                  = 0x6b72676d, // 'mgrk'
-    DWRITE_FONT_FEATURE_TAG_MARK_TO_MARK_POSITIONING            = 0x6b6d6b6d, // 'mkmk'
-    DWRITE_FONT_FEATURE_TAG_ALTERNATE_ANNOTATION_FORMS          = 0x746c616e, // 'nalt'
-    DWRITE_FONT_FEATURE_TAG_NLC_KANJI_FORMS                     = 0x6b636c6e, // 'nlck'
-    DWRITE_FONT_FEATURE_TAG_OLD_STYLE_FIGURES                   = 0x6d756e6f, // 'onum'
-    DWRITE_FONT_FEATURE_TAG_ORDINALS                            = 0x6e64726f, // 'ordn'
-    DWRITE_FONT_FEATURE_TAG_PROPORTIONAL_ALTERNATE_WIDTH        = 0x746c6170, // 'palt'
-    DWRITE_FONT_FEATURE_TAG_PETITE_CAPITALS                     = 0x70616370, // 'pcap'
-    DWRITE_FONT_FEATURE_TAG_PROPORTIONAL_FIGURES                = 0x6d756e70, // 'pnum'
-    DWRITE_FONT_FEATURE_TAG_PROPORTIONAL_WIDTHS                 = 0x64697770, // 'pwid'
-    DWRITE_FONT_FEATURE_TAG_QUARTER_WIDTHS                      = 0x64697771, // 'qwid'
-    DWRITE_FONT_FEATURE_TAG_REQUIRED_LIGATURES                  = 0x67696c72, // 'rlig'
-    DWRITE_FONT_FEATURE_TAG_RUBY_NOTATION_FORMS                 = 0x79627572, // 'ruby'
-    DWRITE_FONT_FEATURE_TAG_STYLISTIC_ALTERNATES                = 0x746c6173, // 'salt'
-    DWRITE_FONT_FEATURE_TAG_SCIENTIFIC_INFERIORS                = 0x666e6973, // 'sinf'
-    DWRITE_FONT_FEATURE_TAG_SMALL_CAPITALS                      = 0x70636d73, // 'smcp'
-    DWRITE_FONT_FEATURE_TAG_SIMPLIFIED_FORMS                    = 0x6c706d73, // 'smpl'
-    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_1                     = 0x31307373, // 'ss01'
-    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_2                     = 0x32307373, // 'ss02'
-    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_3                     = 0x33307373, // 'ss03'
-    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_4                     = 0x34307373, // 'ss04'
-    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_5                     = 0x35307373, // 'ss05'
-    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_6                     = 0x36307373, // 'ss06'
-    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_7                     = 0x37307373, // 'ss07'
-    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_8                     = 0x38307373, // 'ss08'
-    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_9                     = 0x39307373, // 'ss09'
-    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_10                    = 0x30317373, // 'ss10'
-    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_11                    = 0x31317373, // 'ss11'
-    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_12                    = 0x32317373, // 'ss12'
-    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_13                    = 0x33317373, // 'ss13'
-    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_14                    = 0x34317373, // 'ss14'
-    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_15                    = 0x35317373, // 'ss15'
-    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_16                    = 0x36317373, // 'ss16'
-    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_17                    = 0x37317373, // 'ss17'
-    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_18                    = 0x38317373, // 'ss18'
-    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_19                    = 0x39317373, // 'ss19'
-    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_20                    = 0x30327373, // 'ss20'
-    DWRITE_FONT_FEATURE_TAG_SUBSCRIPT                           = 0x73627573, // 'subs'
-    DWRITE_FONT_FEATURE_TAG_SUPERSCRIPT                         = 0x73707573, // 'sups'
-    DWRITE_FONT_FEATURE_TAG_SWASH                               = 0x68737773, // 'swsh'
-    DWRITE_FONT_FEATURE_TAG_TITLING                             = 0x6c746974, // 'titl'
-    DWRITE_FONT_FEATURE_TAG_TRADITIONAL_NAME_FORMS              = 0x6d616e74, // 'tnam'
-    DWRITE_FONT_FEATURE_TAG_TABULAR_FIGURES                     = 0x6d756e74, // 'tnum'
-    DWRITE_FONT_FEATURE_TAG_TRADITIONAL_FORMS                   = 0x64617274, // 'trad'
-    DWRITE_FONT_FEATURE_TAG_THIRD_WIDTHS                        = 0x64697774, // 'twid'
-    DWRITE_FONT_FEATURE_TAG_UNICASE                             = 0x63696e75, // 'unic'
-    DWRITE_FONT_FEATURE_TAG_VERTICAL_WRITING                    = 0x74726576, // 'vert'
-    DWRITE_FONT_FEATURE_TAG_VERTICAL_ALTERNATES_AND_ROTATION    = 0x32747276, // 'vrt2'
-    DWRITE_FONT_FEATURE_TAG_SLASHED_ZERO                        = 0x6f72657a, // 'zero'
+    DWRITE_FONT_FEATURE_TAG_ALTERNATIVE_FRACTIONS               = DWRITE_MAKE_OPENTYPE_TAG('a','f','r','c'),
+    DWRITE_FONT_FEATURE_TAG_PETITE_CAPITALS_FROM_CAPITALS       = DWRITE_MAKE_OPENTYPE_TAG('c','2','p','c'),
+    DWRITE_FONT_FEATURE_TAG_SMALL_CAPITALS_FROM_CAPITALS        = DWRITE_MAKE_OPENTYPE_TAG('c','2','s','c'),
+    DWRITE_FONT_FEATURE_TAG_CONTEXTUAL_ALTERNATES               = DWRITE_MAKE_OPENTYPE_TAG('c','a','l','t'),
+    DWRITE_FONT_FEATURE_TAG_CASE_SENSITIVE_FORMS                = DWRITE_MAKE_OPENTYPE_TAG('c','a','s','e'),
+    DWRITE_FONT_FEATURE_TAG_GLYPH_COMPOSITION_DECOMPOSITION     = DWRITE_MAKE_OPENTYPE_TAG('c','c','m','p'),
+    DWRITE_FONT_FEATURE_TAG_CONTEXTUAL_LIGATURES                = DWRITE_MAKE_OPENTYPE_TAG('c','l','i','g'),
+    DWRITE_FONT_FEATURE_TAG_CAPITAL_SPACING                     = DWRITE_MAKE_OPENTYPE_TAG('c','p','s','p'),
+    DWRITE_FONT_FEATURE_TAG_CONTEXTUAL_SWASH                    = DWRITE_MAKE_OPENTYPE_TAG('c','s','w','h'),
+    DWRITE_FONT_FEATURE_TAG_CURSIVE_POSITIONING                 = DWRITE_MAKE_OPENTYPE_TAG('c','u','r','s'),
+    DWRITE_FONT_FEATURE_TAG_DEFAULT                             = DWRITE_MAKE_OPENTYPE_TAG('d','f','l','t'),
+    DWRITE_FONT_FEATURE_TAG_DISCRETIONARY_LIGATURES             = DWRITE_MAKE_OPENTYPE_TAG('d','l','i','g'),
+    DWRITE_FONT_FEATURE_TAG_EXPERT_FORMS                        = DWRITE_MAKE_OPENTYPE_TAG('e','x','p','t'),
+    DWRITE_FONT_FEATURE_TAG_FRACTIONS                           = DWRITE_MAKE_OPENTYPE_TAG('f','r','a','c'),
+    DWRITE_FONT_FEATURE_TAG_FULL_WIDTH                          = DWRITE_MAKE_OPENTYPE_TAG('f','w','i','d'),
+    DWRITE_FONT_FEATURE_TAG_HALF_FORMS                          = DWRITE_MAKE_OPENTYPE_TAG('h','a','l','f'),
+    DWRITE_FONT_FEATURE_TAG_HALANT_FORMS                        = DWRITE_MAKE_OPENTYPE_TAG('h','a','l','n'),
+    DWRITE_FONT_FEATURE_TAG_ALTERNATE_HALF_WIDTH                = DWRITE_MAKE_OPENTYPE_TAG('h','a','l','t'),
+    DWRITE_FONT_FEATURE_TAG_HISTORICAL_FORMS                    = DWRITE_MAKE_OPENTYPE_TAG('h','i','s','t'),
+    DWRITE_FONT_FEATURE_TAG_HORIZONTAL_KANA_ALTERNATES          = DWRITE_MAKE_OPENTYPE_TAG('h','k','n','a'),
+    DWRITE_FONT_FEATURE_TAG_HISTORICAL_LIGATURES                = DWRITE_MAKE_OPENTYPE_TAG('h','l','i','g'),
+    DWRITE_FONT_FEATURE_TAG_HALF_WIDTH                          = DWRITE_MAKE_OPENTYPE_TAG('h','w','i','d'),
+    DWRITE_FONT_FEATURE_TAG_HOJO_KANJI_FORMS                    = DWRITE_MAKE_OPENTYPE_TAG('h','o','j','o'),
+    DWRITE_FONT_FEATURE_TAG_JIS04_FORMS                         = DWRITE_MAKE_OPENTYPE_TAG('j','p','0','4'),
+    DWRITE_FONT_FEATURE_TAG_JIS78_FORMS                         = DWRITE_MAKE_OPENTYPE_TAG('j','p','7','8'),
+    DWRITE_FONT_FEATURE_TAG_JIS83_FORMS                         = DWRITE_MAKE_OPENTYPE_TAG('j','p','8','3'),
+    DWRITE_FONT_FEATURE_TAG_JIS90_FORMS                         = DWRITE_MAKE_OPENTYPE_TAG('j','p','9','0'),
+    DWRITE_FONT_FEATURE_TAG_KERNING                             = DWRITE_MAKE_OPENTYPE_TAG('k','e','r','n'),
+    DWRITE_FONT_FEATURE_TAG_STANDARD_LIGATURES                  = DWRITE_MAKE_OPENTYPE_TAG('l','i','g','a'),
+    DWRITE_FONT_FEATURE_TAG_LINING_FIGURES                      = DWRITE_MAKE_OPENTYPE_TAG('l','n','u','m'),
+    DWRITE_FONT_FEATURE_TAG_LOCALIZED_FORMS                     = DWRITE_MAKE_OPENTYPE_TAG('l','o','c','l'),
+    DWRITE_FONT_FEATURE_TAG_MARK_POSITIONING                    = DWRITE_MAKE_OPENTYPE_TAG('m','a','r','k'),
+    DWRITE_FONT_FEATURE_TAG_MATHEMATICAL_GREEK                  = DWRITE_MAKE_OPENTYPE_TAG('m','g','r','k'),
+    DWRITE_FONT_FEATURE_TAG_MARK_TO_MARK_POSITIONING            = DWRITE_MAKE_OPENTYPE_TAG('m','k','m','k'),
+    DWRITE_FONT_FEATURE_TAG_ALTERNATE_ANNOTATION_FORMS          = DWRITE_MAKE_OPENTYPE_TAG('n','a','l','t'),
+    DWRITE_FONT_FEATURE_TAG_NLC_KANJI_FORMS                     = DWRITE_MAKE_OPENTYPE_TAG('n','l','c','k'),
+    DWRITE_FONT_FEATURE_TAG_OLD_STYLE_FIGURES                   = DWRITE_MAKE_OPENTYPE_TAG('o','n','u','m'),
+    DWRITE_FONT_FEATURE_TAG_ORDINALS                            = DWRITE_MAKE_OPENTYPE_TAG('o','r','d','n'),
+    DWRITE_FONT_FEATURE_TAG_PROPORTIONAL_ALTERNATE_WIDTH        = DWRITE_MAKE_OPENTYPE_TAG('p','a','l','t'),
+    DWRITE_FONT_FEATURE_TAG_PETITE_CAPITALS                     = DWRITE_MAKE_OPENTYPE_TAG('p','c','a','p'),
+    DWRITE_FONT_FEATURE_TAG_PROPORTIONAL_FIGURES                = DWRITE_MAKE_OPENTYPE_TAG('p','n','u','m'),
+    DWRITE_FONT_FEATURE_TAG_PROPORTIONAL_WIDTHS                 = DWRITE_MAKE_OPENTYPE_TAG('p','w','i','d'),
+    DWRITE_FONT_FEATURE_TAG_QUARTER_WIDTHS                      = DWRITE_MAKE_OPENTYPE_TAG('q','w','i','d'),
+    DWRITE_FONT_FEATURE_TAG_REQUIRED_LIGATURES                  = DWRITE_MAKE_OPENTYPE_TAG('r','l','i','g'),
+    DWRITE_FONT_FEATURE_TAG_RUBY_NOTATION_FORMS                 = DWRITE_MAKE_OPENTYPE_TAG('r','u','b','y'),
+    DWRITE_FONT_FEATURE_TAG_STYLISTIC_ALTERNATES                = DWRITE_MAKE_OPENTYPE_TAG('s','a','l','t'),
+    DWRITE_FONT_FEATURE_TAG_SCIENTIFIC_INFERIORS                = DWRITE_MAKE_OPENTYPE_TAG('s','i','n','f'),
+    DWRITE_FONT_FEATURE_TAG_SMALL_CAPITALS                      = DWRITE_MAKE_OPENTYPE_TAG('s','m','c','p'),
+    DWRITE_FONT_FEATURE_TAG_SIMPLIFIED_FORMS                    = DWRITE_MAKE_OPENTYPE_TAG('s','m','p','l'),
+    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_1                     = DWRITE_MAKE_OPENTYPE_TAG('s','s','0','1'),
+    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_2                     = DWRITE_MAKE_OPENTYPE_TAG('s','s','0','2'),
+    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_3                     = DWRITE_MAKE_OPENTYPE_TAG('s','s','0','3'),
+    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_4                     = DWRITE_MAKE_OPENTYPE_TAG('s','s','0','4'),
+    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_5                     = DWRITE_MAKE_OPENTYPE_TAG('s','s','0','5'),
+    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_6                     = DWRITE_MAKE_OPENTYPE_TAG('s','s','0','6'),
+    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_7                     = DWRITE_MAKE_OPENTYPE_TAG('s','s','0','7'),
+    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_8                     = DWRITE_MAKE_OPENTYPE_TAG('s','s','0','8'),
+    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_9                     = DWRITE_MAKE_OPENTYPE_TAG('s','s','0','9'),
+    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_10                    = DWRITE_MAKE_OPENTYPE_TAG('s','s','1','0'),
+    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_11                    = DWRITE_MAKE_OPENTYPE_TAG('s','s','1','1'),
+    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_12                    = DWRITE_MAKE_OPENTYPE_TAG('s','s','1','2'),
+    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_13                    = DWRITE_MAKE_OPENTYPE_TAG('s','s','1','3'),
+    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_14                    = DWRITE_MAKE_OPENTYPE_TAG('s','s','1','4'),
+    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_15                    = DWRITE_MAKE_OPENTYPE_TAG('s','s','1','5'),
+    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_16                    = DWRITE_MAKE_OPENTYPE_TAG('s','s','1','6'),
+    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_17                    = DWRITE_MAKE_OPENTYPE_TAG('s','s','1','7'),
+    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_18                    = DWRITE_MAKE_OPENTYPE_TAG('s','s','1','8'),
+    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_19                    = DWRITE_MAKE_OPENTYPE_TAG('s','s','1','9'),
+    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_20                    = DWRITE_MAKE_OPENTYPE_TAG('s','s','2','0'),
+    DWRITE_FONT_FEATURE_TAG_SUBSCRIPT                           = DWRITE_MAKE_OPENTYPE_TAG('s','u','b','s'),
+    DWRITE_FONT_FEATURE_TAG_SUPERSCRIPT                         = DWRITE_MAKE_OPENTYPE_TAG('s','u','p','s'),
+    DWRITE_FONT_FEATURE_TAG_SWASH                               = DWRITE_MAKE_OPENTYPE_TAG('s','w','s','h'),
+    DWRITE_FONT_FEATURE_TAG_TITLING                             = DWRITE_MAKE_OPENTYPE_TAG('t','i','t','l'),
+    DWRITE_FONT_FEATURE_TAG_TRADITIONAL_NAME_FORMS              = DWRITE_MAKE_OPENTYPE_TAG('t','n','a','m'),
+    DWRITE_FONT_FEATURE_TAG_TABULAR_FIGURES                     = DWRITE_MAKE_OPENTYPE_TAG('t','n','u','m'),
+    DWRITE_FONT_FEATURE_TAG_TRADITIONAL_FORMS                   = DWRITE_MAKE_OPENTYPE_TAG('t','r','a','d'),
+    DWRITE_FONT_FEATURE_TAG_THIRD_WIDTHS                        = DWRITE_MAKE_OPENTYPE_TAG('t','w','i','d'),
+    DWRITE_FONT_FEATURE_TAG_UNICASE                             = DWRITE_MAKE_OPENTYPE_TAG('u','n','i','c'),
+    DWRITE_FONT_FEATURE_TAG_VERTICAL_WRITING                    = DWRITE_MAKE_OPENTYPE_TAG('v','e','r','t'),
+    DWRITE_FONT_FEATURE_TAG_VERTICAL_ALTERNATES_AND_ROTATION    = DWRITE_MAKE_OPENTYPE_TAG('v','r','t','2'),
+    DWRITE_FONT_FEATURE_TAG_SLASHED_ZERO                        = DWRITE_MAKE_OPENTYPE_TAG('z','e','r','o'),
 };
 
 /// <summary>
@@ -2463,12 +2476,24 @@ struct DWRITE_SHAPING_TEXT_PROPERTIES
     /// This character can be shaped independently from the others
     /// (usually set for the space character).
     /// </summary>
-    UINT16  isShapedAlone       : 1;
+    UINT16 isShapedAlone        : 1;
 
     /// <summary>
     /// Reserved for use by shaping engine.
     /// </summary>
-    UINT16  reserved            : 15;
+    UINT16 reserved1            : 1;
+
+    /// <summary>
+    /// Glyph shaping can be cut after this point without affecting shaping
+    /// before or after it. Otherwise, splitting a call to GetGlyphs would
+    /// cause a reflow of glyph advances and shapes.
+    /// </summary>
+    UINT16 canBreakShapingAfter : 1;
+
+    /// <summary>
+    /// Reserved for use by shaping engine.
+    /// </summary>
+    UINT16 reserved             : 13;
 };
 
 /// <summary>
@@ -2481,27 +2506,28 @@ struct DWRITE_SHAPING_GLYPH_PROPERTIES
     /// another method. This exists for backwards compatibility
     /// with Uniscribe's SCRIPT_JUSTIFY enum.
     /// </summary>
-    UINT16  justification       : 4;
+    UINT16 justification        : 4;
 
     /// <summary>
     /// Indicates glyph is the first of a cluster.
     /// </summary>
-    UINT16  isClusterStart      : 1;
+    UINT16 isClusterStart       : 1;
 
     /// <summary>
     /// Glyph is a diacritic.
     /// </summary>
-    UINT16  isDiacritic         : 1;
+    UINT16 isDiacritic          : 1;
 
     /// <summary>
-    /// Glyph has no width, blank, ZWJ, ZWNJ etc.
+    /// Glyph has no width, mark, ZWJ, ZWNJ, ZWSP, LRM etc.
+    /// This flag is not limited to just U+200B.
     /// </summary>
-    UINT16  isZeroWidthSpace    : 1;
+    UINT16 isZeroWidthSpace     : 1;
 
     /// <summary>
     /// Reserved for use by shaping engine.
     /// </summary>
-    UINT16  reserved            : 9;
+    UINT16 reserved             : 9;
 };
 
 /// <summary>
@@ -2917,7 +2943,7 @@ interface DWRITE_DECLARE_INTERFACE("b7e6163e-7f46-43b4-84b3-e4e6249c365d") IDWri
     STDMETHOD(GetGlyphPlacements)(
         _In_reads_(textLength) WCHAR const* textString,
         _In_reads_(textLength) UINT16 const* clusterMap,
-        _In_reads_(textLength) DWRITE_SHAPING_TEXT_PROPERTIES* textProps,
+        _Inout_updates_(textLength) DWRITE_SHAPING_TEXT_PROPERTIES* textProps,
         UINT32 textLength,
         _In_reads_(glyphCount) UINT16 const* glyphIndices,
         _In_reads_(glyphCount) DWRITE_SHAPING_GLYPH_PROPERTIES const* glyphProps,
@@ -4901,6 +4927,10 @@ interface DWRITE_DECLARE_INTERFACE("b859ee5a-d838-4b5b-a2e8-1adc7d93db48") IDWri
     /// <returns>
     /// Standard HRESULT error code.
     /// </returns>
+    /// <remarks>
+    /// If fontCollection is nullptr, the system font collection is used, grouped by typographic family name
+    /// (DWRITE_FONT_FAMILY_MODEL_WEIGHT_STRETCH_STYLE) without downloadable fonts.
+    /// </remarks>
     STDMETHOD(CreateTextFormat)(
         _In_z_ WCHAR const* fontFamilyName,
         _In_opt_ IDWriteFontCollection* fontCollection,

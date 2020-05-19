@@ -531,7 +531,6 @@ interface DWRITE_DECLARE_INTERFACE("EFA008F9-F7A1-48BF-B05C-F224713CC0FF") IDWri
     ///     locale.</param>
     /// <param name="textLength">Length of the text to analyze.</param>
     /// <param name="baseFontCollection">Default font collection to use.</param>
-    /// <param name="baseFont">Base font to check (optional).</param>
     /// <param name="baseFamilyName">Family name of the base font. If you pass
     ///     null, no matching will be done against the family.</param>
     /// <param name="baseWeight">Desired weight.</param>

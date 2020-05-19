@@ -24,6 +24,9 @@ DEFINE_GUID(CLSID_D2D1YCbCr,                    0x99503cc1, 0x66c7, 0x45c9, 0xa8
 
 /// <summary>
 /// The enumeration of the YCbCr effect's top level properties.
+/// Effect description: An effect that takes a Y plane as input 0 and a CbCr plane
+/// as input 1 and outputs RGBA.  The CbCr plane can be chroma subsampled.  Useful
+/// for JPEG color conversion.
 /// </summary>
 typedef enum D2D1_YCBCR_PROP
 {
